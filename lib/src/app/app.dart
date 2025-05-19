@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
@@ -22,26 +23,32 @@ class GameOnApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => di.sl<AuthCubit>()),
-        BlocProvider(create: (context) => di.sl<TeamActionCubit>()),
-        BlocProvider(
-            create: (context) => di.sl<TeamFetchCubit>()..getMyTeams()),
-        BlocProvider(create: (context) => di.sl<GetOneTeamCubit>()),
-        BlocProvider(create: (context) => di.sl<FetchPlayersTeamCubit>()),
-        BlocProvider(create: (context) => di.sl<FetchTrophiesTeamCubit>()),
-        BlocProvider(create: (context) => di.sl<GetTeamEquipamentCubit>()),
-        BlocProvider(create: (context) => di.sl<SquadCubit>()),
-        BlocProvider(create: (context) => di.sl<StartingLineupPlayerCubit>()),
-        BlocProvider(create: (context) => di.sl<ActionTeamSquadCubit>()),
-      ],
-      child: GetMaterialApp(
-        title: 'Luanda Sport',
-        darkTheme: AppTheme.lightTheme,
-        theme: AppTheme.lightTheme,
-        onGenerateRoute: AppPages.generateRoute,
-        builder: EasyLoading.init(),
+    ScreenUtil.init(context);
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => di.sl<AuthCubit>()),
+          BlocProvider(create: (context) => di.sl<TeamActionCubit>()),
+          BlocProvider(
+              create: (context) => di.sl<TeamFetchCubit>()..getMyTeams()),
+          BlocProvider(create: (context) => di.sl<GetOneTeamCubit>()),
+          BlocProvider(create: (context) => di.sl<FetchPlayersTeamCubit>()),
+          BlocProvider(create: (context) => di.sl<FetchTrophiesTeamCubit>()),
+          BlocProvider(create: (context) => di.sl<GetTeamEquipamentCubit>()),
+          BlocProvider(create: (context) => di.sl<SquadCubit>()),
+          BlocProvider(create: (context) => di.sl<StartingLineupPlayerCubit>()),
+          BlocProvider(create: (context) => di.sl<ActionTeamSquadCubit>()),
+        ],
+        child: GetMaterialApp(
+          title: 'Luanda Sport',
+          darkTheme: AppTheme.lightTheme,
+          theme: AppTheme.lightTheme,
+          onGenerateRoute: AppPages.generateRoute,
+          builder: EasyLoading.init(),
+        ),
       ),
     );
   }

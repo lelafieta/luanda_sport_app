@@ -2,63 +2,36 @@ import 'dart:ui';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:luanda_sport_app/src/config/routes/app_routes.dart';
-import 'package:luanda_sport_app/src/features/home/presentantion/home_page.dart';
-import 'package:luanda_sport_app/src/features/organizers/presentation/pages/organizer_page.dart';
-import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
-import '../../../config/themes/app_colors.dart';
-import '../../../core/resources/app_icons.dart';
-import '../../../core/resources/app_images.dart';
-import '../../settings/presentation/pages/settings_page.dart';
+import 'package:luanda_sport_app/src/config/themes/app_colors.dart';
+import 'package:luanda_sport_app/src/core/resources/app_icons.dart';
+import 'package:luanda_sport_app/src/core/resources/app_images.dart';
 
-class GameOnPage extends StatefulWidget {
+class LuandaSportPage extends StatefulWidget {
   final Map<dynamic, String?>? arguments;
-  const GameOnPage({super.key, this.arguments});
+  const LuandaSportPage({super.key, this.arguments});
 
   @override
-  State<GameOnPage> createState() => _GameOnPageState();
+  State<LuandaSportPage> createState() => _LuandaSportPageState();
 }
 
-class _GameOnPageState extends State<GameOnPage> {
+class _LuandaSportPageState extends State<LuandaSportPage> {
   var _currentIndex = 0;
-
-  List<String> pagesParameters = [
-    "competitions",
-    "teams",
-    "players",
-    "references",
-    "adepts",
-    "logout",
-  ];
-
   late List<Widget> widgets;
 
   @override
   void initState() {
     super.initState();
     widgets = [
-      // OrganizerPage(),
-      HomePage(
-        arguments: widget.arguments,
-      ),
-      // TeamDetailsPage(),
-      // CompetitionDetailsPage(),
-      // Text("data"),
-      const OrganizerPage(),
-      // Text("data"),
-      // MyCompetitionsListPage(),
-      const Text("data"),
-      // LiveGamePage(),
-      const Text("data"),
-      const SettingsPage(),
+      const Text("GOME"),
+      const Text("Live"),
+      const Text("Profile"),
+      const Text("Settings"),
     ];
   }
 
   List<String> iconList = [
     AppIcons.houseChimney,
     AppIcons.whistle,
-    AppIcons.bellNotificationSocialMedia,
     AppIcons.videoCameraAlt,
     AppIcons.settings2
   ];
@@ -66,7 +39,6 @@ class _GameOnPageState extends State<GameOnPage> {
   List<String> iconListBold = [
     AppIcons.houseChimneyBold,
     AppIcons.whistleBold,
-    AppIcons.bellNotificationSocialMedia,
     AppIcons.videoCameraAltBold,
     AppIcons.settings2
   ];
@@ -84,137 +56,156 @@ class _GameOnPageState extends State<GameOnPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primary,
-          centerTitle: true,
+          // centerTitle: true,
           iconTheme: const IconThemeData(color: Colors.white),
           title: const Text(
-            "Torneio X",
-            style: TextStyle(color: Colors.white),
+            "Adepto",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           actions: [
             IconButton(
                 onPressed: () {},
                 icon: SvgPicture.asset(
-                  AppIcons.bellNotificationSocialMedia,
-                  color: AppColors.white,
+                  AppIcons.bell,
+                  color: AppColors.lightWightColor,
                 ))
           ],
         ),
         drawer: Drawer(
-          child: SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      DrawerHeader(
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                        ),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    Container(
+                      color: AppColors.primary,
+                      child: SafeArea(
                         child: ListTile(
-                          contentPadding: const EdgeInsets.all(0),
+                          contentPadding: const EdgeInsets.all(16),
                           title: const Text(
                             'Jesse Lingard',
                             style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
                               color: Colors.white,
                             ),
                           ),
                           subtitle: Text(
                             'Organizador',
                             style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white.withOpacity(.3),
+                              color: Colors.white.withOpacity(.5),
                             ),
                           ),
                           leading: const CircleAvatar(
                             backgroundImage: AssetImage(AppImages.avatar),
                           ),
-                          trailing: IconButton(
-                            onPressed: () {
-                              _showBlurModalChangeProfile(context);
-                            },
-                            icon: SvgPicture.asset(
-                              width: 18,
-                              AppIcons.convertShapes,
-                              color: AppColors.white,
-                            ),
+                          trailing: SvgPicture.asset(
+                            AppIcons.changePosition,
+                            width: 26,
+                            color: AppColors.lightWightColor,
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        child: const Text(
-                          "Painel",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w600,
-                          ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(16.0),
+                      child: const Text(
+                        "Painel",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      ListTile(
-                        leading: SvgPicture.asset(
-                          AppIcons.achievementChallengeMedal,
-                          width: 26,
-                        ),
-                        title: Text('Campeonatos'),
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, AppRoutes.listMyCompetitions);
-                        },
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.userPerson,
+                        width: 25,
                       ),
-                      ListTile(
-                        leading: SvgPicture.asset(
-                          AppIcons.emblem,
-                          width: 26,
-                        ),
-                        title: Text('Equipas'),
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.listMyTeams);
-                        },
+                      title: Text('Meu Perfil'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.trophyCup,
+                        width: 25,
                       ),
-                      ListTile(
-                        leading: SvgPicture.asset(
-                          AppIcons.contractPaper,
-                          width: 26,
-                        ),
-                        title: Text('Inscrições'),
-                        onTap: () {
-                          // Navigator.pop(context)
-                        },
+                      title: Text('Campeonatos'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.badgeMedal,
+                        width: 25,
                       ),
-                      ListTile(
-                        leading: SvgPicture.asset(
-                          AppIcons.settings2,
-                          width: 26,
-                        ),
-                        title: Text('Configurações'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                      title: Text('Equipas'),
+                      onTap: () {
+                        // context.pushNamed("list-teams");
+                      },
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.note,
+                        width: 25,
                       ),
-                      ListTile(
-                        leading: Icon(Icons.logout),
-                        title: Text('Logout'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                      title: Text('Inscrições'),
+                      onTap: () {
+                        // Navigator.pop(context)
+                      },
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.footballBall,
+                        width: 25,
                       ),
-                    ],
-                  ),
+                      title: Text('Jogos'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.settingsGear,
+                        width: 25,
+                      ),
+                      title: Text('Configurações'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        AppIcons.creditCard,
+                        width: 25,
+                      ),
+                      title: Text('Planos/Subscrição'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.logout),
+                      title: Text('Logout'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
-                Text("Pacotes")
-              ],
-            ),
+              ),
+              Text("Pacotes")
+            ],
           ),
         ),
         body: widgets[_currentIndex],
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: AnimatedBottomNavigationBar.builder(
           backgroundColor: Colors.white,
-          itemCount: 5,
+          itemCount: iconList.length,
           activeIndex: _currentIndex,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.softEdge,
@@ -222,7 +213,7 @@ class _GameOnPageState extends State<GameOnPage> {
           rightCornerRadius: 0,
           height: 60,
           shadow: BoxShadow(
-            color: AppColors.shadow.withOpacity(.1),
+            color: AppColors.shadow,
             blurRadius: 100,
           ),
           onTap: (index) => setState(() => _currentIndex = index),
@@ -247,7 +238,7 @@ class _GameOnPageState extends State<GameOnPage> {
     );
   }
 
-  Widget _buildItem(String iconPath, String label, Callback onTap) {
+  Widget _buildItem(String iconPath, String label, Function() onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: ListTile(
@@ -258,7 +249,7 @@ class _GameOnPageState extends State<GameOnPage> {
         ),
         title: Text(
           label,
-          style: const TextStyle(fontSize: 18),
+          // style: const TextStyle(fontSize: 18),
         ),
         onTap: onTap,
       ),
@@ -289,13 +280,9 @@ class _GameOnPageState extends State<GameOnPage> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Divider(color: Colors.grey.shade300),
-                    _buildItem(AppIcons.competitionchampion, "Novo Campeonato",
-                        () {
-                      Get.toNamed(AppRoutes.createCompetition);
-                    }),
-                    _buildItem(AppIcons.footballJersey, "Nova Equipe", () {
-                      Get.toNamed(AppRoutes.createTeam);
-                    }),
+                    _buildItem(
+                        AppIcons.competitionchampion, "Novo Campeonato", () {}),
+                    _buildItem(AppIcons.footballJersey, "Nova Equipe", () {}),
                     _buildItem(AppIcons.userColor, "Novo Jogador", () {}),
                     _buildItem(
                         AppIcons.copyLink, "Participar em torneio", () {}),
@@ -334,15 +321,9 @@ class _GameOnPageState extends State<GameOnPage> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Divider(color: Colors.grey.shade300),
-                    _buildItem(AppIcons.competitionchampion, "Adepto", () {
-                      Get.toNamed(AppRoutes.createCompetition);
-                    }),
-                    _buildItem(AppIcons.footballJersey, "Organizador", () {
-                      Get.toNamed(AppRoutes.createTeam);
-                    }),
-                    _buildItem(AppIcons.footballJersey, "Árbitro", () {
-                      Get.toNamed(AppRoutes.createTeam);
-                    }),
+                    _buildItem(AppIcons.competitionchampion, "Adepto", () {}),
+                    _buildItem(AppIcons.footballJersey, "Organizador", () {}),
+                    _buildItem(AppIcons.footballJersey, "Árbitro", () {}),
                     _buildItem(AppIcons.userColor, "Jogador", () {}),
                   ],
                 ),

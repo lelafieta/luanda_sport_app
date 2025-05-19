@@ -8,6 +8,7 @@ import 'package:luanda_sport_app/src/features/competitions/presentation/pages/li
 import 'package:luanda_sport_app/src/features/game_on/presentation/game_on_page.dart';
 
 import 'package:luanda_sport_app/src/features/live_games/presentation/pages/live_game_page.dart';
+import 'package:luanda_sport_app/src/features/luanda_sport/presentation/pages/luanda_sport_page.dart';
 import 'package:luanda_sport_app/src/features/organizers/presentation/pages/organizer_details_page.dart';
 import 'package:luanda_sport_app/src/features/organizers/presentation/pages/organizer_page.dart';
 import 'package:luanda_sport_app/src/features/splash&onboarding/presentation/pages/splash_page.dart';

@@ -1,4 +1,6 @@
 class AppIcons {
+  AppIcons._();
+
   static const String calendar = "assets/icons/calendar.svg";
   static const String houseChimney = "assets/icons/house-chimney.svg";
   static const String memoPad = "assets/icons/memo-pad.svg";
@@ -104,4 +106,39 @@ class AppIcons {
   static const String populationGlobe = "assets/icons/population-globe.svg";
   static const String football = "assets/icons/football.svg";
   static const String memo = "assets/icons/memo.svg";
+
+  static const String membossMano = "assets/icons/boss-man-svgrepo-com.svg";
+  static const String footballPlayerSpain =
+      "assets/icons/football-player-spain-svgrepo-com.svg";
+  static const String managerBoss = "assets/icons/manager-boss-svgrepo-com.svg";
+  static const String managerBusinessman =
+      "assets/icons/manager-businessman-svgrepo-com.svg";
+  static const String referee = "assets/icons/referee-svgrepo-com.svg";
+  static const String rss = "assets/icons/rss.svg";
+  static const String badgeMedal = "assets/icons/badge-medal-svgrepo-com.svg";
+  static const String trophyCup = "assets/icons/trophy-cup-svgrepo-com.svg";
+  static const String noteNotepad = "assets/icons/note-notepad-svgrepo-com.svg";
+  static const String settingsTools =
+      "assets/icons/settings-tools-and-utensils-svgrepo-com.svg";
+
+  static const String footballBall = "assets/icons/football-svgrepo-com.svg";
+
+  static const String note = "assets/icons/note-svgrepo-com.svg";
+  static const String settingsGear =
+      "assets/icons/settings-gear-svgrepo-com.svg";
+
+  static const String creditCard = "assets/icons/credit-card-svgrepo-com.svg";
+  static const String userPerson =
+      "assets/icons/user-person-profile-block-account-circle-svgrepo-com.svg";
+
+  static const String taskChecklist = "assets/icons/task-checklist.svg";
+  static const String medal = "assets/icons/medal.svg";
+  static const String timePast = "assets/icons/time-past.svg";
+
+  static const String clockThree = "assets/icons/clock-three.svg";
+  static const String redSquare = "assets/icons/red-square-svgrepo-com.svg";
+  static const String yellowSquare =
+      "assets/icons/yellow-square-svgrepo-com.svg";
+
+  static const String clock = "assets/icons/clock-svgrepo-com.svg";
 }
