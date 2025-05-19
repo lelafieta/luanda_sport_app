@@ -264,12 +264,14 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                     ),
                   ),
                 ),
-                const DrawerItem(icon: Icons.calendar_today, label: 'Menu'),
-                const DrawerItem(icon: Icons.email, label: 'Contato'),
+                const DrawerItem(icon: Icons.sports_soccer, label: 'Jogos'),
+                const DrawerItem(icon: Icons.people, label: 'Organizadores'),
+                const DrawerItem(
+                    icon: Icons.emoji_events, label: 'Campeonatos'),
+                const DrawerItem(icon: Icons.groups, label: 'Equipes'),
+                const DrawerItem(icon: Icons.how_to_reg, label: 'Inscrições'),
                 const DrawerItem(icon: Icons.help_outline, label: 'Como usar'),
                 const DrawerItem(icon: Icons.star, label: 'Ir para Premium'),
-                const DrawerItem(
-                    icon: Icons.attach_money, label: 'Compartilhe para ...'),
                 const DrawerItem(icon: Icons.language, label: 'Alterar idioma'),
                 const DrawerItem(
                     icon: Icons.feedback, label: 'Deixe um feedback'),
