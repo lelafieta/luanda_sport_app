@@ -19,6 +19,9 @@ class LuandaSportPage extends StatefulWidget {
 class _LuandaSportPageState extends State<LuandaSportPage> {
   var _currentIndex = 0;
   late List<Widget> widgets;
+  final _controller = SingleValueDropDownController(
+    data: DropDownValueModel(name: 'Jogador', value: "player"),
+  );
 
   @override
   void initState() {
@@ -204,7 +207,7 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
         //   ),
         // ),
         drawer: Drawer(
-          backgroundColor: AppColors.lightWightColor,
+          backgroundColor: const Color(0xFF1A1A1A),
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +219,7 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                     width: 50,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.black12,
+                      color: Colors.white12,
                       borderRadius: BorderRadius.circular(100),
                     ),
                   ),
@@ -224,17 +227,19 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                     "LINGARD",
                     style: TextStyle(
                       // fontSize: 18,
-
+                      color: AppColors.lightWightColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  subtitle: Container(
+                  subtitle: SizedBox(
                     height: 30,
                     child: DropDownTextField(
                       clearOption: false,
                       enableSearch: false,
                       readOnly: true,
-                      initialValue: "player",
+                      controller: _controller,
+                      textStyle:
+                          const TextStyle(color: AppColors.lightWightColor),
                       searchTextStyle: const TextStyle(color: Colors.red),
                       searchDecoration: const InputDecoration(
                         hintText: "enter your custom hint text here",
@@ -428,11 +433,14 @@ class DrawerItem extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        // color: Colors.white,
+        color: AppColors.lightWightColor,
       ),
       title: Text(
         label,
         // style: const TextStyle(color: Colors.white),
+        style: TextStyle(
+          color: AppColors.lightWightColor,
+        ),
       ),
       onTap: () {
         Navigator.pop(context);
