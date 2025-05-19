@@ -264,6 +264,8 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                const DrawerItem(icon: Icons.person, label: 'Meu Perfil'),
                 const DrawerItem(icon: Icons.sports_soccer, label: 'Jogos'),
                 const DrawerItem(icon: Icons.people, label: 'Organizadores'),
                 const DrawerItem(
