@@ -24,6 +24,7 @@ class AppPages {
       case AppRoutes.initial:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
+            return LuandaSportPage();
             return const SplashPage();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -35,7 +36,7 @@ class AppPages {
             );
           },
         );
-      case AppRoutes.gameOn:
+      case AppRoutes.luandaSport:
         final params = settings.arguments as Map<dynamic, String?>;
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {

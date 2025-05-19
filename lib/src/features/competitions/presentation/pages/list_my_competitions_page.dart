@@ -93,7 +93,7 @@ class ListMyCompetitionsPage extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            Get.offAndToNamed(AppRoutes.gameOn, arguments: 0);
+            Get.offAndToNamed(AppRoutes.luandaSport, arguments: 0);
           },
           child: Container(
             padding: const EdgeInsets.all(16.0),

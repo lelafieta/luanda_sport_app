@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
           if (state is AuthLoading) {
             EasyLoading.show(status: "Loading");
           } else if (state is AuthAuthenticated) {
-            Navigator.pushReplacementNamed(context, AppRoutes.gameOn,
+            Navigator.pushReplacementNamed(context, AppRoutes.luandaSport,
                 arguments: 0);
           }
         },

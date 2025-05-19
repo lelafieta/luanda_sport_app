@@ -135,7 +135,7 @@ class TeamProfileWidget extends StatelessWidget {
           "pageParams": "teams",
           "componentId": team.id.toString()
         };
-        Get.toNamed(AppRoutes.gameOn, arguments: arguments);
+        Get.toNamed(AppRoutes.luandaSport, arguments: arguments);
       },
       child: Container(
         padding: const EdgeInsets.all(16.0),
