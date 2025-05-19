@@ -1,0 +1,76 @@
+
+import 'package:flutter/material.dart';
+
+class CompetitionDetailsPage extends StatelessWidget {
+  final ValueNotifier<List<String>> listOneNotifier =
+      ValueNotifier(['Item 1', 'Item 2', 'Item 3']);
+  final ValueNotifier<List<String>> listTwoNotifier =
+      ValueNotifier<List<String>>([]);
+
+  // Função para mover itens entre as listas
+  void moveItem(String item, bool isFromListOne) {
+    if (isFromListOne) {
+      // Remove o item de listOne e adiciona em listTwo
+      listOneNotifier.value = List.from(listOneNotifier.value)..remove(item);
+      listTwoNotifier.value = List.from(listTwoNotifier.value)..add(item);
+    } else {
+      // Remove o item de listTwo e adiciona em listOne
+      listTwoNotifier.value = List.from(listTwoNotifier.value)..remove(item);
+      listOneNotifier.value = List.from(listOneNotifier.value)..add(item);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Competition Details')),
+      body: Row(
+        children: [
+          // Lista da esquerda
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ValueListenableBuilder<List<String>>(
+                valueListenable: listOneNotifier,
+                builder: (context, listOne, child) {
+                  return ListView.builder(
+                    itemCount: listOne.length,
+                    itemBuilder: (context, index) {
+                      final item = listOne[index];
+                      return ListTile(
+                        title: Text(item),
+                        onTap: () => moveItem(item, true),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          const VerticalDivider(),
+          // Lista da direita
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ValueListenableBuilder<List<String>>(
+                valueListenable: listTwoNotifier,
+                builder: (context, listTwo, child) {
+                  return ListView.builder(
+                    itemCount: listTwo.length,
+                    itemBuilder: (context, index) {
+                      final item = listTwo[index];
+                      return ListTile(
+                        title: Text(item),
+                        onTap: () => moveItem(item, false),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
