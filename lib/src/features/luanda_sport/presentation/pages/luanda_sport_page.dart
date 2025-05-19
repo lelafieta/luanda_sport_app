@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -209,6 +210,8 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
+                  minVerticalPadding: 0,
+                  titleAlignment: ListTileTitleAlignment.center,
                   leading: Container(
                     width: 50,
                     height: 50,
@@ -221,7 +224,38 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                     "LINGARD",
                     style: TextStyle(
                       // fontSize: 18,
+
                       fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: Container(
+                    height: 30,
+                    child: DropDownTextField(
+                      clearOption: false,
+                      enableSearch: false,
+                      readOnly: true,
+                      initialValue: "player",
+                      searchTextStyle: const TextStyle(color: Colors.red),
+                      searchDecoration: const InputDecoration(
+                        hintText: "enter your custom hint text here",
+                        border: InputBorder.none,
+                      ),
+                      textFieldDecoration: const InputDecoration(
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                      dropDownItemCount: 6,
+                      dropDownList: const [
+                        DropDownValueModel(name: 'Adépto', value: "fan"),
+                        DropDownValueModel(name: 'Jogador', value: "player"),
+                        DropDownValueModel(
+                            name: 'Organizador', value: "organizer"),
+                        DropDownValueModel(name: 'Treinador', value: "coach"),
+                        DropDownValueModel(name: 'Árbitro', value: "referee"),
+                      ],
+                      onChanged: (val) {},
                     ),
                   ),
                 ),
