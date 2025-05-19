@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luanda_sport_app/src/config/themes/app_colors.dart';
@@ -75,132 +76,178 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                 ))
           ],
         ),
+        // drawer: Drawer(
+        //   child: Column(
+        //     children: [
+        //       Expanded(
+        //         child: ListView(
+        //           padding: EdgeInsets.zero,
+        //           children: [
+        //             Container(
+        //               color: AppColors.primary,
+        //               child: SafeArea(
+        //                 child: ListTile(
+        //                   contentPadding: const EdgeInsets.all(16),
+        //                   title: const Text(
+        //                     'Jesse Lingard',
+        //                     style: TextStyle(
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                   subtitle: Text(
+        //                     'Organizador',
+        //                     style: TextStyle(
+        //                       color: Colors.white.withOpacity(.5),
+        //                     ),
+        //                   ),
+        //                   leading: const CircleAvatar(
+        //                     backgroundImage: AssetImage(AppImages.avatar),
+        //                   ),
+        //                   trailing: SvgPicture.asset(
+        //                     AppIcons.changePosition,
+        //                     width: 26,
+        //                     color: AppColors.lightWightColor,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //             Container(
+        //               padding: const EdgeInsets.all(16.0),
+        //               child: const Text(
+        //                 "Painel",
+        //                 style: TextStyle(
+        //                   fontSize: 16,
+        //                   color: AppColors.primary,
+        //                   fontWeight: FontWeight.w600,
+        //                 ),
+        //               ),
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.userPerson,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Meu Perfil'),
+        //               onTap: () {},
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.trophyCup,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Campeonatos'),
+        //               onTap: () {},
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.badgeMedal,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Equipas'),
+        //               onTap: () {
+        //                 // context.pushNamed("list-teams");
+        //               },
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.note,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Inscrições'),
+        //               onTap: () {
+        //                 // Navigator.pop(context)
+        //               },
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.footballBall,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Jogos'),
+        //               onTap: () {
+        //                 Navigator.pop(context);
+        //               },
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.settingsGear,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Configurações'),
+        //               onTap: () {
+        //                 Navigator.pop(context);
+        //               },
+        //             ),
+        //             ListTile(
+        //               leading: SvgPicture.asset(
+        //                 AppIcons.creditCard,
+        //                 width: 25,
+        //               ),
+        //               title: Text('Planos/Subscrição'),
+        //               onTap: () {
+        //                 Navigator.pop(context);
+        //               },
+        //             ),
+        //             ListTile(
+        //               leading: Icon(Icons.logout),
+        //               title: Text('Logout'),
+        //               onTap: () {
+        //                 Navigator.pop(context);
+        //               },
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       Text("Pacotes")
+        //     ],
+        //   ),
+        // ),
         drawer: Drawer(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Container(
-                      color: AppColors.primary,
-                      child: SafeArea(
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(16),
-                          title: const Text(
-                            'Jesse Lingard',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          subtitle: Text(
-                            'Organizador',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(.5),
-                            ),
-                          ),
-                          leading: const CircleAvatar(
-                            backgroundImage: AssetImage(AppImages.avatar),
-                          ),
-                          trailing: SvgPicture.asset(
-                            AppIcons.changePosition,
-                            width: 26,
-                            color: AppColors.lightWightColor,
-                          ),
-                        ),
-                      ),
+          backgroundColor: AppColors.lightWightColor,
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  leading: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(100),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      child: const Text(
-                        "Painel",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                  ),
+                  title: const Text(
+                    "LINGARD",
+                    style: TextStyle(
+                      // fontSize: 18,
+                      fontWeight: FontWeight.w600,
                     ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.userPerson,
-                        width: 25,
-                      ),
-                      title: Text('Meu Perfil'),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.trophyCup,
-                        width: 25,
-                      ),
-                      title: Text('Campeonatos'),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.badgeMedal,
-                        width: 25,
-                      ),
-                      title: Text('Equipas'),
-                      onTap: () {
-                        // context.pushNamed("list-teams");
-                      },
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.note,
-                        width: 25,
-                      ),
-                      title: Text('Inscrições'),
-                      onTap: () {
-                        // Navigator.pop(context)
-                      },
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.footballBall,
-                        width: 25,
-                      ),
-                      title: Text('Jogos'),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.settingsGear,
-                        width: 25,
-                      ),
-                      title: Text('Configurações'),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        AppIcons.creditCard,
-                        width: 25,
-                      ),
-                      title: Text('Planos/Subscrição'),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Logout'),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              Text("Pacotes")
-            ],
+                const DrawerItem(icon: Icons.calendar_today, label: 'Menu'),
+                const DrawerItem(icon: Icons.email, label: 'Contato'),
+                const DrawerItem(icon: Icons.help_outline, label: 'Como usar'),
+                const DrawerItem(icon: Icons.star, label: 'Ir para Premium'),
+                const DrawerItem(
+                    icon: Icons.attach_money, label: 'Compartilhe para ...'),
+                const DrawerItem(icon: Icons.language, label: 'Alterar idioma'),
+                const DrawerItem(
+                    icon: Icons.feedback, label: 'Deixe um feedback'),
+                const DrawerItem(icon: Icons.logout, label: 'Sair'),
+                const Spacer(),
+                const Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 16.0),
+                  child: Text(
+                    "Versão 2.7.2",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
+
         body: widgets[_currentIndex],
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: AnimatedBottomNavigationBar.builder(
@@ -331,6 +378,31 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
             ),
           ),
         );
+      },
+    );
+  }
+}
+
+class DrawerItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const DrawerItem({super.key, required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        // color: Colors.white,
+      ),
+      title: Text(
+        label,
+        // style: const TextStyle(color: Colors.white),
+      ),
+      onTap: () {
+        Navigator.pop(context);
+        // Aqui você pode adicionar a navegação correspondente
       },
     );
   }
