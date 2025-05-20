@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:luanda_sport_app/src/features/fans/presentation/screens/fan_communities_screen.dart';
 import 'package:luanda_sport_app/src/features/fans/presentation/screens/fan_teams_screen.dart';
 
 import '../../../../config/themes/app_colors.dart';
@@ -87,7 +88,7 @@ class _FanScreenState extends State<FanScreen> with TickerProviderStateMixin {
               controller: _tabController,
               children: [
                 FanTeamsScreen(),
-                Text("data"),
+                FanComunidadesScreen(),
                 Text("data"),
               ],
             ),
