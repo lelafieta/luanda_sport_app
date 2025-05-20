@@ -6,6 +6,7 @@ import 'package:luanda_sport_app/src/features/fans/presentation/screens/fan_team
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/resources/app_images.dart';
+import 'fan_envents_screen.dart';
 
 class FanScreen extends StatefulWidget {
   const FanScreen({super.key});
@@ -89,7 +90,7 @@ class _FanScreenState extends State<FanScreen> with TickerProviderStateMixin {
               children: [
                 FanTeamsScreen(),
                 FanComunidadesScreen(),
-                Text("data"),
+                FanEventsScreen(),
               ],
             ),
           ),
