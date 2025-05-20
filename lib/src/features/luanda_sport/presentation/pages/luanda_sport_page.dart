@@ -55,6 +55,23 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
     AppIcons.settings2
   ];
 
+  String switchTitle() {
+    switch (arguments["pageParams"]) {
+      case "player":
+        return "Jogador";
+      case "fan":
+        return "Adepto";
+      case "referee":
+        return "Árbitro";
+      case "coach":
+        return "Treinador";
+      case "organizer":
+        return "Organizador";
+      default:
+        return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,10 +85,10 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primary,
-          // centerTitle: true,
+          centerTitle: true,
           iconTheme: const IconThemeData(color: Colors.white),
-          title: const Text(
-            "Adepto",
+          title: Text(
+            switchTitle(),
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -134,7 +151,7 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                       ),
                       dropDownItemCount: 6,
                       dropDownList: const [
-                        DropDownValueModel(name: 'Adépto', value: "fan"),
+                        DropDownValueModel(name: 'Adepto', value: "fan"),
                         DropDownValueModel(name: 'Jogador', value: "player"),
                         DropDownValueModel(
                             name: 'Organizador', value: "organizer"),
@@ -142,6 +159,7 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                         DropDownValueModel(name: 'Árbitro', value: "referee"),
                       ],
                       onChanged: (val) {
+                        Navigator.pop(context);
                         setState(() {
                           arguments["pageParams"] = val.value;
                         });

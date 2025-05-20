@@ -81,6 +81,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   drop_down_list: ^2.0.0
   dropdown_search: ^5.0.6
+  tab_container: ^3.5.3
 
 dev_dependencies:
   flutter_test:

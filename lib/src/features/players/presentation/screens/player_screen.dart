@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:luanda_sport_app/src/core/resources/app_images.dart';
-import 'package:luanda_sport_app/src/features/communities/presentation/pages/community_page.dart';
-import 'package:luanda_sport_app/src/features/followers/presentation/pages/follower_page.dart';
 
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
+import '../../../../core/resources/app_images.dart';
 import '../widgets/my_profile_widget.dart';
 import '../widgets/player_stats_widget.dart';
 
@@ -77,13 +73,13 @@ class _PlayerScreenState extends State<PlayerScreen>
                 ),
                 Tab(
                   icon: SvgPicture.asset(
-                    AppIcons.memoPadBold,
+                    AppIcons.medal,
                     width: 25,
                     color: selectedTabIndex == 1
                         ? Colors.white
                         : AppColors.white.withOpacity(.6),
                   ),
-                  text: 'Contratos',
+                  text: 'Conquistas',
                 ),
               ],
             ),
@@ -171,84 +167,6 @@ class _PlayerScreenState extends State<PlayerScreen>
                 ),
               ],
             ),
-
-            // child: Column(
-            //   children: [
-            //     Expanded(
-            //       child: Container(
-            //         width: double.infinity,
-            //         decoration: const BoxDecoration(
-            //           borderRadius: BorderRadius.only(
-            //             bottomRight: Radius.circular(100),
-            //             topLeft: Radius.circular(10),
-            //             topRight: Radius.circular(10),
-            //           ),
-            //           boxShadow: [
-            //             BoxShadow(
-            //               blurRadius: 2,
-            //               color: Colors.black54,
-            //               offset: Offset(0, 0),
-            //             ),
-            //           ],
-            //         ),
-            //         child: ClipRRect(
-            //           borderRadius: const BorderRadius.only(
-            //             bottomRight: Radius.circular(100),
-            //             topLeft: Radius.circular(10),
-            //             topRight: Radius.circular(10),
-            //           ),
-            //           child: Image.asset(
-            //             AppImages.avatar,
-            //             fit: BoxFit.cover,
-            //             width: double.infinity,
-            //             height: 200, // ou outro valor de altura que preferires
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.all(10),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         children: [
-            //           Text(
-            //             "12",
-            //             style: TextStyle(
-            //                 fontSize: 50,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //                 shadows: [
-            //                   Shadow(
-            //                     blurRadius: 2,
-            //                     color: Colors.black26,
-            //                     offset: Offset(0, 2),
-            //                   )
-            //                 ]),
-            //           ),
-            //           SizedBox(width: 10),
-            //           Text(
-            //             "|",
-            //             style: TextStyle(
-            //               fontSize: 30,
-            //               fontWeight: FontWeight.normal,
-            //               color: Colors.black,
-            //             ),
-            //           ),
-            //           SizedBox(width: 10),
-            //           Text(
-            //             "Bellingahm".toUpperCase(),
-            //             style: TextStyle(
-            //                 fontSize: 12,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //                 height: 1,
-            //                 overflow: TextOverflow.ellipsis),
-            //           ),
-            //         ],
-            //       ),
-            //     )
-            //   ],
-            // ),
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),

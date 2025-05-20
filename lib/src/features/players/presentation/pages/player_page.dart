@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luanda_sport_app/src/core/resources/app_images.dart';
 import 'package:luanda_sport_app/src/features/communities/presentation/pages/community_page.dart';
 import 'package:luanda_sport_app/src/features/followers/presentation/pages/follower_page.dart';
+import 'package:tab_container/tab_container.dart';
 
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
@@ -23,7 +24,7 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -37,83 +38,129 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            color: AppColors.primary,
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              tabAlignment: TabAlignment.center,
-              unselectedLabelColor: AppColors.white.withOpacity(.6),
-              labelColor: AppColors.white,
-              indicatorColor: Colors.white,
-              indicatorSize: TabBarIndicatorSize.tab,
-              onTap: (value) {
-                setState(() {
-                  selectedTabIndex = value;
-                });
-              },
-              tabs: [
-                Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.football,
-                    width: 20,
-                    color: selectedTabIndex == 0
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
-                  text: 'Perfil',
-                ),
-                Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.settings,
-                    color: selectedTabIndex == 1
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
-                  text: 'Configurações',
-                ),
-                Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.barsStaggered,
-                    color: selectedTabIndex == 1
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
-                  text: 'Estatísticas',
-                ),
-                Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.thumbsup,
-                    color: selectedTabIndex == 2
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
-                  text: 'Seguidores',
-                ),
-                Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.memo,
-                    color: selectedTabIndex == 3
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
-                  text: 'Contracto',
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   color: AppColors.primary,
+          //   child: TabBar(
+          //     controller: _tabController,
+          //     isScrollable: true,
+          //     tabAlignment: TabAlignment.center,
+          //     unselectedLabelColor: AppColors.white.withOpacity(.6),
+          //     labelColor: AppColors.white,
+          //     indicatorColor: Colors.white,
+          //     indicatorSize: TabBarIndicatorSize.tab,
+          //     onTap: (value) {
+          //       setState(() {
+          //         selectedTabIndex = value;
+          //       });
+          //     },
+          //     tabs: [
+          //       Tab(
+          //         icon: SvgPicture.asset(
+          //           AppIcons.football,
+          //           width: 20,
+          //           color: selectedTabIndex == 0
+          //               ? Colors.white
+          //               : AppColors.white.withOpacity(.6),
+          //         ),
+          //         text: 'Perfil',
+          //       ),
+          //       Tab(
+          //         icon: SvgPicture.asset(
+          //           AppIcons.settings,
+          //           color: selectedTabIndex == 1
+          //               ? Colors.white
+          //               : AppColors.white.withOpacity(.6),
+          //         ),
+          //         text: 'Configurações',
+          //       ),
+          //       Tab(
+          //         icon: SvgPicture.asset(
+          //           AppIcons.barsStaggered,
+          //           color: selectedTabIndex == 1
+          //               ? Colors.white
+          //               : AppColors.white.withOpacity(.6),
+          //         ),
+          //         text: 'Estatísticas',
+          //       ),
+          //       Tab(
+          //         icon: SvgPicture.asset(
+          //           AppIcons.thumbsup,
+          //           color: selectedTabIndex == 2
+          //               ? Colors.white
+          //               : AppColors.white.withOpacity(.6),
+          //         ),
+          //         text: 'Seguidores',
+          //       ),
+          //       Tab(
+          //         icon: SvgPicture.asset(
+          //           AppIcons.memo,
+          //           color: selectedTabIndex == 3
+          //               ? Colors.white
+          //               : AppColors.white.withOpacity(.6),
+          //         ),
+          //         text: 'Contracto',
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildPlayerProfile(),
-                CommunityPage(),
-                FollowerPage(),
-                Text("data"),
-                Center(child: Text('Jogos')),
-              ],
+            child: Container(
+              color: AppColors.white,
+              child: TabContainer(
+                controller: _tabController,
+                tabEdge: TabEdge.right,
+                tabsStart: 0.1,
+                tabsEnd: 0.9,
+                tabMaxLength: 100,
+                borderRadius: BorderRadius.circular(10),
+                tabBorderRadius: BorderRadius.circular(10),
+                childPadding: const EdgeInsets.all(20.0),
+                selectedTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                ),
+                unselectedTextStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 13.0,
+                ),
+                colors: [
+                  Colors.red,
+                  Colors.green,
+                  Colors.blue,
+                ],
+                tabs: [
+                  Text('Tab 1'),
+                  Text('Tab 2'),
+                  Text('Tab 3'),
+                ],
+                children: [
+                  Container(
+                    child: Text('Child 1'),
+                  ),
+                  Container(
+                    child: Text('Child 2'),
+                  ),
+                  Container(
+                    child: Text('Child 3'),
+                  ),
+                ],
+              ),
             ),
           ),
+
+          // Expanded(
+          //   child: TabBarView(
+          //     controller: _tabController,
+          //     children: [
+          //       _buildPlayerProfile(),
+          //       CommunityPage(),
+          //       FollowerPage(),
+          //       Text("data"),
+          //       Center(child: Text('Jogos')),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -123,10 +170,10 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          Container(
+          SizedBox(
             width: 250,
             height: 350,
             // decoration: BoxDecoration(

@@ -96,7 +96,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                   ),
                   title: const Text('Gols'),
                   trailing: const Text(
-                    '10',
+                    '12',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -111,7 +111,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                   ),
                   title: const Text('Assistências'),
                   trailing: const Text(
-                    '10',
+                    '5',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -126,7 +126,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                   ),
                   title: const Text('Partidas'),
                   trailing: const Text(
-                    '10',
+                    '21',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -297,7 +297,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '2',
+                              '0',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

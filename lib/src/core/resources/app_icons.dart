@@ -144,5 +144,5 @@ class AppIcons {
   static const String chartKanban = "assets/icons/chart-kanban.svg";
   static const String cross = "assets/icons/cross.svg";
 
-  // static const String minus = "assets/icons/minus.svg";
+  static const String usersAlt = "assets/icons/users-alt.svg";
 }
