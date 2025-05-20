@@ -39,7 +39,6 @@ class AppPages {
           },
         );
       case AppRoutes.luandaSport:
-        final params = settings.arguments as Map<dynamic, String?>;
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return LuandaSportPage();

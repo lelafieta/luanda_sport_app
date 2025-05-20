@@ -27,17 +27,21 @@ class _LoginPageState extends State<LoginPage> {
           if (state is AuthLoading) {
             EasyLoading.show(status: "Loading");
           } else if (state is AuthAuthenticated) {
-            Navigator.pushReplacementNamed(context, AppRoutes.luandaSport,
-                arguments: 0);
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutes.luandaSport,
+            );
           }
         },
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.primary,
-                AppColors.primary,
-                Color(0xFF6A11CB),
+                // AppColors.primary,
+                // AppColors.primary,
+                // Color(0xFF6A11CB),
+                AppColors.lightWightColor,
+                AppColors.lightWightColor
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -53,21 +57,20 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      'Bem-vindo de Volta',
+                      'Login',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 45,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        // color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Faça o login para continuar',
+                    Text(
+                      'Entra para continuar',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
+                        fontSize: 12,
+                        color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -75,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                       name: "email",
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        // fillColor: Colors.white,
                         hintText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -95,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        // fillColor: Colors.white,
                         hintText: 'Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -121,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         backgroundColor: Colors.black,
                       ),
