@@ -302,7 +302,7 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
           leftCornerRadius: 0,
           rightCornerRadius: 0,
           height: 60,
-          shadow: BoxShadow(
+          shadow: const BoxShadow(
             color: AppColors.shadow,
             blurRadius: 100,
           ),
