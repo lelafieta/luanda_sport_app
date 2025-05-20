@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
-import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
-import 'package:luanda_sport_app/src/features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
 import 'package:get/get.dart';
 
 import '../config/routes/app_pages.dart';
 import '../config/themes/app_theme.dart';
 import '../features/auth/presentation/cubit/auth_cubit.dart';
+import '../features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
+import '../features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
 import '../features/squads/presentation/cubit/squad_cubit.dart';
 import '../features/teams/presentation/cubit/action_team_squad_cubit/action_team_squad_cubit.dart';
+import '../features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
 import '../features/teams/presentation/cubit/get_team_equipament_cubit/get_team_equipament_cubit.dart';
+import '../features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
 import '../features/teams/presentation/cubit/team_action_cubit/team_action_cubit.dart';
 import '../features/teams/presentation/cubit/team_fetch_cubit/team_fetch_cubit.dart';
 import '../features/trophies/presentation/cubit/fetch_trophies_team_cubit/fetch_trophies_team_cubit.dart';
@@ -41,6 +42,7 @@ class GameOnApp extends StatelessWidget {
           BlocProvider(create: (context) => di.sl<SquadCubit>()),
           BlocProvider(create: (context) => di.sl<StartingLineupPlayerCubit>()),
           BlocProvider(create: (context) => di.sl<ActionTeamSquadCubit>()),
+          BlocProvider(create: (context) => di.sl<GetMyPlayerDataCubit>()),
         ],
         child: GetMaterialApp(
           title: 'Luanda Sport',

@@ -21,10 +21,10 @@ final class GetMyPlayerDataFailure extends GetMyPlayerDataState {
 }
 
 final class GetMyPlayerDataLoaded extends GetMyPlayerDataState {
-  final PlayerEntity player;
+  final PlayerEntity? player;
 
   const GetMyPlayerDataLoaded({required this.player});
 
   @override
-  List<Object> get props => [player];
+  List<Object> get props => [];
 }

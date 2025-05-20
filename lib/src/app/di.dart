@@ -31,6 +31,7 @@ import '../features/players/domain/usecases/get_player_by_id_usecase.dart';
 import '../features/players/domain/usecases/get_players_by_team_usecase.dart';
 import '../features/players/domain/usecases/update_player_usecase.dart';
 import '../features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
+import '../features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
 import '../features/squads/data/datasources/i_squad_datasource.dart';
 import '../features/squads/data/datasources/squad_datasource.dart';
 import '../features/squads/data/repositories/squad_repository.dart';
@@ -108,6 +109,7 @@ void _registerCubits() {
   //PLAYER
   sl.registerFactory(
       () => FetchPlayersTeamCubit(getPlayersByTeamUseCase: sl()));
+  sl.registerFactory(() => GetMyPlayerDataCubit(getPlayerByIdUseCase: sl()));
 
   // TROPHY
   sl.registerFactory(
