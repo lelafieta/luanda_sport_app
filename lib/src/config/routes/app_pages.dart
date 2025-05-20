@@ -25,8 +25,9 @@ class AppPages {
       case AppRoutes.initial:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return LuandaSportPage();
-            return const SplashPage();
+            // return LuandaSportPage();
+            // return const SplashPage();
+            return const LoginPage();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SharedAxisTransition(
