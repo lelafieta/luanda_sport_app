@@ -8,9 +8,10 @@ import 'package:luanda_sport_app/src/config/themes/app_colors.dart';
 import 'package:luanda_sport_app/src/core/resources/app_icons.dart';
 import 'package:luanda_sport_app/src/core/resources/app_images.dart';
 
+import '../../../home/presentantion/screens/home_page.dart';
+
 class LuandaSportPage extends StatefulWidget {
-  final Map<dynamic, String?>? arguments;
-  const LuandaSportPage({super.key, this.arguments});
+  const LuandaSportPage({super.key});
 
   @override
   State<LuandaSportPage> createState() => _LuandaSportPageState();
@@ -18,6 +19,11 @@ class LuandaSportPage extends StatefulWidget {
 
 class _LuandaSportPageState extends State<LuandaSportPage> {
   var _currentIndex = 0;
+
+  Map<dynamic, String> arguments = {
+    "pageParams": "player",
+  };
+
   late List<Widget> widgets;
   final _controller = SingleValueDropDownController(
     data: DropDownValueModel(name: 'Jogador', value: "player"),
@@ -26,9 +32,10 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
   @override
   void initState() {
     super.initState();
+
     widgets = [
-      const Text("GOME"),
-      const Text("Live"),
+      const HomeScreen(),
+      const Text("LIVE"),
       const Text("Profile"),
       const Text("Settings"),
     ];
@@ -80,132 +87,6 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                 ))
           ],
         ),
-        // drawer: Drawer(
-        //   child: Column(
-        //     children: [
-        //       Expanded(
-        //         child: ListView(
-        //           padding: EdgeInsets.zero,
-        //           children: [
-        //             Container(
-        //               color: AppColors.primary,
-        //               child: SafeArea(
-        //                 child: ListTile(
-        //                   contentPadding: const EdgeInsets.all(16),
-        //                   title: const Text(
-        //                     'Jesse Lingard',
-        //                     style: TextStyle(
-        //                       color: Colors.white,
-        //                     ),
-        //                   ),
-        //                   subtitle: Text(
-        //                     'Organizador',
-        //                     style: TextStyle(
-        //                       color: Colors.white.withOpacity(.5),
-        //                     ),
-        //                   ),
-        //                   leading: const CircleAvatar(
-        //                     backgroundImage: AssetImage(AppImages.avatar),
-        //                   ),
-        //                   trailing: SvgPicture.asset(
-        //                     AppIcons.changePosition,
-        //                     width: 26,
-        //                     color: AppColors.lightWightColor,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ),
-        //             Container(
-        //               padding: const EdgeInsets.all(16.0),
-        //               child: const Text(
-        //                 "Painel",
-        //                 style: TextStyle(
-        //                   fontSize: 16,
-        //                   color: AppColors.primary,
-        //                   fontWeight: FontWeight.w600,
-        //                 ),
-        //               ),
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.userPerson,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Meu Perfil'),
-        //               onTap: () {},
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.trophyCup,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Campeonatos'),
-        //               onTap: () {},
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.badgeMedal,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Equipas'),
-        //               onTap: () {
-        //                 // context.pushNamed("list-teams");
-        //               },
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.note,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Inscrições'),
-        //               onTap: () {
-        //                 // Navigator.pop(context)
-        //               },
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.footballBall,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Jogos'),
-        //               onTap: () {
-        //                 Navigator.pop(context);
-        //               },
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.settingsGear,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Configurações'),
-        //               onTap: () {
-        //                 Navigator.pop(context);
-        //               },
-        //             ),
-        //             ListTile(
-        //               leading: SvgPicture.asset(
-        //                 AppIcons.creditCard,
-        //                 width: 25,
-        //               ),
-        //               title: Text('Planos/Subscrição'),
-        //               onTap: () {
-        //                 Navigator.pop(context);
-        //               },
-        //             ),
-        //             ListTile(
-        //               leading: Icon(Icons.logout),
-        //               title: Text('Logout'),
-        //               onTap: () {
-        //                 Navigator.pop(context);
-        //               },
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //       Text("Pacotes")
-        //     ],
-        //   ),
-        // ),
         drawer: Drawer(
           backgroundColor: const Color(0xFF1A1A1A),
           child: SafeArea(
@@ -260,7 +141,11 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                         DropDownValueModel(name: 'Treinador', value: "coach"),
                         DropDownValueModel(name: 'Árbitro', value: "referee"),
                       ],
-                      onChanged: (val) {},
+                      onChanged: (val) {
+                        setState(() {
+                          arguments["pageParams"] = val.value;
+                        });
+                      },
                     ),
                   ),
                 ),
@@ -290,8 +175,18 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
             ),
           ),
         ),
-
-        body: widgets[_currentIndex],
+        body: switch (_currentIndex) {
+          0 => HomeScreen(arguments: arguments),
+          1 => const Text("Live"),
+          2 => const Text("Profile"),
+          3 => const Text("Settings"),
+          _ =>
+            Container(), // Default case, you might want to handle this differently
+        },
+        //  widgets[_currentIndex],
+        //  IndexedStack(
+        //   index: _currentIndex,
+        //   children: widgets),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: AnimatedBottomNavigationBar.builder(
           backgroundColor: Colors.white,

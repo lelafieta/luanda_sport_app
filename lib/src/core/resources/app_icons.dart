@@ -141,4 +141,8 @@ class AppIcons {
       "assets/icons/yellow-square-svgrepo-com.svg";
 
   static const String clock = "assets/icons/clock-svgrepo-com.svg";
+  static const String chartKanban = "assets/icons/chart-kanban.svg";
+  static const String cross = "assets/icons/cross.svg";
+
+  // static const String minus = "assets/icons/minus.svg";
 }

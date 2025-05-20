@@ -8,7 +8,7 @@ import 'package:luanda_sport_app/src/core/strings/app_strings.dart';
 
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
-import '../../../home/presentantion/home_page.dart';
+import '../../../home/presentantion/screens/home_page.dart';
 import '../../../home/presentantion/old_home';
 
 class CompetitionDetailsPage extends StatefulWidget {

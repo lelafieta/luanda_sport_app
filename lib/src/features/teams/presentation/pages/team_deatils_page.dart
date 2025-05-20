@@ -1,10 +1,7 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_date_timeline/easy_date_timeline.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +13,6 @@ import 'package:luanda_sport_app/src/features/teams/presentation/cubit/action_te
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_team_equipament_cubit/get_team_equipament_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
-import 'package:luanda_sport_app/src/features/teams/presentation/cubit/team_action_cubit/team_action_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/pages/build_equipament_page.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
@@ -25,7 +21,7 @@ import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/utils/app_date_utils.dart';
 import '../../../../core/utils/equipment_widget_utils.dart';
-import '../../../home/presentantion/home_page.dart';
+import '../../../home/presentantion/screens/home_page.dart';
 import '../../../home/presentantion/old_home';
 import '../../../squads/presentation/cubit/squad_cubit.dart';
 import '../../../trophies/presentation/cubit/fetch_trophies_team_cubit/fetch_trophies_team_cubit.dart';

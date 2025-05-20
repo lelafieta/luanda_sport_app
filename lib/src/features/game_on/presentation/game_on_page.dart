@@ -3,7 +3,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luanda_sport_app/src/config/routes/app_routes.dart';
-import 'package:luanda_sport_app/src/features/home/presentantion/home_page.dart';
+import 'package:luanda_sport_app/src/features/home/presentantion/screens/home_page.dart';
 import 'package:luanda_sport_app/src/features/organizers/presentation/pages/organizer_page.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
@@ -39,7 +39,7 @@ class _GameOnPageState extends State<GameOnPage> {
     super.initState();
     widgets = [
       // OrganizerPage(),
-      HomePage(
+      HomeScreen(
         arguments: widget.arguments,
       ),
       // TeamDetailsPage(),
