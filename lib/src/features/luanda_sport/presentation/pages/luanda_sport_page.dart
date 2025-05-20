@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:luanda_sport_app/src/config/themes/app_colors.dart';
 import 'package:luanda_sport_app/src/core/resources/app_icons.dart';
 import 'package:luanda_sport_app/src/core/resources/app_images.dart';
-
 import '../../../home/presentantion/screens/home_page.dart';
 
 class LuandaSportPage extends StatefulWidget {
@@ -40,6 +40,16 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
       const Text("Settings"),
     ];
   }
+
+  final List<Map<String, String>> itemsMap = [
+    {'name': 'Adepto', 'value': 'fan'},
+    {'name': 'Jogador', 'value': 'player'},
+    {'name': 'Organizador', 'value': 'organizer'},
+    {'name': 'Treinador', 'value': 'coach'},
+    {'name': 'Árbitro', 'value': 'referee'},
+  ];
+
+  String? selectedValue;
 
   List<String> iconList = [
     AppIcons.houseChimney,
@@ -131,44 +141,76 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
                   ),
                   subtitle: SizedBox(
                     height: 30,
-                    child: DropDownTextField(
-                      clearOption: false,
-                      enableSearch: false,
-                      readOnly: true,
-                      controller: _controller,
-                      textStyle:
-                          const TextStyle(color: AppColors.lightWightColor),
-                      searchTextStyle: const TextStyle(color: Colors.red),
-                      searchDecoration: const InputDecoration(
-                        hintText: "enter your custom hint text here",
-                        border: InputBorder.none,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        isExpanded: true,
+                        hint: Text(
+                          'Selecionar função',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                        items: itemsMap
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item['value'],
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      item['name']!,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        selectedItemBuilder: (BuildContext context) {
+                          return itemsMap.map((item) {
+                            return Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                item['name']!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors
+                                      .white60, // <- Cor do item selecionado
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            );
+                          }).toList();
+                        },
+                        value: selectedValue,
+                        onChanged: (String? value) {
+                          Get.back();
+                          setState(() {
+                            selectedValue = value;
+                            arguments["pageParams"] = value!;
+                          });
+                        },
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 0),
+                          height: 40,
+                          width: 200,
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          height: 40,
+                        ),
                       ),
-                      textFieldDecoration: const InputDecoration(
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                      ),
-                      dropDownItemCount: 6,
-                      dropDownList: const [
-                        DropDownValueModel(name: 'Adepto', value: "fan"),
-                        DropDownValueModel(name: 'Jogador', value: "player"),
-                        DropDownValueModel(
-                            name: 'Organizador', value: "organizer"),
-                        DropDownValueModel(name: 'Treinador', value: "coach"),
-                        DropDownValueModel(name: 'Árbitro', value: "referee"),
-                      ],
-                      onChanged: (val) {
-                        Navigator.pop(context);
-                        setState(() {
-                          arguments["pageParams"] = val.value;
-                        });
-                      },
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 const DrawerItem(icon: Icons.person, label: 'Meu Perfil'),
+                DrawerItem(
+                    icon: Icons.article,
+                    label: 'Feed',
+                    onTap: () {
+                      setState(() {
+                        arguments["pageParams"] = "feed";
+                      });
+                    }),
                 const DrawerItem(icon: Icons.sports_soccer, label: 'Jogos'),
                 const DrawerItem(icon: Icons.people, label: 'Organizadores'),
                 const DrawerItem(
@@ -342,8 +384,10 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
 class DrawerItem extends StatelessWidget {
   final IconData icon;
   final String label;
+  final Function()? onTap;
 
-  const DrawerItem({super.key, required this.icon, required this.label});
+  const DrawerItem(
+      {super.key, required this.icon, required this.label, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -361,7 +405,7 @@ class DrawerItem extends StatelessWidget {
       ),
       onTap: () {
         Navigator.pop(context);
-        // Aqui você pode adicionar a navegação correspondente
+        onTap;
       },
     );
   }

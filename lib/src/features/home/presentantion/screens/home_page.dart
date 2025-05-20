@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luanda_sport_app/src/features/feeds/presentation/views/feed_view.dart';
 import '../../../coaches/presentation/screens/coach_screen.dart';
 import '../../../competitions/presentation/pages/my_competition_details_page.dart';
 import '../../../fans/presentation/screens/fan_screen.dart';
@@ -41,6 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case "organizer":
           content = const OrganizerScreen();
+
+        case "feed":
+          content = const FeedPage();
           break;
         default:
           content = const Center(child: Text('Tela padrão'));
