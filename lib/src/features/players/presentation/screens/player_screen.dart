@@ -28,7 +28,6 @@ class _PlayerScreenState extends State<PlayerScreen>
   void initState() {
     super.initState();
     context.read<GetMyPlayerDataCubit>().fetchPlayerData(AppEntity.uId!);
-    context.read<FetchPlayerStatsCubit>().fetchPlayerStatsById(AppEntity.uId!);
 
     _tabController = TabController(length: 3, vsync: this);
   }
@@ -119,25 +118,25 @@ class _PlayerScreenState extends State<PlayerScreen>
                     return const SizedBox.shrink();
                   },
                 ),
-                BlocBuilder<FetchPlayerStatsCubit, FetchPlayerStatsState>(
+                BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
                     print(state);
-                    if (state is FetchPlayerStatsLoading) {
+                    if (state is GetMyPlayerDataLoading) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else if (state is FetchPlayerStatsFailure) {
+                    } else if (state is GetMyPlayerDataFailure) {
                       return const Center(
                         child: Text("Erro ao carregar estatísticas"),
                       );
-                    } else if (state is FetchPlayerStatsLoaded) {
-                      if (state.playerStats == null) {
+                    } else if (state is GetMyPlayerDataLoaded) {
+                      if (state.player == null) {
                         return const Center(
                           child: Text("Nenhuma estatística encontrada"),
                         );
                       }
                       return PlayerStatsWidget(
-                        playerStats: state.playerStats!,
+                        player: state.player!,
                       );
                     }
                     return const SizedBox.shrink();
