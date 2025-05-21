@@ -228,8 +228,7 @@ void _registerUseCases() {
       () => GetPlayerStatsByTeamUseCase(playerStatsRepository: sl()));
   sl.registerLazySingleton(
       () => UpdatePlayerStatsUseCase(playerStatsRepository: sl()));
-  sl.registerLazySingleton(
-      () => UpdatePlayerStatsUseCase(playerStatsRepository: sl()));
+
   sl.registerLazySingleton(
       () => DeletePlayerStatsUseCase(playerStatsRepository: sl()));
 

@@ -119,6 +119,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                 ),
                 BlocBuilder<FetchPlayerStatsCubit, FetchPlayerStatsState>(
                   builder: (context, state) {
+                    print(state);
                     if (state is FetchPlayerStatsLoading) {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -137,7 +138,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                         playerStats: state.playerStats!,
                       );
                     }
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   },
                 ),
                 Text("data"),
