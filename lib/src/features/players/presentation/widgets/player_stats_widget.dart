@@ -1,10 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../app/app_entity.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/resources/app_images.dart';
+import '../../../player_teams/domain/entities/player_team_entity.dart';
+import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../../domain/entities/player_stats_entity.dart';
 
 class PlayerStatsWidget extends StatefulWidget {
@@ -17,69 +22,145 @@ class PlayerStatsWidget extends StatefulWidget {
 
 class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
   final dropDownKey = GlobalKey<DropdownSearchState>();
+  PlayerTeamEntity? selectedTeam;
+  @override
+  void initState() {
+    context.read<PlayerTeamCubit>().getPlayerTeams(AppEntity.uId!);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          DropdownSearch<String>(
-            key: dropDownKey,
-            selectedItem: "Menu",
-            items: const [
-              "Menu",
-              "Dialog",
-              "Modal",
-              "BottomSheet",
-              "Dialog",
-            ],
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey.shade300,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            popupProps: PopupProps.dialog(
-              showSearchBox: false,
-              title: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                child: Center(
-                  child: Text(
-                    "Equipes de Passagem",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-              ),
-              itemBuilder: (context, item, isSelected) {
-                return ListTile(
-                  leading: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://template.canva.com/EAGP4Vom1pY/1/0/1600w-IOa8p4GmFqQ.jpg',
-                      width: 40,
-                      height: 40,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                      fit: BoxFit.cover,
+          BlocConsumer<PlayerTeamCubit, PlayerTeamState>(
+            listener: (context, state) {
+              if (state is PlayerTeamLoading) {
+                EasyLoading.show(
+                  status: 'Carregando...',
+                  maskType: EasyLoadingMaskType.black,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is PlayerTeamLoaded) {
+                return DropdownSearch<PlayerTeamEntity>(
+                  key: dropDownKey,
+                  selectedItem: selectedTeam, // Um PlayerTeam
+                  items: state.playerTeams, // List<PlayerTeam>
+                  itemAsString: (PlayerTeamEntity? team) => team == null
+                      ? ''
+                      : (team.position != null
+                          ? "${team.position} - ${team.teamId ?? ''}"
+                          : (team.teamId ?? '')),
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
-                  title: const Text("Dourada FC"),
-                  subtitle: const Text('Subtitle'),
-                  selected: isSelected,
-                );
-              },
-              dialogProps: const DialogProps(
-                  // Removido shape e backgroundColor para herdar o padrão do sistema
-                  // Isso usa a borda padrão do sistema automaticamente
+                  popupProps: PopupProps.dialog(
+                    showSearchBox: false,
+                    title: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 20),
+                      child: Center(
+                        child: Text(
+                          "Equipes de Passagem",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                    ),
+                    itemBuilder: (context, item, isSelected) {
+                      return ListTile(
+                        leading: ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: item.player!.avatarUrl ??
+                                'https://placehold.co/40x40', // Opcional: pode vir do model
+                            width: 40,
+                            height: 40,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Text(item.teamId.toString()),
+                        subtitle:
+                            Text("Posição: ${item.position ?? 'Desconhecida'}"),
+                        selected: isSelected,
+                      );
+                    },
                   ),
-            ),
+                );
+              }
+
+              return DropdownSearch<String>(
+                key: dropDownKey,
+                selectedItem: "Menu",
+                items: const [
+                  "Menu",
+                  "Dialog",
+                  "Modal",
+                  "BottomSheet",
+                  "Dialog",
+                ],
+                dropdownDecoratorProps: DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade300,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                popupProps: PopupProps.dialog(
+                  showSearchBox: false,
+                  title: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 20),
+                    child: Center(
+                      child: Text(
+                        "Equipes de Passagem",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                  ),
+                  itemBuilder: (context, item, isSelected) {
+                    return ListTile(
+                      leading: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              'https://template.canva.com/EAGP4Vom1pY/1/0/1600w-IOa8p4GmFqQ.jpg',
+                          width: 40,
+                          height: 40,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      title: const Text("Dourada FC"),
+                      subtitle: const Text('Subtitle'),
+                      selected: isSelected,
+                    );
+                  },
+                  dialogProps: const DialogProps(
+                      // Removido shape e backgroundColor para herdar o padrão do sistema
+                      // Isso usa a borda padrão do sistema automaticamente
+                      ),
+                ),
+              );
+            },
           ),
           Expanded(
             child: ListView(

@@ -30,6 +30,7 @@ import '../features/player_teams/data/datasources/i_player_team_datasource.dart'
 import '../features/player_teams/data/datasources/player_team_datasource.dart';
 import '../features/player_teams/data/repositories/player_team_repository.dart';
 import '../features/player_teams/domain/repositories/i_player_team_repository.dart';
+import '../features/player_teams/domain/usecases/create_player_team_usecase.dart';
 import '../features/player_teams/domain/usecases/get_player_teams_usecase.dart';
 import '../features/player_teams/presentation/cubit/player_team_cubit.dart';
 import '../features/players/data/datasources/i_player_datasource.dart';
@@ -281,6 +282,8 @@ void _registerUseCases() {
   // PLAYER TEAM
   sl.registerLazySingleton(
       () => GetPlayerTeamUseCase(playerTeamRespository: sl()));
+  sl.registerLazySingleton(
+      () => CreatePlayerTeamUseCase(playerTeamRespository: sl()));
 }
 
 void _registerExternal() {
