@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luanda_sport_app/src/core/resources/app_icons.dart';
+import 'package:luanda_sport_app/src/core/resources/app_images.dart';
 
 import '../../../../config/themes/app_colors.dart';
 import 'my_profile_widget.dart';
@@ -238,6 +239,10 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                         decoration: BoxDecoration(
                           color: Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.design1),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         child: Column(
                           children: [
@@ -277,6 +282,10 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                         decoration: BoxDecoration(
                           color: Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.design1),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         child: Column(
                           children: [

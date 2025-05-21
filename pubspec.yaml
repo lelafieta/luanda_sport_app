@@ -83,6 +83,7 @@ dependencies:
   dropdown_search: ^5.0.6
   tab_container: ^3.5.3
   dropdown_button2: ^2.3.9
+  flag: ^7.0.0
 
 dev_dependencies:
   flutter_test:

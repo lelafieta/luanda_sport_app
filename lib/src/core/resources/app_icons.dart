@@ -145,4 +145,7 @@ class AppIcons {
   static const String cross = "assets/icons/cross.svg";
 
   static const String usersAlt = "assets/icons/users-alt.svg";
+
+  static const String birthdayCake =
+      "assets/icons/birthday-cake-svgrepo-com.svg";
 }

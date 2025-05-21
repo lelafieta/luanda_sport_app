@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:luanda_sport_app/src/app/app_entity.dart';
+import 'package:luanda_sport_app/src/core/utils/app_date_utils.dart';
 import 'package:luanda_sport_app/src/features/players/domain/entities/player_entity.dart';
 
 import '../../../../core/resources/app_icons.dart';
@@ -15,6 +18,7 @@ class MyProfileWidget extends StatefulWidget {
 }
 
 class _MyProfileWidgetState extends State<MyProfileWidget> {
+  bool? displayFlagPicker;
   @override
   Widget build(BuildContext context) {
     final String backgroundUrl =
@@ -158,13 +162,27 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
             ],
           ),
           const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.location_on, color: Colors.grey),
-              const SizedBox(width: 5),
-              Text("Angola, Luanda, Morro Bento"),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flags.fromString(
+                  const [
+                    "BR",
+                    "BR",
+                  ],
+                  width: 30,
+                  height: 20,
+                  borderRadius: 5,
+                ),
+                const SizedBox(width: 5),
+                Text("Angola, Luanda",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey,
+                        )),
+              ],
+            ),
           ),
           const SizedBox(height: 15),
           Row(
@@ -209,7 +227,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.footballJersey,
             ),
-            title: const Text("7"),
+            title: Text("${widget.player.shirtNumber}"),
             subtitle: const Text("Camisa"),
             onTap: () {
               // Navegar para a tela de configurações
@@ -220,7 +238,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.footballShoesShoe,
             ),
-            title: const Text("Canhoto"),
+            title: Text("${widget.player.foot}"),
             subtitle: const Text("Pé"),
             onTap: () {
               // Navegar para a tela de configurações
@@ -231,7 +249,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.soccerField,
             ),
-            title: const Text("Extremo"),
+            title: Text("${widget.player.position}"),
             subtitle: const Text("Posição"),
             onTap: () {
               // Navegar para a tela de configurações
@@ -240,10 +258,11 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
           ListTile(
             leading: SvgPicture.asset(
               width: 25,
-              AppIcons.calendarColor,
+              AppIcons.birthdayCake,
             ),
-            title: const Text("12. abr 2025"),
-            subtitle: const Text("Team actual desde"),
+            title: Text(
+                "${AppDateUtils.formatDate(data: widget.player.birthDate!)}"),
+            subtitle: const Text("Aniversário"),
             onTap: () {
               // Navegar para a tela de configurações
             },

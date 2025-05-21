@@ -36,4 +36,6 @@ class AppImages {
   static const String bg3 = "assets/images/bg3.jpg";
   static const String soccerPlayer = "assets/images/soccer-player.png";
   static const String playerCard = "assets/images/player-card.png";
+  static const String design1 = "assets/images/design-1.png";
+  static const String design2 = "assets/images/design-2.png";
 }
