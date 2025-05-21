@@ -4,9 +4,9 @@ import '../../domain/params/create_player_team_params.dart';
 import '../models/player_team_model.dart';
 import 'i_player_team_datasource.dart';
 
-class PlayerTeamRemoteDatasource extends IPlayerTeamRemoteDataSource {
+class PlayerTeamRemoteDataSource extends IPlayerTeamRemoteDataSource {
   final SupabaseClient client;
-  PlayerTeamRemoteDatasource({required this.client});
+  PlayerTeamRemoteDataSource({required this.client});
   @override
   Future<Unit> createPlayerTeam(CreatePlayerTeamParams playerTeam) {
     return client

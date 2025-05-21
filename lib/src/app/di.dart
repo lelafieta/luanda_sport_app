@@ -26,6 +26,11 @@ import '../features/auth/domain/repositories/i_auth_repository.dart';
 import '../features/auth/domain/usecases/is_logged_in_usecase.dart';
 import '../features/auth/domain/usecases/login_usecase.dart';
 import '../features/auth/presentation/cubit/auth_cubit.dart';
+import '../features/player_teams/data/datasources/i_player_team_datasource.dart';
+import '../features/player_teams/data/datasources/player_team_datasource.dart';
+import '../features/player_teams/domain/repositories/i_player_team_repository.dart';
+import '../features/player_teams/domain/usecases/get_player_teams_usecase.dart';
+import '../features/player_teams/presentation/cubit/player_team_cubit.dart';
 import '../features/players/data/datasources/i_player_datasource.dart';
 import '../features/players/data/datasources/i_player_stats_datasource.dart';
 import '../features/players/data/datasources/player_datasource.dart';
@@ -139,6 +144,12 @@ void _registerCubits() {
       getTeamStartingLineupPlayersUseCase: sl(),
       removeStartingLineupPlayerUseCase: sl(),
       deleteSquadTeamUseCase: sl()));
+
+  // PLAYER TEAM
+  sl.registerFactory(() => PlayerTeamCubit(
+        getPlayerTeamUseCase: sl(),
+        createPlayerTeamUseCase: sl(),
+      ));
 }
 
 void _registerRepositories() {
@@ -166,6 +177,10 @@ void _registerRepositories() {
   // STARTING LINEUP PLAYERS
   sl.registerLazySingleton<IStartingLineupPlayerRepository>(() =>
       StartingLineupPlayerRepository(startingLineupPlayerDataSource: sl()));
+
+  // PLAYER TEAM
+  sl.registerLazySingleton<IPlayerTeamRepository>(
+      () => PlayerTeamRepository(playerTeamDataSource: sl()));
 }
 
 void _registerDatasources() {
@@ -195,6 +210,10 @@ void _registerDatasources() {
   // STARTING LINEUP PLAYERS
   sl.registerLazySingleton<IStartingLineupPlayerRemoteDataSource>(
       () => StartingLineupPlayerRemoteDataSource(client: sl()));
+
+  // PLAYER TEAM
+  sl.registerLazySingleton<IPlayerTeamRemoteDataSource>(
+      () => PlayerTeamRemoteDataSource(client: sl()));
 }
 
 void _registerUseCases() {
@@ -257,6 +276,10 @@ void _registerUseCases() {
 
   sl.registerLazySingleton(
       () => DeleteSquadTeamUseCase(startingLineupPlayerRepository: sl()));
+
+  // PLAYER TEAM
+  sl.registerLazySingleton(
+      () => GetPlayerTeamUseCase(playerTeamRespository: sl()));
 }
 
 void _registerExternal() {
