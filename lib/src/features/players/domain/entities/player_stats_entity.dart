@@ -2,7 +2,7 @@ import 'package:luanda_sport_app/src/features/players/domain/entities/player_ent
 import 'package:luanda_sport_app/src/features/teams/domain/entities/team_entity.dart';
 
 class PlayerStatsEntity {
-  final String id;
+  final String? id;
   final String? playerId;
   final String? teamId;
   final int? match;
