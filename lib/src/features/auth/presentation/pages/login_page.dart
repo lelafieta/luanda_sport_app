@@ -24,9 +24,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          print(state);
           EasyLoading.dismiss();
           if (state is AuthLoading) {
             EasyLoading.show(status: "Loading");
+          } else if (state is AuthError) {
+            EasyLoading.showError(state.message);
           } else if (state is AuthAuthenticated) {
             Navigator.pushReplacementNamed(
               context,
@@ -66,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                         // color: Colors.white,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Entra para continuar',
                       textAlign: TextAlign.center,
                       style: TextStyle(

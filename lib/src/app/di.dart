@@ -1,5 +1,10 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:luanda_sport_app/src/features/players/data/repositories/player_stats_repository.dart';
+import 'package:luanda_sport_app/src/features/players/domain/repositories/i_player_stats_repository.dart';
+import 'package:luanda_sport_app/src/features/players/domain/usecases/create_player_stats_usecase.dart';
+import 'package:luanda_sport_app/src/features/players/domain/usecases/get_player_stats_by_id_usecase.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
 import 'package:luanda_sport_app/src/features/squads/presentation/cubit/squad_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/data/datasources/i_starting_lineup_player_datasource.dart';
 import 'package:luanda_sport_app/src/features/teams/data/datasources/starting_lineup_player_datasource.dart';
@@ -22,13 +27,18 @@ import '../features/auth/domain/usecases/is_logged_in_usecase.dart';
 import '../features/auth/domain/usecases/login_usecase.dart';
 import '../features/auth/presentation/cubit/auth_cubit.dart';
 import '../features/players/data/datasources/i_player_datasource.dart';
+import '../features/players/data/datasources/i_player_stats_datasource.dart';
 import '../features/players/data/datasources/player_datasource.dart';
+import '../features/players/data/datasources/player_stats_datasource.dart';
 import '../features/players/data/repositories/player_repository.dart';
 import '../features/players/domain/repositories/i_player_repository.dart';
 import '../features/players/domain/usecases/create_player_usecase.dart';
+import '../features/players/domain/usecases/delete_player_stats_usecase.dart';
 import '../features/players/domain/usecases/delete_player_usecase.dart';
 import '../features/players/domain/usecases/get_player_by_id_usecase.dart';
+import '../features/players/domain/usecases/get_player_stats_by_team_usecase.dart';
 import '../features/players/domain/usecases/get_players_by_team_usecase.dart';
+import '../features/players/domain/usecases/update_player_stats_usecase.dart';
 import '../features/players/domain/usecases/update_player_usecase.dart';
 import '../features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
 import '../features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
@@ -110,6 +120,8 @@ void _registerCubits() {
   sl.registerFactory(
       () => FetchPlayersTeamCubit(getPlayersByTeamUseCase: sl()));
   sl.registerFactory(() => GetMyPlayerDataCubit(getPlayerByIdUseCase: sl()));
+  sl.registerFactory(() => FetchPlayerStatsCubit(
+      getPlayerStatsByIdUseCase: sl(), getPlayerStatsByTeamUseCase: sl()));
 
   // TROPHY
   sl.registerFactory(
@@ -141,7 +153,8 @@ void _registerRepositories() {
   //PLAYER
   sl.registerLazySingleton<IPlayerRepository>(
       () => PlayerRepository(playerDataSource: sl()));
-
+  sl.registerLazySingleton<IPlayerStatsRepository>(
+      () => PlayerStatsRepository(playerStatsDataSource: sl()));
   // TROPHY
   sl.registerLazySingleton<ITrophyRepository>(
       () => TrophyRepository(trophyDataSource: sl()));
@@ -167,6 +180,9 @@ void _registerDatasources() {
   // PLAYER
   sl.registerLazySingleton<IPlayerRemoteDataSource>(
       () => PlayerRemoteDataSource(client: sl()));
+
+  sl.registerLazySingleton<IPlayerStatsRemoteDataSource>(
+      () => PlayerStatsRemoteDataSource(client: sl()));
 
   // TROPHY
   sl.registerLazySingleton<ITrophyRemoteDataSource>(
@@ -204,6 +220,18 @@ void _registerUseCases() {
   sl.registerLazySingleton(() => UpdatePlayerUseCase(playerRepository: sl()));
   sl.registerLazySingleton(
       () => GetTeamTacticalFormationUseCase(teamRepository: sl()));
+  sl.registerLazySingleton(
+      () => CreatePlayerStatsUseCase(playerStatsRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetPlayerStatsByIdUseCase(playerStatsRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetPlayerStatsByTeamUseCase(playerStatsRepository: sl()));
+  sl.registerLazySingleton(
+      () => UpdatePlayerStatsUseCase(playerStatsRepository: sl()));
+  sl.registerLazySingleton(
+      () => UpdatePlayerStatsUseCase(playerStatsRepository: sl()));
+  sl.registerLazySingleton(
+      () => DeletePlayerStatsUseCase(playerStatsRepository: sl()));
 
   // TROPHY
   sl.registerLazySingleton(() => CreateTrophyUseCase(trophyRepository: sl()));
