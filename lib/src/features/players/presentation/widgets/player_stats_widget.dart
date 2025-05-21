@@ -70,7 +70,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  title: Text("Dourada FC"),
+                  title: const Text("Dourada FC"),
                   subtitle: const Text('Subtitle'),
                   selected: isSelected,
                 );
@@ -83,7 +83,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
               children: [
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
@@ -92,8 +92,8 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                     width: 25,
                   ),
                   title: const Text('Gols'),
-                  trailing: const Text(
-                    '12',
+                  trailing: Text(
+                    '${widget.playerStats.goals}',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -107,8 +107,8 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                     width: 25,
                   ),
                   title: const Text('Assistências'),
-                  trailing: const Text(
-                    '5',
+                  trailing: Text(
+                    '${widget.playerStats.assists}',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -122,8 +122,8 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                     width: 25,
                   ),
                   title: const Text('Partidas'),
-                  trailing: const Text(
-                    '21',
+                  trailing: Text(
+                    '${widget.playerStats.match}',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '2',
+                              '${widget.playerStats.lose}',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '6',
+                              '${widget.playerStats.win}',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -212,7 +212,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '3',
+                              '${widget.playerStats.draw}',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -259,7 +259,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '2',
+                              '${widget.playerStats.yellowCards}',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -302,7 +302,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '0',
+                              '${widget.playerStats.redCards}',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
