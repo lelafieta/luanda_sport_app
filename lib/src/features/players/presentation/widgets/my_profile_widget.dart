@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:luanda_sport_app/src/features/players/domain/entities/player_entity.dart';
 
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/strings/app_strings.dart';
 
 class MyProfileWidget extends StatefulWidget {
-  const MyProfileWidget({super.key});
+  final PlayerEntity player;
+  const MyProfileWidget({super.key, required this.player});
 
   @override
   State<MyProfileWidget> createState() => _MyProfileWidgetState();
@@ -107,7 +109,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                 child: Column(
                   children: [
                     Text(
-                      'LINGARD',
+                      '${widget.player.fullName}',
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -184,7 +186,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Dourada FC",
+                    "${widget.player.teamId}",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(

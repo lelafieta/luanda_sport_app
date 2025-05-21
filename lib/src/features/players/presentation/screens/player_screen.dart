@@ -95,17 +95,24 @@ class _PlayerScreenState extends State<PlayerScreen>
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
                     if (state is GetMyPlayerDataLoading) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is GetMyPlayerDataFailure) {
-                      return Center(
+                      return const Center(
                         child: Text("Erro ao carregar dados do jogador"),
                       );
                     } else if (state is GetMyPlayerDataLoaded) {
-                      return MyProfileWidget();
+                      if (state.player == null) {
+                        return const Center(
+                          child: Text("Nenhum jogador encontrado"),
+                        );
+                      }
+                      return MyProfileWidget(
+                        player: state.player!,
+                      );
                     }
-                    return MyProfileWidget();
+                    return const SizedBox.shrink();
                   },
                 ),
                 PlayerStatsWidget(),

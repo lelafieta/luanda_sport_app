@@ -19,10 +19,17 @@ class PlayerRemoteDataSource implements IPlayerRemoteDataSource {
 
   @override
   Future<PlayerModel?> getPlayerById(String id) async {
-    final response =
-        await client.from('players').select().eq('id', id).maybeSingle();
+    print("VEEEE");
+    final response = await client
+        .from('players')
+        .select()
+        .eq('created_by', id)
+        .maybeSingle();
+    print("___-");
+    print(response);
 
     if (response != null) {
+      print(response);
       return PlayerModel.fromMap(response as Map<String, dynamic>);
     }
     return null;
