@@ -15,4 +15,18 @@ class PlayerTeamModel extends PlayerTeamEntity {
     super.isActive,
     super.createdAt,
   });
+
+  factory PlayerTeamModel.fromJson(Map<String, dynamic> json) {
+    return PlayerTeamModel(
+      id: json['id'] as String?,
+      playerId: json['playerId'] as String?,
+      teamId: json['teamId'] as String?,
+      value: json['value'] as int?,
+      joinedAt: DateTime.parse(json['joinedAt'] as String),
+      leftAt: DateTime.parse(json['leftAt'] as String),
+      position: json['position'] as String?,
+      shirtNumber: json['shirtNumber'] as int?,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+    );
+  }
 }
