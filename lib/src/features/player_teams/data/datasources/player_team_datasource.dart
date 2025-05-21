@@ -22,12 +22,13 @@ class PlayerTeamRemoteDataSource extends IPlayerTeamRemoteDataSource {
   Future<List<PlayerTeamModel>> getPlayerTeams(String playerId) {
     return client
         .from('player_teams')
-        .select()
+        .select('*, players(*), teams(*)')
         .eq('player_id', playerId)
-        .then((value) => (value as List)
-            .map((e) => PlayerTeamModel.fromJson(e as Map<String, dynamic>))
-            .toList())
-        .catchError((error) {
+        .then((value) {
+      return (value as List)
+          .map((e) => PlayerTeamModel.fromMap(e as Map<String, dynamic>))
+          .toList();
+    }).catchError((error) {
       throw Exception('Error getting player teams: $error');
     });
   }

@@ -9,7 +9,7 @@ import '../../domain/usecases/get_player_teams_usecase.dart';
 part 'player_team_state.dart';
 
 class PlayerTeamCubit extends Cubit<PlayerTeamState> {
-  final GetPlayerTeamUseCase getPlayerTeamUseCase;
+  final GetPlayerTeamsUseCase getPlayerTeamUseCase;
   final CreatePlayerTeamUseCase createPlayerTeamUseCase;
   PlayerTeamCubit({
     required this.getPlayerTeamUseCase,

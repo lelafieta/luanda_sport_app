@@ -23,9 +23,13 @@ class PlayerStatsWidget extends StatefulWidget {
 class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
   final dropDownKey = GlobalKey<DropdownSearchState>();
   PlayerTeamEntity? selectedTeam;
+  String selectedTeamId = "";
   @override
   void initState() {
-    context.read<PlayerTeamCubit>().getPlayerTeams(AppEntity.uId!);
+    selectedTeamId = widget.playerStats.teamId ?? '';
+    context
+        .read<PlayerTeamCubit>()
+        .getPlayerTeams("9f829de7-50dc-4351-aff9-fc0d1c93cef2");
     super.initState();
   }
 
@@ -37,24 +41,30 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
         children: [
           BlocConsumer<PlayerTeamCubit, PlayerTeamState>(
             listener: (context, state) {
-              if (state is PlayerTeamLoading) {
-                EasyLoading.show(
-                  status: 'Carregando...',
-                  maskType: EasyLoadingMaskType.black,
-                );
+              if (state is PlayerTeamLoaded) {
+                print("YAAA");
               }
             },
             builder: (context, state) {
               if (state is PlayerTeamLoaded) {
+                var selectedTeam = state.playerTeams.firstWhere(
+                  (team) => team.team?.id == selectedTeamId,
+                );
                 return DropdownSearch<PlayerTeamEntity>(
                   key: dropDownKey,
-                  selectedItem: selectedTeam, // Um PlayerTeam
-                  items: state.playerTeams, // List<PlayerTeam>
+                  selectedItem: selectedTeam,
+                  items: state.playerTeams,
+                  onChanged: (team) {
+                    setState(() {
+                      selectedTeamId = team?.team?.id ?? '';
+                      selectedTeam = team!;
+                    });
+                  },
                   itemAsString: (PlayerTeamEntity? team) => team == null
                       ? ''
                       : (team.position != null
-                          ? "${team.position} - ${team.teamId ?? ''}"
-                          : (team.teamId ?? '')),
+                          ? "${team.position} - ${team.team?.name ?? ''}"
+                          : (team.team?.name ?? '')),
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       filled: true,
@@ -65,6 +75,35 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                       ),
                     ),
                   ),
+                  dropdownBuilder: (context, item) {
+                    if (item == null || item.team == null) {
+                      return const Text("Selecione um time");
+                    }
+                    return Row(
+                      children: [
+                        ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: item.team!.logoUrl ??
+                                'https://placehold.co/40x40',
+                            width: 30,
+                            height: 30,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            item.team!.name ?? '',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                   popupProps: PopupProps.dialog(
                     showSearchBox: false,
                     title: Container(
@@ -78,24 +117,33 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                       ),
                     ),
                     itemBuilder: (context, item, isSelected) {
-                      return ListTile(
-                        leading: ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: item.player!.avatarUrl ??
-                                'https://placehold.co/40x40', // Opcional: pode vir do model
-                            width: 40,
-                            height: 40,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            fit: BoxFit.cover,
+                      return Container(
+                        color: selectedTeamId == item.team?.id
+                            ? Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withAlpha(50)
+                            : Colors.transparent,
+                        child: ListTile(
+                          leading: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: item.team?.logoUrl ??
+                                  'https://placehold.co/40x40',
+                              width: 40,
+                              height: 40,
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              fit: BoxFit.cover,
+                            ),
                           ),
+                          title: Text(item.team?.name ?? 'Time desconhecido'),
+                          subtitle: Text(
+                            "Desde: ${item.joinedAt?.toString().split(' ')[0]} até Agora",
+                          ),
+                          selected: isSelected,
                         ),
-                        title: Text(item.teamId.toString()),
-                        subtitle:
-                            Text("Posição: ${item.position ?? 'Desconhecida'}"),
-                        selected: isSelected,
                       );
                     },
                   ),

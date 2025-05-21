@@ -281,7 +281,7 @@ void _registerUseCases() {
 
   // PLAYER TEAM
   sl.registerLazySingleton(
-      () => GetPlayerTeamUseCase(playerTeamRespository: sl()));
+      () => GetPlayerTeamsUseCase(playerTeamRespository: sl()));
   sl.registerLazySingleton(
       () => CreatePlayerTeamUseCase(playerTeamRespository: sl()));
 }
