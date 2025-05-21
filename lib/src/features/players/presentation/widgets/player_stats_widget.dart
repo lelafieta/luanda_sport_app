@@ -303,7 +303,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             const SizedBox(height: 10),
                             Text(
                               '${widget.playerStats.redCards}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
