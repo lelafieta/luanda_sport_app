@@ -1820,7 +1820,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
       child: ListView.separated(
         scrollDirection: Axis.vertical,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
           final newss = NewsArticle.fromJson(news[index]);

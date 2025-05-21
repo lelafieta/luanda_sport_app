@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luanda_sport_app/src/app/app_entity.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
 
 import '../../../../config/themes/app_colors.dart';
@@ -26,6 +27,7 @@ class _PlayerScreenState extends State<PlayerScreen>
   void initState() {
     super.initState();
     context.read<GetMyPlayerDataCubit>().fetchPlayerData(AppEntity.uId!);
+    context.read<FetchPlayerStatsCubit>().fetchPlayerStatsById(AppEntity.uId!);
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -54,7 +56,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                   selectedTabIndex = value;
                 });
               },
-              tabs: [
+              tabs: const [
                 Tab(
                   // icon: SvgPicture.asset(
                   //   AppIcons.membossMano,
@@ -115,7 +117,29 @@ class _PlayerScreenState extends State<PlayerScreen>
                     return const SizedBox.shrink();
                   },
                 ),
-                PlayerStatsWidget(),
+                BlocBuilder<FetchPlayerStatsCubit, FetchPlayerStatsState>(
+                  builder: (context, state) {
+                    if (state is FetchPlayerStatsLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is FetchPlayerStatsFailure) {
+                      return const Center(
+                        child: Text("Erro ao carregar estatísticas"),
+                      );
+                    } else if (state is FetchPlayerStatsLoaded) {
+                      if (state.playerStats == null) {
+                        return const Center(
+                          child: Text("Nenhuma estatística encontrada"),
+                        );
+                      }
+                      return PlayerStatsWidget(
+                        playerStats: state.playerStats!,
+                      );
+                    }
+                    return SizedBox.shrink();
+                  },
+                ),
                 Text("data"),
               ],
             ),

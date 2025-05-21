@@ -1,19 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:drop_down_list/drop_down_list.dart';
-import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:luanda_sport_app/src/core/resources/app_icons.dart';
-import 'package:luanda_sport_app/src/core/resources/app_images.dart';
 
-import '../../../../config/themes/app_colors.dart';
-import 'my_profile_widget.dart';
+import '../../../../core/resources/app_icons.dart';
+import '../../../../core/resources/app_images.dart';
+import '../../domain/entities/player_stats_entity.dart';
 
 class PlayerStatsWidget extends StatefulWidget {
-  const PlayerStatsWidget({super.key});
+  final PlayerStatsEntity playerStats;
+  const PlayerStatsWidget({super.key, required this.playerStats});
 
   @override
   State<PlayerStatsWidget> createState() => _PlayerStatsWidgetState();
