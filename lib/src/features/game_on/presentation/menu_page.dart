@@ -179,7 +179,7 @@ class _MenuPageState extends State<MenuPage> {
                 horizontal: 15,
               ),
               decoration: BoxDecoration(
-                color: AppColors.error,
+                // color: AppColors.error,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Text(

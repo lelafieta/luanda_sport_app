@@ -56,13 +56,13 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                   onPressed: () {},
                   icon: SvgPicture.asset(AppIcons.search,
-                      width: 24, color: AppColors.color),
+                      width: 24, color: Colors.black),
                 ),
                 IconButton(
                   onPressed: () {},
                   icon: SvgPicture.asset(
                     AppIcons.bellNotificationSocialMedia,
-                    color: AppColors.color,
+                    color: Colors.black,
                     width: 24,
                   ),
                 ),
@@ -107,21 +107,21 @@ class _HomePageState extends State<HomePage> {
       //         ),
       //       ),
       //       ListTile(
-      //         leading: Icon(Icons.home, color: AppColors.color),
+      //         leading: Icon(Icons.home, color: Colors.black),
       //         title: const Text('Home'),
       //         onTap: () {
       //           Navigator.pop(context);
       //         },
       //       ),
       //       ListTile(
-      //         leading: Icon(Icons.settings, color: AppColors.color),
+      //         leading: Icon(Icons.settings, color: Colors.black),
       //         title: const Text('Settings'),
       //         onTap: () {
       //           Navigator.pop(context);
       //         },
       //       ),
       //       ListTile(
-      //         leading: Icon(Icons.logout, color: AppColors.color),
+      //         leading: Icon(Icons.logout, color: Colors.black),
       //         title: const Text('Logout'),
       //         onTap: () {
       //           Navigator.pop(context);
@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.grey.withOpacity(.2),
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: AppColors.color.withOpacity(.4),
+                                color: Colors.black.withOpacity(.4),
                                 width: 1,
                               ),
                             ),
@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage> {
                                         SvgPicture.asset(
                                           AppIcons.calendar,
                                           width: 16,
-                                          color: AppColors.color,
+                                          color: Colors.black,
                                         ),
                                         const SizedBox(
                                           width: 5,
@@ -346,7 +346,7 @@ class _HomePageState extends State<HomePage> {
                                         SvgPicture.asset(
                                           AppIcons.siteAlt,
                                           width: 16,
-                                          color: AppColors.color,
+                                          color: Colors.black,
                                         ),
                                         const SizedBox(
                                           width: 5,

@@ -1401,90 +1401,91 @@ class _CompetitionDetailsPageState extends State<CompetitionDetailsPage>
   }
 
   Widget _buildTabContentNews() {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListView.separated(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        physics: ClampingScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final newss = NewsArticle.fromJson(news[index]);
-          return Container(
-            width: double.infinity,
-            height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 80,
-                  height: 100,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(
-                      imageUrl: newss.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        newss.title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.black,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.calendar,
-                            width: 16,
-                            color: AppColors.color,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Text("10/10/2024 10:10"),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SvgPicture.asset(
-                            AppIcons.siteAlt,
-                            width: 16,
-                            color: AppColors.color,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(newss.sourceStr),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            height: 20,
-          );
-        },
-        itemCount: news.length,
-      ),
-    );
+    return Text("data");
+    // return Container(
+    //   width: double.infinity,
+    //   margin: const EdgeInsets.symmetric(vertical: 8),
+    //   child: ListView.separated(
+    //     scrollDirection: Axis.vertical,
+    //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    //     physics: ClampingScrollPhysics(),
+    //     shrinkWrap: true,
+    //     itemBuilder: (context, index) {
+    //       final newss = NewsArticle.fromJson(news[index]);
+    //       return Container(
+    //         width: double.infinity,
+    //         height: 100,
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.start,
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: [
+    //             Container(
+    //               width: 80,
+    //               height: 100,
+    //               child: ClipRRect(
+    //                 borderRadius: BorderRadius.circular(10),
+    //                 child: CachedNetworkImage(
+    //                   imageUrl: newss.imageUrl,
+    //                   fit: BoxFit.cover,
+    //                 ),
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               width: 10,
+    //             ),
+    //             Expanded(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: [
+    //                   Text(
+    //                     newss.title,
+    //                     overflow: TextOverflow.ellipsis,
+    //                     maxLines: 3,
+    //                     style: TextStyle(
+    //                       fontWeight: FontWeight.w600,
+    //                       color: AppColors.black,
+    //                     ),
+    //                   ),
+    //                   Row(
+    //                     children: [
+    //                       SvgPicture.asset(
+    //                         AppIcons.calendar,
+    //                         width: 16,
+    //                         // color: AppColors.color,
+    //                       ),
+    //                       const SizedBox(
+    //                         width: 5,
+    //                       ),
+    //                       const Text("10/10/2024 10:10"),
+    //                       const SizedBox(
+    //                         width: 10,
+    //                       ),
+    //                       SvgPicture.asset(
+    //                         AppIcons.siteAlt,
+    //                         width: 16,
+    //                         // color: AppColors.color,
+    //                       ),
+    //                       const SizedBox(
+    //                         width: 5,
+    //                       ),
+    //                       Text(newss.sourceStr),
+    //                     ],
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       );
+    //     },
+    //     separatorBuilder: (context, index) {
+    //       return const SizedBox(
+    //         height: 20,
+    //       );
+    //     },
+    //     itemCount: news.length,
+    //   ),
+    // );
   }
 }
 

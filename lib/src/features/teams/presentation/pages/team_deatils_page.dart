@@ -1863,7 +1863,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
                           SvgPicture.asset(
                             AppIcons.calendar,
                             width: 16,
-                            color: AppColors.color,
+                            // color: AppColors.color,
                           ),
                           const SizedBox(
                             width: 5,
@@ -1875,7 +1875,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
                           SvgPicture.asset(
                             AppIcons.siteAlt,
                             width: 16,
-                            color: AppColors.color,
+                            // color: AppColors.color,
                           ),
                           const SizedBox(
                             width: 5,

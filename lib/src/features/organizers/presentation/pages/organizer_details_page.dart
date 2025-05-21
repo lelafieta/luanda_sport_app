@@ -67,7 +67,7 @@ class _OrganizerDetailsPageState extends State<OrganizerDetailsPage> {
                             padding: const EdgeInsets.all(8.0),
                             icon: const Icon(
                               Icons.arrow_back,
-                              color: AppColors.black,
+                              // color: AppColors.black,
                             ),
                             onPressed: () {
                               // Navigator.of(context).pop();

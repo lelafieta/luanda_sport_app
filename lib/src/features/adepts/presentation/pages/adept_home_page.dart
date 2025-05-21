@@ -70,7 +70,7 @@ class _AdeptHomePageState extends State<AdeptHomePage> {
                               color: Colors.grey.withOpacity(.2),
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: AppColors.color.withOpacity(.4),
+                                // color: AppColors.color.withOpacity(.4),
                                 width: 1,
                               ),
                             ),
@@ -140,7 +140,7 @@ class _AdeptHomePageState extends State<AdeptHomePage> {
                                         SvgPicture.asset(
                                           AppIcons.calendar,
                                           width: 16,
-                                          color: AppColors.color,
+                                          // color: AppColors.color,
                                         ),
                                         const SizedBox(
                                           width: 5,
@@ -152,7 +152,7 @@ class _AdeptHomePageState extends State<AdeptHomePage> {
                                         SvgPicture.asset(
                                           AppIcons.siteAlt,
                                           width: 16,
-                                          color: AppColors.color,
+                                          // color: AppColors.color,
                                         ),
                                         const SizedBox(
                                           width: 5,
