@@ -56,33 +56,33 @@ class _PlayerScreenState extends State<PlayerScreen>
               },
               tabs: [
                 Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.membossMano,
-                    width: 25,
-                    color: selectedTabIndex == 0
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
+                  // icon: SvgPicture.asset(
+                  //   AppIcons.membossMano,
+                  //   width: 25,
+                  //   color: selectedTabIndex == 0
+                  //       ? Colors.white
+                  //       : AppColors.white.withOpacity(.6),
+                  // ),
                   text: 'Perfil',
                 ),
                 Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.chartKanban,
-                    width: 25,
-                    color: selectedTabIndex == 1
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
+                  // icon: SvgPicture.asset(
+                  //   AppIcons.chartKanban,
+                  //   width: 25,
+                  //   color: selectedTabIndex == 1
+                  //       ? Colors.white
+                  //       : AppColors.white.withOpacity(.6),
+                  // ),
                   text: 'Estatísticas',
                 ),
                 Tab(
-                  icon: SvgPicture.asset(
-                    AppIcons.medal,
-                    width: 25,
-                    color: selectedTabIndex == 1
-                        ? Colors.white
-                        : AppColors.white.withOpacity(.6),
-                  ),
+                  // icon: SvgPicture.asset(
+                  //   AppIcons.medal,
+                  //   width: 25,
+                  //   color: selectedTabIndex == 1
+                  //       ? Colors.white
+                  //       : AppColors.white.withOpacity(.6),
+                  // ),
                   text: 'Conquistas',
                 ),
               ],

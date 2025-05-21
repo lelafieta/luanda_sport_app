@@ -186,7 +186,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${widget.player.teamId}",
+                    "${widget.player.team!.name}",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(

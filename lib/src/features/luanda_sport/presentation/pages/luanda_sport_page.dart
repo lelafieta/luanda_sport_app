@@ -115,7 +115,7 @@ class _LuandaSportPageState extends State<LuandaSportPage> {
           ],
         ),
         drawer: Drawer(
-          backgroundColor: const Color(0xFF1A1A1A),
+          backgroundColor: Colors.black,
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

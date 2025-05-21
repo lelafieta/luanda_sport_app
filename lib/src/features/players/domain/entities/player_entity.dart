@@ -1,5 +1,7 @@
 import 'package:luanda_sport_app/src/features/profiles/domain/entities/profile_entity.dart';
 
+import '../../../teams/domain/entities/team_entity.dart';
+
 class PlayerEntity {
   final String? id;
   final String? teamId;
@@ -19,6 +21,7 @@ class PlayerEntity {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final ProfileEntity? createdByProfile;
+  final TeamEntity? team;
 
   const PlayerEntity({
     this.id,
@@ -39,5 +42,6 @@ class PlayerEntity {
     this.createdAt,
     this.updatedAt,
     this.createdByProfile,
+    this.team,
   });
 }

@@ -22,11 +22,9 @@ class PlayerRemoteDataSource implements IPlayerRemoteDataSource {
     print("VEEEE");
     final response = await client
         .from('players')
-        .select()
+        .select('*, teams(*)')
         .eq('created_by', id)
         .maybeSingle();
-    print("___-");
-    print(response);
 
     if (response != null) {
       print(response);

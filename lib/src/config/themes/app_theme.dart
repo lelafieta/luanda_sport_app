@@ -201,8 +201,7 @@ class AppTheme {
         brightness: Brightness.light,
         primaryColor: const Color(0xFF051DA0), // cor de foco e ícones
         scaffoldBackgroundColor: Colors.white,
-
-        // Estilo dos campos de texto (TextField / FormBuilderTextField)
+        fontFamily: AppStrings.fontFamily,
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,

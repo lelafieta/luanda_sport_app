@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../config/themes/app_colors.dart';
+
 class GradientButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -13,11 +15,7 @@ class GradientButton extends StatelessWidget {
       width: double.infinity,
       height: 50,
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF051DA0), Color(0xFF6977C6)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        gradient: AppColors.primaryGradient,
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
       child: ElevatedButton(

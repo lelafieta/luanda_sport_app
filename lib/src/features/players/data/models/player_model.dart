@@ -1,4 +1,5 @@
 import '../../../profiles/data/models/profile_model.dart';
+import '../../../teams/data/models/team_model.dart';
 import '../../domain/entities/player_entity.dart';
 
 class PlayerModel extends PlayerEntity {
@@ -21,37 +22,38 @@ class PlayerModel extends PlayerEntity {
     super.createdAt,
     super.updatedAt,
     super.createdByProfile,
+    super.team,
   });
 
   factory PlayerModel.fromMap(Map<String, dynamic> map) {
     return PlayerModel(
-      id: map['id'] as String?,
-      teamId: map['team_id'] as String?,
-      createdBy: map['created_by'] as String?,
-      fullName: map['full_name'] as String?,
-      nickname: map['nickname'] as String?,
-      shirtNumber: map['shirt_number'] as int?,
-      position: map['position'] as String?,
-      type: map['type'] as String?, // Adicionado aqui
-      nationality: map['nationality'] as String?,
-      birthDate: map['birth_date'] != null
-          ? DateTime.tryParse(map['birth_date'])
-          : null,
-      heightCm: map['height_cm'] as int?,
-      weightKg: map['weight_kg'] as int?,
-      foot: map['foot'] as String?,
-      avatarUrl: map['avatar_url'] as String?,
-      status: map['status'] as String?,
-      createdAt: map['created_at'] != null
-          ? DateTime.tryParse(map['created_at'])
-          : null,
-      updatedAt: map['updated_at'] != null
-          ? DateTime.tryParse(map['updated_at'])
-          : null,
-      createdByProfile: map['created_by_profile'] != null
-          ? ProfileModel.fromJson(map['created_by_profile'])
-          : null,
-    );
+        id: map['id'] as String?,
+        teamId: map['team_id'] as String?,
+        createdBy: map['created_by'] as String?,
+        fullName: map['full_name'] as String?,
+        nickname: map['nickname'] as String?,
+        shirtNumber: map['shirt_number'] as int?,
+        position: map['position'] as String?,
+        type: map['type'] as String?, // Adicionado aqui
+        nationality: map['nationality'] as String?,
+        birthDate: map['birth_date'] != null
+            ? DateTime.tryParse(map['birth_date'])
+            : null,
+        heightCm: map['height_cm'] as int?,
+        weightKg: map['weight_kg'] as int?,
+        foot: map['foot'] as String?,
+        avatarUrl: map['avatar_url'] as String?,
+        status: map['status'] as String?,
+        createdAt: map['created_at'] != null
+            ? DateTime.tryParse(map['created_at'])
+            : null,
+        updatedAt: map['updated_at'] != null
+            ? DateTime.tryParse(map['updated_at'])
+            : null,
+        createdByProfile: map['created_by_profile'] != null
+            ? ProfileModel.fromJson(map['created_by_profile'])
+            : null,
+        team: map['teams'] != null ? TeamModel.fromJson(map['team']) : null);
   }
 
   factory PlayerModel.fromEntity(PlayerEntity entity) {

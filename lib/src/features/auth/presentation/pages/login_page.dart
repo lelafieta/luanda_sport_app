@@ -7,6 +7,7 @@ import 'package:luanda_sport_app/src/features/auth/domain/entities/login_entity.
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../config/themes/app_colors.dart';
+import '../../../../core/utils/gradient_button_widget.dart';
 import '../cubit/auth_cubit.dart';
 
 class LoginPage extends StatefulWidget {
@@ -110,8 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                             errorText: "Campo obrigatório"),
                       ]),
                     ),
-                    const SizedBox(height: 32),
-                    ElevatedButton(
+                    const SizedBox(height: 16),
+                    GradientButton(
+                      text: "Login",
                       onPressed: () {
                         if (formKey.currentState?.validate() == true) {
                           context.read<AuthCubit>().login(LoginEntity(
@@ -121,22 +123,34 @@ class _LoginPageState extends State<LoginPage> {
                                   .currentState?.fields["password"]!.value));
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: Colors.black,
-                      ),
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     if (formKey.currentState?.validate() == true) {
+                    //       context.read<AuthCubit>().login(LoginEntity(
+                    //           email:
+                    //               formKey.currentState?.fields["email"]!.value,
+                    //           password: formKey
+                    //               .currentState?.fields["password"]!.value));
+                    //     }
+                    //   },
+                    //   style: ElevatedButton.styleFrom(
+                    //     padding: const EdgeInsets.symmetric(vertical: 16),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //     backgroundColor: Colors.black,
+                    //   ),
+                    //   child: const Text(
+                    //     'Login',
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 18,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    // ),
+
                     const SizedBox(height: 16),
                     TextButton(
                       onPressed: () {},
