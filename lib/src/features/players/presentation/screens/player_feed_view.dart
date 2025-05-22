@@ -81,25 +81,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
               SizedBox(
                 width: double.infinity,
                 child: GestureDetector(
-                  onTap: () {
-                    final CartazEntity cartazExemplo = CartazEntity(
-                      titulo: "Final do Campeonato Municipal",
-                      equipeCasa: "Futebol Clube Luanda",
-                      equipeVisitante: "Benfica de Talatona",
-                      imagemEquipeCasa:
-                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
-                      imagemEquipeVisitante:
-                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
-                      logoCompeticao:
-                          "https://example.com/imagens/campeonato-logo.png",
-                      dataHora: DateTime(2025, 6, 15, 16, 30),
-                      local: "Estádio 11 de Novembro",
-                      descricao: 'Descrição do jogo',
-                    );
-                    context.pushTransparentRoute(SecondPage(
-                      cartaz: cartazExemplo,
-                    ));
-                  },
+                  onTap: () {},
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -335,8 +317,23 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
               ),
             ),
             onPressed: () {
-              print("object");
-              context.pushTransparentRoute(PosterExportPage());
+              final CartazEntity cartazExemplo = CartazEntity(
+                titulo: "Final do Campeonato Municipal",
+                equipeCasa: "Futebol Clube Luanda",
+                equipeVisitante: "Benfica de Talatona",
+                imagemEquipeCasa:
+                    "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
+                imagemEquipeVisitante:
+                    "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
+                logoCompeticao:
+                    "https://example.com/imagens/campeonato-logo.png",
+                dataHora: DateTime(2025, 6, 15, 16, 30),
+                local: "Estádio 11 de Novembro",
+                descricao: 'Descrição do jogo',
+              );
+              context.pushTransparentRoute(SecondPage(
+                cartaz: cartazExemplo,
+              ));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
