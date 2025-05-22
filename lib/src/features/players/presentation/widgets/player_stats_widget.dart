@@ -11,6 +11,7 @@ import '../../../player_teams/domain/entities/player_team_entity.dart';
 import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../../domain/entities/player_entity.dart';
 import '../cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
+import 'player_team_dropdown_skeleton.dart';
 
 class PlayerStatsWidget extends StatefulWidget {
   final PlayerEntity player;
@@ -168,64 +169,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                       );
                     }
 
-                    return DropdownSearch<String>(
-                      key: dropDownKey,
-                      selectedItem: "Menu",
-                      items: const [
-                        "Menu",
-                        "Dialog",
-                        "Modal",
-                        "BottomSheet",
-                        "Dialog",
-                      ],
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      popupProps: PopupProps.dialog(
-                        showSearchBox: false,
-                        title: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 20),
-                          child: Center(
-                            child: Text(
-                              "Equipes de Passagem",
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
-                        ),
-                        itemBuilder: (context, item, isSelected) {
-                          return ListTile(
-                            leading: ClipOval(
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    'https://template.canva.com/EAGP4Vom1pY/1/0/1600w-IOa8p4GmFqQ.jpg',
-                                width: 40,
-                                height: 40,
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            title: const Text("Dourada FC"),
-                            subtitle: const Text('Subtitle'),
-                            selected: isSelected,
-                          );
-                        },
-                        dialogProps: const DialogProps(
-                            // Removido shape e backgroundColor para herdar o padrão do sistema
-                            // Isso usa a borda padrão do sistema automaticamente
-                            ),
-                      ),
-                    );
+                    return PlayerTeamDropdownSkeleton();
                   },
                 ),
                 Expanded(
