@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -231,6 +232,11 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                   child:
                       BlocBuilder<FetchPlayerStatsCubit, FetchPlayerStatsState>(
                     builder: (context, state) {
+                      if (state is FetchPlayerStatsLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                       if (state is FetchPlayerStatsLoaded) {
                         final playerStats = state.playerStats;
                         if (playerStats == null) {
@@ -238,240 +244,244 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                             child: Text('Nenhum dado encontrado'),
                           );
                         }
-                        return ListView(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 8),
-                          children: [
-                            ListTile(
-                              contentPadding: const EdgeInsets.all(0),
-                              leading: SvgPicture.asset(
-                                AppIcons.footballBall,
-                                width: 25,
-                              ),
-                              title: const Text('Gols'),
-                              trailing: Text(
-                                '${playerStats!.goals}',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                        return FadeIn(
+                          child: ListView(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
+                            children: [
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(0),
+                                leading: SvgPicture.asset(
+                                  AppIcons.footballBall,
+                                  width: 25,
+                                ),
+                                title: const Text('Gols'),
+                                trailing: Text(
+                                  '${playerStats.goals}',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            ListTile(
-                              contentPadding: const EdgeInsets.all(0),
-                              leading: SvgPicture.asset(
-                                AppIcons.footballShoesShoe,
-                                width: 25,
-                              ),
-                              title: const Text('Assistências'),
-                              trailing: Text(
-                                '${playerStats!.assists}',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(0),
+                                leading: SvgPicture.asset(
+                                  AppIcons.footballShoesShoe,
+                                  width: 25,
+                                ),
+                                title: const Text('Assistências'),
+                                trailing: Text(
+                                  '${playerStats!.assists}',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            ListTile(
-                              contentPadding: const EdgeInsets.all(0),
-                              leading: SvgPicture.asset(
-                                AppIcons.footballJersey,
-                                width: 25,
-                              ),
-                              title: const Text('Partidas'),
-                              trailing: Text(
-                                '${playerStats!.match}',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(0),
+                                leading: SvgPicture.asset(
+                                  AppIcons.footballJersey,
+                                  width: 25,
+                                ),
+                                title: const Text('Partidas'),
+                                trailing: Text(
+                                  '${playerStats!.match}',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const Text('Derrotas'),
-                                        const SizedBox(height: 10),
-                                        SvgPicture.asset(
-                                          AppIcons.cross,
-                                          width: 25,
-                                          color: Colors.red.shade600,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          '${playerStats!.lose}',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const Text('Derrotas'),
+                                          const SizedBox(height: 10),
+                                          SvgPicture.asset(
+                                            AppIcons.cross,
+                                            width: 25,
                                             color: Colors.red.shade600,
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            '${playerStats!.lose}',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red.shade600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const Text('Victórias'),
-                                        const SizedBox(height: 10),
-                                        SvgPicture.asset(
-                                          AppIcons.medal,
-                                          width: 25,
-                                          color: Colors.green.shade600,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          '${playerStats!.win}',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const Text('Victórias'),
+                                          const SizedBox(height: 10),
+                                          SvgPicture.asset(
+                                            AppIcons.medal,
+                                            width: 25,
                                             color: Colors.green.shade600,
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            '${playerStats!.win}',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green.shade600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const Text('Empates'),
-                                        const SizedBox(height: 10),
-                                        SvgPicture.asset(
-                                          AppIcons.minus,
-                                          width: 25,
-                                          color: Colors.orange.shade600,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          '${playerStats!.draw}',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const Text('Empates'),
+                                          const SizedBox(height: 10),
+                                          SvgPicture.asset(
+                                            AppIcons.minus,
+                                            width: 25,
                                             color: Colors.orange.shade600,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: AssetImage(AppImages.design1),
-                                        fit: BoxFit.cover,
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            '${playerStats!.draw}',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orange.shade600,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Amarelos',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        SvgPicture.asset(
-                                          AppIcons.yellowSquare,
-                                          width: 25,
-                                          // color: Colors.yellow.shade600,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          '${playerStats!.yellowCards}',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: AssetImage(AppImages.design1),
-                                        fit: BoxFit.cover,
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: AssetImage(AppImages.design1),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Amarelos',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          SvgPicture.asset(
+                                            AppIcons.yellowSquare,
+                                            width: 25,
+                                            // color: Colors.yellow.shade600,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            '${playerStats!.yellowCards}',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Vermelhos',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: AssetImage(AppImages.design1),
+                                          fit: BoxFit.cover,
                                         ),
-                                        const SizedBox(height: 10),
-                                        SvgPicture.asset(
-                                          AppIcons.redSquare,
-                                          width: 25,
-                                          // color: Colors.yellow.shade600,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          '${playerStats!.redCards}',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Vermelhos',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(height: 10),
+                                          SvgPicture.asset(
+                                            AppIcons.redSquare,
+                                            width: 25,
+                                            // color: Colors.yellow.shade600,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            '${playerStats!.redCards}',
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         );
                       }
                       return SizedBox.shrink();
