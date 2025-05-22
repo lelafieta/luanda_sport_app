@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:luanda_sport_app/src/features/matches/domain/entities/cartaz_entity.dart';
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
+import '../../../matches/presentation/views/match_cartaz_view.dart';
+import 'print_image.dart';
 
 class PlayerFeedView extends StatefulWidget {
   const PlayerFeedView({super.key});
@@ -79,7 +82,23 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                 width: double.infinity,
                 child: GestureDetector(
                   onTap: () {
-                    context.pushTransparentRoute(SecondPage());
+                    final CartazEntity cartazExemplo = CartazEntity(
+                      titulo: "Final do Campeonato Municipal",
+                      equipeCasa: "Futebol Clube Luanda",
+                      equipeVisitante: "Benfica de Talatona",
+                      imagemEquipeCasa:
+                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
+                      imagemEquipeVisitante:
+                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
+                      logoCompeticao:
+                          "https://example.com/imagens/campeonato-logo.png",
+                      dataHora: DateTime(2025, 6, 15, 16, 30),
+                      local: "Estádio 11 de Novembro",
+                      descricao: 'Descrição do jogo',
+                    );
+                    context.pushTransparentRoute(SecondPage(
+                      cartaz: cartazExemplo,
+                    ));
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -315,7 +334,10 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                 side: const BorderSide(color: AppColors.primary),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              print("object");
+              context.pushTransparentRoute(PosterExportPage());
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -463,36 +485,10 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
 const imageUrl =
     'https://user-images.githubusercontent.com/26390946/155666045-aa93bf48-f8e7-407c-bb19-bc247d9e12bd.png';
 
-class FirstPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(228, 217, 236, 1),
-      body: GestureDetector(
-        onTap: () {
-          // Use extension method to use [TransparentRoute]
-          // This will push page without route background
-          context.pushTransparentRoute(SecondPage());
-        },
-        child: Center(
-          child: SizedBox(
-            width: 200,
-            // Hero widget is needed to animate page transition
-            child: Hero(
-              tag: 'Unique tag',
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class SecondPage extends StatelessWidget {
+  final CartazEntity cartaz;
+
+  const SecondPage({super.key, required this.cartaz});
   @override
   Widget build(BuildContext context) {
     return DismissiblePage(
@@ -510,7 +506,7 @@ class SecondPage extends StatelessWidget {
       onDragUpdate: (details) {
         print(details);
       },
-      dismissThresholds: {
+      dismissThresholds: const {
         DismissiblePageDismissDirection.vertical: .2,
       },
       minScale: .8,
@@ -519,13 +515,7 @@ class SecondPage extends StatelessWidget {
       onDismissed: () {
         Navigator.of(context).pop();
       },
-      child: Hero(
-        tag: 'Unique tag',
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-        ),
-      ),
+      child: MatchCartazView(cartaz: cartaz),
     );
   }
 }

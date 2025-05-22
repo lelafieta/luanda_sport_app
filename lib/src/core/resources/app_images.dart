@@ -38,4 +38,6 @@ class AppImages {
   static const String playerCard = "assets/images/player-card.png";
   static const String design1 = "assets/images/design-1.png";
   static const String design2 = "assets/images/design-2.png";
+  static const String cartaz1 = "assets/images/cartaz-1.png";
+  static const String cartaz2 = "assets/images/cartaz-2.png";
 }
