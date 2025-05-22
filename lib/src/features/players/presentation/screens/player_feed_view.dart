@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:luanda_sport_app/src/core/utils/title_widget.dart';
-
-import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 
 class PlayerFeedPage extends StatefulWidget {
@@ -78,148 +76,153 @@ class _PlayerFeedPageState extends State<PlayerFeedPage> {
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
+                child: GestureDetector(
+                  onTap: () {
+                    context.pushTransparentRoute(SecondPage());
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            child: const Text(
-                              "Exibição",
-                              style: TextStyle(
-                                // color: AppColors.primary,
-                                fontWeight: FontWeight.w600,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              child: const Text(
+                                "Exibição",
+                                style: TextStyle(
+                                  // color: AppColors.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade50,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                )),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        right: BorderSide(
-                                            width: 2,
-                                            color: Colors.grey.shade200),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                  )),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          right: BorderSide(
+                                              width: 2,
+                                              color: Colors.grey.shade200),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Row(children: [
+                                                  ClipOval(
+                                                    child: CachedNetworkImage(
+                                                        width: 30,
+                                                        height: 30,
+                                                        fit: BoxFit.cover,
+                                                        imageUrl:
+                                                            "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  const Text(
+                                                    "Dourada FC",
+                                                    style: TextStyle(),
+                                                  ),
+                                                ]),
+                                              ),
+                                              const Text("-")
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Row(children: [
+                                                  ClipOval(
+                                                    child: CachedNetworkImage(
+                                                        width: 30,
+                                                        height: 30,
+                                                        fit: BoxFit.cover,
+                                                        imageUrl:
+                                                            "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  const Text(
+                                                    "Ell Fantasma",
+                                                    style: TextStyle(),
+                                                  ),
+                                                ]),
+                                              ),
+                                              const Text("-")
+                                            ],
+                                          ),
+                                          const SizedBox(width: 10),
+                                        ],
                                       ),
                                     ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Container(
+                                    width: 50,
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(left: 10),
                                     child: Column(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                ClipOval(
-                                                  child: CachedNetworkImage(
-                                                      width: 30,
-                                                      height: 30,
-                                                      fit: BoxFit.cover,
-                                                      imageUrl:
-                                                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                const Text(
-                                                  "Dourada FC",
-                                                  style: TextStyle(),
-                                                ),
-                                              ]),
-                                            ),
-                                            const Text("-")
-                                          ],
+                                        Center(
+                                          child: SvgPicture.asset(
+                                            AppIcons.football,
+                                            width: 20,
+                                          ),
                                         ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                ClipOval(
-                                                  child: CachedNetworkImage(
-                                                      width: 30,
-                                                      height: 30,
-                                                      fit: BoxFit.cover,
-                                                      imageUrl:
-                                                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                const Text(
-                                                  "Ell Fantasma",
-                                                  style: TextStyle(),
-                                                ),
-                                              ]),
-                                            ),
-                                            const Text("-")
-                                          ],
+                                        const SizedBox(height: 5),
+                                        const Text(
+                                          "20:00",
+                                          style: TextStyle(
+                                            // color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                        const SizedBox(width: 10),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  width: 50,
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.only(left: 10),
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: SvgPicture.asset(
-                                          AppIcons.football,
-                                          width: 20,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      const Text(
-                                        "20:00",
-                                        style: TextStyle(
-                                          // color: Colors.red,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // const SizedBox(height: 5),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(20),
-                          topLeft: Radius.circular(20),
+                          ],
                         ),
                       ),
-                      child: const Text("Sábado, 17 de Maio 2025"),
-                    )
-                  ],
+                      // const SizedBox(height: 5),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                          ),
+                        ),
+                        child: const Text("Sábado, 17 de Maio 2025"),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -292,6 +295,76 @@ class _PlayerFeedPageState extends State<PlayerFeedPage> {
               const SizedBox(height: 16),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+const imageUrl =
+    'https://user-images.githubusercontent.com/26390946/155666045-aa93bf48-f8e7-407c-bb19-bc247d9e12bd.png';
+
+class FirstPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(228, 217, 236, 1),
+      body: GestureDetector(
+        onTap: () {
+          // Use extension method to use [TransparentRoute]
+          // This will push page without route background
+          context.pushTransparentRoute(SecondPage());
+        },
+        child: Center(
+          child: SizedBox(
+            width: 200,
+            // Hero widget is needed to animate page transition
+            child: Hero(
+              tag: 'Unique tag',
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DismissiblePage(
+      isFullScreen: false,
+      disabled: false,
+      minRadius: 10,
+      maxRadius: 10,
+      dragSensitivity: 1.0,
+      maxTransformValue: .8,
+      direction: DismissiblePageDismissDirection.multi,
+      backgroundColor: Colors.black,
+      onDragStart: () {
+        print('onDragStart');
+      },
+      onDragUpdate: (details) {
+        print(details);
+      },
+      dismissThresholds: {
+        DismissiblePageDismissDirection.vertical: .2,
+      },
+      minScale: .8,
+      startingOpacity: 1,
+      reverseDuration: const Duration(milliseconds: 250),
+      onDismissed: () {
+        Navigator.of(context).pop();
+      },
+      child: Hero(
+        tag: 'Unique tag',
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.cover,
         ),
       ),
     );

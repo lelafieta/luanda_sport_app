@@ -84,6 +84,7 @@ dependencies:
   tab_container: ^3.5.3
   dropdown_button2: ^2.3.9
   flag: ^7.0.0
+  dismissible_page: ^1.0.2
 
 dev_dependencies:
   flutter_test:
