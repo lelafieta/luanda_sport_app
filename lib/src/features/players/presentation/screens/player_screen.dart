@@ -11,7 +11,7 @@ import '../../../../core/resources/app_images.dart';
 import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../widgets/my_profile_widget.dart';
 import '../widgets/player_stats_widget.dart';
-import 'player_feed_page.dart';
+import 'player_feed_view.dart';
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({super.key});
@@ -94,7 +94,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                     return const SizedBox.shrink();
                   },
                 ),
-                PlayerFeedPage(),
+                const PlayerFeedPage(),
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
                     print(state);
