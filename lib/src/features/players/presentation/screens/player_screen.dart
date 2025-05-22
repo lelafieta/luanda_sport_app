@@ -11,6 +11,7 @@ import '../../../../core/resources/app_images.dart';
 import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../widgets/my_profile_widget.dart';
 import '../widgets/player_stats_widget.dart';
+import 'player_feed_page.dart';
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({super.key});
@@ -29,7 +30,7 @@ class _PlayerScreenState extends State<PlayerScreen>
     super.initState();
     context.read<GetMyPlayerDataCubit>().fetchPlayerData(AppEntity.uId!);
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -47,7 +48,8 @@ class _PlayerScreenState extends State<PlayerScreen>
             color: AppColors.primary,
             child: TabBar(
               controller: _tabController,
-              tabAlignment: TabAlignment.fill,
+              tabAlignment: TabAlignment.center,
+              isScrollable: true,
               unselectedLabelColor: AppColors.white.withOpacity(.6),
               labelColor: AppColors.white,
               indicatorColor: Colors.white,
@@ -58,36 +60,10 @@ class _PlayerScreenState extends State<PlayerScreen>
                 });
               },
               tabs: const [
-                Tab(
-                  // icon: SvgPicture.asset(
-                  //   AppIcons.membossMano,
-                  //   width: 25,
-                  //   color: selectedTabIndex == 0
-                  //       ? Colors.white
-                  //       : AppColors.white.withOpacity(.6),
-                  // ),
-                  text: 'Perfil',
-                ),
-                Tab(
-                  // icon: SvgPicture.asset(
-                  //   AppIcons.chartKanban,
-                  //   width: 25,
-                  //   color: selectedTabIndex == 1
-                  //       ? Colors.white
-                  //       : AppColors.white.withOpacity(.6),
-                  // ),
-                  text: 'Estatísticas',
-                ),
-                Tab(
-                  // icon: SvgPicture.asset(
-                  //   AppIcons.medal,
-                  //   width: 25,
-                  //   color: selectedTabIndex == 1
-                  //       ? Colors.white
-                  //       : AppColors.white.withOpacity(.6),
-                  // ),
-                  text: 'Conquistas',
-                ),
+                Tab(text: 'Perfil'),
+                Tab(text: 'Feed'),
+                Tab(text: 'Estatísticas'),
+                Tab(text: 'Conquistas'),
               ],
             ),
           ),
@@ -118,6 +94,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                     return const SizedBox.shrink();
                   },
                 ),
+                PlayerFeedPage(),
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
                     print(state);

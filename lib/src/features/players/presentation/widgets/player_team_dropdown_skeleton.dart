@@ -10,7 +10,7 @@ class PlayerTeamDropdownSkeleton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(100),
       ),
       child: Row(
         children: [

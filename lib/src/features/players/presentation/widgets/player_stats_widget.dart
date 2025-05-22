@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/resources/app_images.dart';
 import '../../../player_teams/domain/entities/player_team_entity.dart';
@@ -126,21 +127,20 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                           showSearchBox: false,
                           title: Container(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 20),
+                              vertical: 16,
+                              horizontal: 20,
+                            ),
                             child: Center(
                               child: Text(
                                 "Equipes de Passagem",
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                           ),
                           itemBuilder: (context, item, isSelected) {
                             return Container(
                               color: selectedTeamId == item.team?.id
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withAlpha(50)
+                                  ? AppColors.primary.withAlpha(50)
                                   : Colors.transparent,
                               child: ListTile(
                                 leading: ClipOval(
@@ -169,7 +169,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                       );
                     }
 
-                    return PlayerTeamDropdownSkeleton();
+                    return const PlayerTeamDropdownSkeleton();
                   },
                 ),
                 Expanded(
@@ -202,7 +202,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                                 title: const Text('Gols'),
                                 trailing: Text(
                                   '${playerStats.goals}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -216,8 +216,8 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                                 ),
                                 title: const Text('Assistências'),
                                 trailing: Text(
-                                  '${playerStats!.assists}',
-                                  style: TextStyle(
+                                  '${playerStats.assists}',
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -231,8 +231,8 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                                 ),
                                 title: const Text('Partidas'),
                                 trailing: Text(
-                                  '${playerStats!.match}',
-                                  style: TextStyle(
+                                  '${playerStats.match}',
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
