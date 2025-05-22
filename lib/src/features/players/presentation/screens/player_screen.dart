@@ -94,7 +94,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                     return const SizedBox.shrink();
                   },
                 ),
-                const PlayerFeedPage(),
+                const PlayerFeedView(),
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
                     print(state);

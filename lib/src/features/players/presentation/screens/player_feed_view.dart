@@ -2,16 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 
-class PlayerFeedPage extends StatefulWidget {
-  const PlayerFeedPage({super.key});
+class PlayerFeedView extends StatefulWidget {
+  const PlayerFeedView({super.key});
 
   @override
-  State<PlayerFeedPage> createState() => _PlayerFeedPageState();
+  State<PlayerFeedView> createState() => _PlayerFeedViewState();
 }
 
-class _PlayerFeedPageState extends State<PlayerFeedPage> {
+class _PlayerFeedViewState extends State<PlayerFeedView> {
   // Simulações para exemplo
   final bool convocado = true;
   final bool noOnzeInicial = true;
@@ -83,131 +84,7 @@ class _PlayerFeedPageState extends State<PlayerFeedPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              child: const Text(
-                                "Exibição",
-                                style: TextStyle(
-                                  // color: AppColors.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
-                                    bottomLeft: Radius.circular(20),
-                                  )),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          right: BorderSide(
-                                              width: 2,
-                                              color: Colors.grey.shade200),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Row(children: [
-                                                  ClipOval(
-                                                    child: CachedNetworkImage(
-                                                        width: 30,
-                                                        height: 30,
-                                                        fit: BoxFit.cover,
-                                                        imageUrl:
-                                                            "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  const Text(
-                                                    "Dourada FC",
-                                                    style: TextStyle(),
-                                                  ),
-                                                ]),
-                                              ),
-                                              const Text("-")
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Row(children: [
-                                                  ClipOval(
-                                                    child: CachedNetworkImage(
-                                                        width: 30,
-                                                        height: 30,
-                                                        fit: BoxFit.cover,
-                                                        imageUrl:
-                                                            "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  const Text(
-                                                    "Ell Fantasma",
-                                                    style: TextStyle(),
-                                                  ),
-                                                ]),
-                                              ),
-                                              const Text("-")
-                                            ],
-                                          ),
-                                          const SizedBox(width: 10),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Container(
-                                    width: 50,
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(left: 10),
-                                    child: Column(
-                                      children: [
-                                        Center(
-                                          child: SvgPicture.asset(
-                                            AppIcons.football,
-                                            width: 20,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        const Text(
-                                          "20:00",
-                                          style: TextStyle(
-                                            // color: Colors.red,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      showGameWithCard(),
                       // const SizedBox(height: 5),
                       Container(
                         padding: const EdgeInsets.all(8),
@@ -297,6 +174,288 @@ class _PlayerFeedPageState extends State<PlayerFeedPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget showGame() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: const Text(
+              "Exibição",
+              style: TextStyle(
+                // color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                )),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right:
+                            BorderSide(width: 2, color: Colors.grey.shade200),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(children: [
+                                ClipOval(
+                                  child: CachedNetworkImage(
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.cover,
+                                      imageUrl:
+                                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                ),
+                                const SizedBox(width: 8),
+                                const Text(
+                                  "Dourada FC",
+                                  style: TextStyle(),
+                                ),
+                              ]),
+                            ),
+                            const Text("-")
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(children: [
+                                ClipOval(
+                                  child: CachedNetworkImage(
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.cover,
+                                      imageUrl:
+                                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
+                                ),
+                                const SizedBox(width: 8),
+                                const Text(
+                                  "Ell Fantasma",
+                                  style: TextStyle(),
+                                ),
+                              ]),
+                            ),
+                            const Text("-")
+                          ],
+                        ),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: 50,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.football,
+                          width: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      const Text(
+                        "20:00",
+                        style: TextStyle(
+                          // color: Colors.red,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget showGameWithCard() {
+    return Column(
+      children: [
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: AppColors.primary),
+              ),
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  AppIcons.images,
+                  color: Colors.white,
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  "Partilhar do cartaz",
+                  style: TextStyle(color: AppColors.lightWightColor),
+                ),
+              ],
+            )),
+        const SizedBox(height: 5),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: const Text(
+                  "Exibição",
+                  style: TextStyle(
+                    // color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    )),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            right: BorderSide(
+                                width: 2, color: Colors.grey.shade200),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(children: [
+                                    ClipOval(
+                                      child: CachedNetworkImage(
+                                          width: 30,
+                                          height: 30,
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Text(
+                                      "Dourada FC",
+                                      style: TextStyle(),
+                                    ),
+                                  ]),
+                                ),
+                                const Text("-")
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(children: [
+                                    ClipOval(
+                                      child: CachedNetworkImage(
+                                          width: 30,
+                                          height: 30,
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Text(
+                                      "Ell Fantasma",
+                                      style: TextStyle(),
+                                    ),
+                                  ]),
+                                ),
+                                const Text("-")
+                              ],
+                            ),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      width: 50,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Center(
+                            child: SvgPicture.asset(
+                              AppIcons.football,
+                              width: 20,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          const Text(
+                            "20:00",
+                            style: TextStyle(
+                              // color: Colors.red,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
