@@ -1,3 +1,6 @@
+import '../../../coaches/data/models/coach_model.dart';
+import '../../../competitions/data/models/compeition_model.dart';
+import '../../../players/data/models/player_model.dart';
 import '../../domain/entities/call_up_entity.dart';
 
 class CallUpModel extends CallUpEntity {
@@ -13,6 +16,9 @@ class CallUpModel extends CallUpEntity {
     super.isCancelled,
     super.visibleUntil,
     super.coachId,
+    super.coach,
+    super.competition,
+    super.player,
   });
 
   factory CallUpModel.fromMap(Map<String, dynamic> map) {
@@ -32,6 +38,12 @@ class CallUpModel extends CallUpEntity {
           ? DateTime.tryParse(map['visible_until'])
           : null,
       coachId: map['coach_id'] as String?,
+      coach: map['coaches'] != null ? CoachModel.fromMap(map['coaches']) : null,
+      player:
+          map['players'] != null ? PlayerModel.fromMap(map['players']) : null,
+      competition: map['competitions'] != null
+          ? CompetitionModel.fromMap(map['competitions'])
+          : null,
     );
   }
 

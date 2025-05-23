@@ -1,0 +1,55 @@
+import 'package:dartz/dartz.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../models/call_up_model.dart';
+import 'i_call_up_datasource.dart';
+
+class CallUpRemoteDataSsource extends ICallUpRemoteDataSource {
+  final SupabaseClient client;
+
+  CallUpRemoteDataSsource({required this.client});
+
+  @override
+  Future<Unit> cancelCallUp(String id) async {
+    await client.from('call_ups').update({'is_cancelled': true}).eq('id', id);
+    return unit;
+  }
+
+  @override
+  Future<Unit> createCallUp(CallUpModel callUp) async {
+    await client.from('call_ups').insert(callUp.toMap());
+    return unit;
+  }
+
+  @override
+  Future<Unit> deleteCallUp(String id) async {
+    await client.from('call_ups').delete().eq('id', id);
+    return unit;
+  }
+
+  @override
+  Future<List<CallUpModel>> getCallUpsByCoach(String coachId) async {
+    final response = await client
+        .from('call_ups')
+        .select('*,  coeches(*), players(*), competitions(*)')
+        .eq('coach_id', coachId);
+
+    return (response as List).map((json) => CallUpModel.fromMap(json)).toList();
+  }
+
+  @override
+  Future<List<CallUpModel>> getCallUpsByPlayer(String playerId) async {
+    final response = await client
+        .from('call_ups')
+        .select('*,  coeches(*), players(*), competitions(*)')
+        .eq('player_id', playerId);
+
+    return (response as List).map((json) => CallUpModel.fromMap(json)).toList();
+  }
+
+  @override
+  Future<Unit> updateCallUpStatus(String id, String status) async {
+    await client.from('call_ups').update({'status': status}).eq('id', id);
+    return unit;
+  }
+}
