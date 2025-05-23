@@ -78,7 +78,6 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
               ),
               const SizedBox(height: 10),
               _buildGameWithCard(),
-              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: const Text(
@@ -475,34 +474,37 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
   }
 
   Widget _buildCallUpsWidget() {
-    return BlocBuilder<CallUpCubit, CallUpState>(
-      builder: (context, state) {
-        if (state is CallUpLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is CallUpLoaded) {
-          final callUps = state.callUps;
-          if (callUps.isEmpty) {
-            return const Text("Sem nenhuma convocatória");
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: BlocBuilder<CallUpCubit, CallUpState>(
+        builder: (context, state) {
+          if (state is CallUpLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is CallUpLoaded) {
+            final callUps = state.callUps;
+            if (callUps.isEmpty) {
+              return const Text("Sem nenhuma convocatória");
+            }
+
+            return FadeIn(
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final callUp = callUps[index];
+
+                  return _callUpComponent(callUp);
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
+                itemCount: callUps.length,
+              ),
+            );
           }
-
-          return FadeIn(
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final callUp = callUps[index];
-
-                return _callUpComponent(callUp);
-              },
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
-              itemCount: callUps.length,
-            ),
-          );
-        }
-        return SizedBox.shrink();
-      },
+          return SizedBox.shrink();
+        },
+      ),
     );
   }
 
