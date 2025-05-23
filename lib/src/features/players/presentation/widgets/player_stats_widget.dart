@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:luanda_sport_app/src/app/app_entity.dart';
 import 'package:luanda_sport_app/src/core/utils/warning_widget.dart';
 
 import '../../../../config/themes/app_colors.dart';
@@ -30,9 +31,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
   @override
   void initState() {
     selectedTeamId = widget.player.teamId ?? '';
-    context
-        .read<PlayerTeamCubit>()
-        .getPlayerTeams("9f829de7-50dc-4351-aff9-fc0d1c93cef2");
+    context.read<PlayerTeamCubit>().getPlayerTeams(AppEntity.uId!);
 
     super.initState();
   }

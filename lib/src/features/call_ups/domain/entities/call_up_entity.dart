@@ -15,6 +15,7 @@ class CallUpEntity {
   final bool? isCancelled;
   final DateTime? visibleUntil;
   final String? coachId;
+  final String? position;
   final CoachEntity? coach;
   final CompetitionEntity? competition;
   final PlayerEntity? player;
@@ -29,6 +30,7 @@ class CallUpEntity {
     this.sentAt,
     this.respondedAt,
     this.notes,
+    this.position,
     this.isCancelled,
     this.visibleUntil,
     this.coachId,

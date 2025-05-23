@@ -20,6 +20,7 @@ class PlayerTeamRemoteDataSource extends IPlayerTeamRemoteDataSource {
 
   @override
   Future<List<PlayerTeamModel>> getPlayerTeams(String playerId) {
+    print(playerId);
     return client
         .from('player_teams')
         .select('*, players(*), teams(*)')

@@ -14,6 +14,7 @@ class CallUpModel extends CallUpEntity {
     super.sentAt,
     super.respondedAt,
     super.notes,
+    super.position,
     super.isCancelled,
     super.visibleUntil,
     super.coachId,
@@ -30,6 +31,7 @@ class CallUpModel extends CallUpEntity {
       competitionId: map['competition_id'] as String?,
       playerId: map['player_id'] as String,
       status: map['status'] as String,
+      position: map['position'] as String,
       sentAt: map['sent_at'] != null ? DateTime.tryParse(map['sent_at']) : null,
       respondedAt: map['responded_at'] != null
           ? DateTime.tryParse(map['responded_at'])
@@ -40,11 +42,10 @@ class CallUpModel extends CallUpEntity {
           ? DateTime.tryParse(map['visible_until'])
           : null,
       coachId: map['coach_id'] as String?,
-      coach: map['coaches'] != null ? CoachModel.fromMap(map['coaches']) : null,
-      player:
-          map['players'] != null ? PlayerModel.fromMap(map['players']) : null,
-      competition: map['competitions'] != null
-          ? CompetitionModel.fromMap(map['competitions'])
+      coach: map['coach'] != null ? CoachModel.fromMap(map['coach']) : null,
+      player: map['player'] != null ? PlayerModel.fromMap(map['player']) : null,
+      competition: map['competition'] != null
+          ? CompetitionModel.fromMap(map['competition'])
           : null,
       match: map['match'] != null ? MatchModel.fromMap(map['match']) : null,
     );

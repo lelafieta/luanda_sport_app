@@ -57,7 +57,13 @@ class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
   Future<List<CallUpModel>> getCallUpsByPlayerPending(String playerId) async {
     final response = await client
         .from('call_ups')
-        .select('*,  coaches(*), players(*), competitions(*)')
+        .select(''
+            '*,  coach:coach_id(*), player:player_id(*),'
+            ' competition:competition_id(*),'
+            'match:match_id(*,'
+            ' home_team:home_team_id(*), '
+            ' away_team:away_team_id(*))'
+            '')
         .eq('status', 'pending')
         .eq('player_id', playerId);
 
