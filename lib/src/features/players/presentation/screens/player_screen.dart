@@ -9,6 +9,7 @@ import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/resources/app_images.dart';
 import '../../../achievements/presentation/views/achievements_view.dart';
+import '../../../call_ups/presentation/cubit/call_up_cubit.dart';
 import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../widgets/my_profile_widget.dart';
 import '../widgets/player_stats_widget.dart';
@@ -30,7 +31,6 @@ class _PlayerScreenState extends State<PlayerScreen>
   void initState() {
     super.initState();
     context.read<GetMyPlayerDataCubit>().fetchPlayerData(AppEntity.uId!);
-
     _tabController = TabController(length: 4, vsync: this);
   }
 

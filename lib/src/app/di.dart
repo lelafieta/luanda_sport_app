@@ -1,24 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_coach_usecase.dart';
-import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_player_usecase.dart';
-import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/update_call_up_status_usecase.dart';
-import 'package:luanda_sport_app/src/features/call_ups/presentation/call_up_action/call_up_action_cubit.dart';
-import 'package:luanda_sport_app/src/features/players/data/repositories/player_stats_repository.dart';
-import 'package:luanda_sport_app/src/features/players/domain/repositories/i_player_stats_repository.dart';
-import 'package:luanda_sport_app/src/features/players/domain/usecases/create_player_stats_usecase.dart';
-import 'package:luanda_sport_app/src/features/players/domain/usecases/get_player_stats_by_id_usecase.dart';
-import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
-import 'package:luanda_sport_app/src/features/squads/presentation/cubit/squad_cubit.dart';
-import 'package:luanda_sport_app/src/features/teams/data/datasources/i_starting_lineup_player_datasource.dart';
-import 'package:luanda_sport_app/src/features/teams/data/datasources/starting_lineup_player_datasource.dart';
-import 'package:luanda_sport_app/src/features/teams/domain/repositories/i_starting_lineup_player_repository.dart';
-import 'package:luanda_sport_app/src/features/teams/domain/usecases/create_starting_lineup_players_usecase.dart';
-import 'package:luanda_sport_app/src/features/teams/domain/usecases/delete_squad_team_usecase.dart';
-import 'package:luanda_sport_app/src/features/teams/domain/usecases/get_team_starting_lineup_players_usecase.dart';
-import 'package:luanda_sport_app/src/features/teams/domain/usecases/remove_starting_lineup_player_usecase.dart';
-import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_team_equipament_cubit/get_team_equipament_cubit.dart';
-import 'package:luanda_sport_app/src/features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/cache/i_secure_storage_helper.dart';
@@ -37,6 +19,10 @@ import '../features/call_ups/domain/repositories/i_call_up_repository.dart';
 import '../features/call_ups/domain/usecases/cancel_call_up_usecase.dart';
 import '../features/call_ups/domain/usecases/create_call_up_usecase.dart';
 import '../features/call_ups/domain/usecases/delete_call_up_usecase.dart';
+import '../features/call_ups/domain/usecases/get_call_ups_by_player_usecase.dart';
+import '../features/call_ups/domain/usecases/update_call_up_status_usecase.dart';
+import '../features/call_ups/presentation/call_up_action/call_up_action_cubit.dart';
+import '../features/call_ups/presentation/cubit/call_up_cubit.dart';
 import '../features/player_teams/data/datasources/i_player_team_datasource.dart';
 import '../features/player_teams/data/datasources/player_team_datasource.dart';
 import '../features/player_teams/data/repositories/player_team_repository.dart';
@@ -49,15 +35,20 @@ import '../features/players/data/datasources/i_player_stats_datasource.dart';
 import '../features/players/data/datasources/player_datasource.dart';
 import '../features/players/data/datasources/player_stats_datasource.dart';
 import '../features/players/data/repositories/player_repository.dart';
+import '../features/players/data/repositories/player_stats_repository.dart';
 import '../features/players/domain/repositories/i_player_repository.dart';
+import '../features/players/domain/repositories/i_player_stats_repository.dart';
+import '../features/players/domain/usecases/create_player_stats_usecase.dart';
 import '../features/players/domain/usecases/create_player_usecase.dart';
 import '../features/players/domain/usecases/delete_player_stats_usecase.dart';
 import '../features/players/domain/usecases/delete_player_usecase.dart';
 import '../features/players/domain/usecases/get_player_by_id_usecase.dart';
+import '../features/players/domain/usecases/get_player_stats_by_id_usecase.dart';
 import '../features/players/domain/usecases/get_player_stats_by_team_usecase.dart';
 import '../features/players/domain/usecases/get_players_by_team_usecase.dart';
 import '../features/players/domain/usecases/update_player_stats_usecase.dart';
 import '../features/players/domain/usecases/update_player_usecase.dart';
+import '../features/players/presentation/cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
 import '../features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
 import '../features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
 import '../features/squads/data/datasources/i_squad_datasource.dart';
@@ -67,21 +58,31 @@ import '../features/squads/domain/repositories/squad_repository.dart';
 import '../features/squads/domain/usecases/create_squad_usecase.dart';
 import '../features/squads/domain/usecases/get_squad_by_game_type_formation_usecase.dart';
 import '../features/squads/domain/usecases/get_squads_by_team_usecase.dart';
+import '../features/squads/presentation/cubit/squad_cubit.dart';
+import '../features/teams/data/datasources/i_starting_lineup_player_datasource.dart';
 import '../features/teams/data/datasources/i_team_datasource.dart';
+import '../features/teams/data/datasources/starting_lineup_player_datasource.dart';
 import '../features/teams/data/datasources/team_datasource.dart';
 import '../features/teams/data/repositories/starting_lineup_player_repository.dart';
 import '../features/teams/data/repositories/team_repository.dart';
+import '../features/teams/domain/repositories/i_starting_lineup_player_repository.dart';
 import '../features/teams/domain/repositories/i_team_repository.dart';
+import '../features/teams/domain/usecases/create_starting_lineup_players_usecase.dart';
 import '../features/teams/domain/usecases/create_team_usecase.dart';
+import '../features/teams/domain/usecases/delete_squad_team_usecase.dart';
 import '../features/teams/domain/usecases/delete_team_usecase.dart';
 import '../features/teams/domain/usecases/get_my_teams_usecase.dart';
 import '../features/teams/domain/usecases/get_team_by_id_usecase.dart';
+import '../features/teams/domain/usecases/get_team_starting_lineup_players_usecase.dart';
 import '../features/teams/domain/usecases/get_team_tactical_formation_usecase.dart';
 import '../features/teams/domain/usecases/get_teams_usecase.dart';
+import '../features/teams/domain/usecases/remove_starting_lineup_player_usecase.dart';
 import '../features/teams/domain/usecases/update_team_squad_usecase.dart';
 import '../features/teams/domain/usecases/update_team_usecase.dart';
 import '../features/teams/presentation/cubit/action_team_squad_cubit/action_team_squad_cubit.dart';
 import '../features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
+import '../features/teams/presentation/cubit/get_team_equipament_cubit/get_team_equipament_cubit.dart';
+import '../features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
 import '../features/teams/presentation/cubit/team_action_cubit/team_action_cubit.dart';
 import '../features/teams/presentation/cubit/team_fetch_cubit/team_fetch_cubit.dart';
 import '../features/trophies/data/datasources/i_trophy_datasource.dart';
@@ -166,11 +167,13 @@ void _registerCubits() {
 
   // CALL UP
   sl.registerFactory(() => CallUpActionCubit(
-        createCallUpUseCase: sl(),
-        cancelCallUpUseCase: sl(),
-        updateCallUpStatusUseCase: sl(),
-        deleteCallUpUseCase: sl(),
-      ));
+      createCallUpUseCase: sl(),
+      cancelCallUpUseCase: sl(),
+      updateCallUpStatusUseCase: sl(),
+      deleteCallUpUseCase: sl()));
+
+  sl.registerFactory(() => CallUpCubit(
+      getCallUpByCoachUseCase: sl(), getCallUpByPlayerUseCase: sl()));
 }
 
 void _registerRepositories() {

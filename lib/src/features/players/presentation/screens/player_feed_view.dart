@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,12 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:luanda_sport_app/src/features/call_ups/domain/entities/call_up_entity.dart';
 import 'package:luanda_sport_app/src/features/matches/domain/entities/cartaz_entity.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../../../app/app_entity.dart';
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
+import '../../../call_ups/presentation/cubit/call_up_cubit.dart';
 import '../../../matches/presentation/views/match_cartaz_view.dart';
 import 'print_image.dart';
 
@@ -44,92 +49,76 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
   ];
 
   @override
+  void initState() {
+    context.read<CallUpCubit>().getCallUpByPlayer(AppEntity.uId!);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: const TitleWidget(title: "Meu Estatus na equipe")),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Proximo jogo",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 10),
-              _buildGameWithCard(),
-              const SizedBox(height: 16),
-              Text(
-                "Convocatórias",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 10),
-              _buildCardResponse(),
-              const SizedBox(height: 16),
-              if (convocado) ...[
-                const SizedBox(height: 16),
-                Card(
-                  color: isTreino ? Colors.yellow[100] : Colors.orange[100],
-                  child: ListTile(
-                    leading: Icon(
-                      isTreino ? Icons.fitness_center : Icons.sports_soccer,
-                      color: isTreino ? Colors.amber : Colors.orange,
-                    ),
-                    title: Text(
-                      isTreino
-                          ? "Treino programado"
-                          : "Próximo Jogo: contra $adversario",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Data: $dataEvento"),
-                        Text("Local: $estadio"),
-                      ],
-                    ),
+      body: FadeIn(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Proximo jogo",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
+                const SizedBox(height: 10),
+                _buildGameWithCard(),
                 const SizedBox(height: 16),
-                if (isTreino && proximosTreinos.isNotEmpty)
-                  Card(
-                    elevation: 2,
-                    color: Colors.red[50],
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Próximos Treinos",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                const Text(
+                  "Convocatórias",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                _buildCallUpsWidget(),
+                const SizedBox(height: 16),
+                if (convocado) ...[
+                  const SizedBox(height: 16),
+                  if (isTreino && proximosTreinos.isNotEmpty)
+                    Card(
+                      elevation: 2,
+                      color: Colors.red[50],
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Próximos Treinos",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          ...proximosTreinos.map((treino) => ListTile(
-                                leading: const Icon(Icons.schedule,
-                                    color: Colors.red),
-                                title: Text(treino['data']!),
-                                subtitle: Text(treino['local']!),
-                              )),
-                        ],
+                            const SizedBox(height: 8),
+                            ...proximosTreinos.map((treino) => ListTile(
+                                  leading: const Icon(Icons.schedule,
+                                      color: Colors.red),
+                                  title: Text(treino['data']!),
+                                  subtitle: Text(treino['local']!),
+                                )),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+                  const SizedBox(height: 16),
+                ],
                 const SizedBox(height: 16),
               ],
-              const SizedBox(height: 16),
-            ],
+            ),
           ),
         ),
       ),
@@ -456,200 +445,228 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
     );
   }
 
-  Widget _buildCardResponse() {
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          border: Border.all(
-            width: 1,
-            color: Colors.grey.shade400,
-          ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: GestureDetector(
-          onTap: () {},
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      child: const Text(
-                        "Exibição",
-                        style: TextStyle(
-                          // color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+  Widget _buildCallUpsWidget() {
+    return BlocBuilder<CallUpCubit, CallUpState>(
+      builder: (context, state) {
+        if (state is CallUpLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is CallUpLoaded) {
+          final callUps = state.callUps;
+          if (callUps.isEmpty) {
+            return const Text("Sem nenhuma convocatória");
+          }
+
+          return ListView.separated(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return SizedBox(
+                width: double.infinity,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey.shade400,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          )),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Column(
-                                children: [
-                                  Row(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                child: const Text(
+                                  "Exibição",
+                                  style: TextStyle(
+                                    // color: AppColors.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade50,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20),
+                                    )),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Row(children: [
+                                                    ClipOval(
+                                                      child: CachedNetworkImage(
+                                                          width: 30,
+                                                          height: 30,
+                                                          fit: BoxFit.cover,
+                                                          imageUrl:
+                                                              "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    const Text(
+                                                      "Dourada FC",
+                                                      style: TextStyle(),
+                                                    ),
+                                                  ]),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Row(children: [
+                                                    ClipOval(
+                                                      child: CachedNetworkImage(
+                                                          width: 30,
+                                                          height: 30,
+                                                          fit: BoxFit.cover,
+                                                          imageUrl:
+                                                              "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    const Text(
+                                                      "Ell Fantasma",
+                                                      style: TextStyle(),
+                                                    ),
+                                                  ]),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(20),
+                              topLeft: Radius.circular(20),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Atacante (ST)",
+                                style: TextStyle(
+                                  fontWeight: ui.FontWeight.bold,
+                                ),
+                              ),
+                              const Text("Sábado, 17 de Maio 2025"),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.lightWightColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      side: BorderSide(
+                                          color: Colors.red.shade500),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Expanded(
-                                        child: Row(children: [
-                                          ClipOval(
-                                            child: CachedNetworkImage(
-                                                width: 30,
-                                                height: 30,
-                                                fit: BoxFit.cover,
-                                                imageUrl:
-                                                    "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          const Text(
-                                            "Dourada FC",
-                                            style: TextStyle(),
-                                          ),
-                                        ]),
+                                      SvgPicture.asset(
+                                        AppIcons.close,
+                                        width: 22,
+                                        color: Colors.red.shade500,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        "Recusar",
+                                        style: TextStyle(
+                                            color: Colors.red.shade500),
                                       ),
                                     ],
+                                  )),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: BorderSide(color: AppColors.primary),
                                   ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(children: [
-                                          ClipOval(
-                                            child: CachedNetworkImage(
-                                                width: 30,
-                                                height: 30,
-                                                fit: BoxFit.cover,
-                                                imageUrl:
-                                                    "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          const Text(
-                                            "Ell Fantasma",
-                                            style: TextStyle(),
-                                          ),
-                                        ]),
+                                ),
+                                onPressed: () {},
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      AppIcons.check,
+                                      width: 22,
+                                      color: AppColors.white,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Text(
+                                      "Recusar",
+                                      style: TextStyle(
+                                        color: AppColors.white,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Atacante (ST)",
-                      style: TextStyle(
-                        fontWeight: ui.FontWeight.bold,
-                      ),
-                    ),
-                    const Text("Sábado, 17 de Maio 2025"),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.lightWightColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Colors.red.shade500),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.close,
-                              width: 22,
-                              color: Colors.red.shade500,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              "Recusar",
-                              style: TextStyle(color: Colors.red.shade500),
-                            ),
-                          ],
-                        )),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: AppColors.primary),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.check,
-                              width: 22,
-                              color: AppColors.white,
-                            ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              "Recusar",
-                              style: TextStyle(
-                                color: AppColors.white,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
-                        )),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+            itemCount: callUps.length,
+          );
+        }
+        return SizedBox.shrink();
+      },
     );
   }
 }
