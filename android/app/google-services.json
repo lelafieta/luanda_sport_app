@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "24511238363",
+    "project_id": "luanda-sport-app",
+    "storage_bucket": "luanda-sport-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24511238363:android:55c69424fa5a2421a53cfe",
+        "android_client_info": {
+          "package_name": "com.luanda_sport_app.futurist.luanda_sport_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNs0QYVf1uc1YZ6Bc0ECLkeVdPaCGTujo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

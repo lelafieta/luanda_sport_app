@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:luanda_sport_app/firebase_options.dart';
 import 'package:luanda_sport_app/src/app/app_entity.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -10,6 +12,10 @@ import 'src/core/cache/i_secure_storage_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await ScreenUtil.ensureScreenSize();
   await initializeDateFormatting('pt_BR', null);
   await dotenv.load(fileName: ".env");

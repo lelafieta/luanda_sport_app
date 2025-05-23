@@ -10,6 +10,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:luanda_sport_app/src/core/utils/app_date_utils.dart';
@@ -62,65 +63,67 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
       // appBar: AppBar(title: const TitleWidget(title: "Meu Estatus na equipe")),
       body: FadeIn(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: const Text(
                   "Proximo jogo",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ),
-                const SizedBox(height: 10),
-                _buildGameWithCard(),
-                const SizedBox(height: 16),
-                const Text(
+              ),
+              const SizedBox(height: 10),
+              _buildGameWithCard(),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: const Text(
                   "Convocatórias",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ),
-                const SizedBox(height: 10),
-                _buildCallUpsWidget(),
+              ),
+              _buildCallUpsWidget(),
+              const SizedBox(height: 16),
+              if (convocado) ...[
                 const SizedBox(height: 16),
-                if (convocado) ...[
-                  const SizedBox(height: 16),
-                  if (isTreino && proximosTreinos.isNotEmpty)
-                    Card(
-                      elevation: 2,
-                      color: Colors.red[50],
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Próximos Treinos",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                if (isTreino && proximosTreinos.isNotEmpty)
+                  Card(
+                    elevation: 2,
+                    color: Colors.red[50],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Próximos Treinos",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(height: 8),
-                            ...proximosTreinos.map((treino) => ListTile(
-                                  leading: const Icon(Icons.schedule,
-                                      color: Colors.red),
-                                  title: Text(treino['data']!),
-                                  subtitle: Text(treino['local']!),
-                                )),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 8),
+                          ...proximosTreinos.map((treino) => ListTile(
+                                leading: const Icon(Icons.schedule,
+                                    color: Colors.red),
+                                title: Text(treino['data']!),
+                                subtitle: Text(treino['local']!),
+                              )),
+                        ],
                       ),
                     ),
-                  const SizedBox(height: 16),
-                ],
+                  ),
                 const SizedBox(height: 16),
               ],
-            ),
+              const SizedBox(height: 16),
+            ],
           ),
         ),
       ),
@@ -255,8 +258,32 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
   }
 
   Widget _buildGameWithCard() {
-    return SizedBox(
+    return ImageSlideshow(
       width: double.infinity,
+      height: 250,
+      initialPage: 0,
+      indicatorColor: Colors.blue,
+      indicatorBackgroundColor: Colors.grey,
+      children: [
+        nextMatchWidget(),
+        nextMatchWidget(),
+      ],
+
+      /// Called whenever the page in the center of the viewport changes.
+      onPageChanged: (value) {
+        print('Page changed: $value');
+      },
+
+      autoPlayInterval: 0,
+
+      isLoop: false,
+    );
+  }
+
+  Widget nextMatchWidget() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GestureDetector(
         onTap: () {},
         child: Column(
