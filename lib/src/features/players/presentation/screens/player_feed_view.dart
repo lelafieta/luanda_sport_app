@@ -4,7 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:luanda_sport_app/src/features/matches/domain/entities/cartaz_entity.dart';
@@ -50,159 +52,14 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: const BorderSide(color: AppColors.primary),
-                    ),
-                  ),
-                  onPressed: () {
-                    final CartazEntity cartazExemplo = CartazEntity(
-                      titulo: "Final do Campeonato Municipal",
-                      equipeCasa: "Futebol Clube Luanda",
-                      equipeVisitante: "Benfica de Talatona",
-                      imagemEquipeCasa:
-                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
-                      imagemEquipeVisitante:
-                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
-                      logoCompeticao:
-                          "https://example.com/imagens/campeonato-logo.png",
-                      dataHora: DateTime(2025, 6, 15, 16, 30),
-                      local: "Estádio 11 de Novembro",
-                      descricao: 'Descrição do jogo',
-                    );
-                    context.pushTransparentRoute(SecondPage(
-                      cartaz: cartazExemplo,
-                    ));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        AppIcons.images,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        "Partilhar Convocatória",
-                        style: TextStyle(color: AppColors.lightWightColor),
-                      ),
-                    ],
-                  )),
-              Card(
-                color: convocado ? Colors.green[100] : Colors.red[100],
-                child: ListTile(
-                  leading: Icon(
-                    convocado ? Icons.check_circle : Icons.cancel,
-                    color: convocado ? Colors.green : Colors.red,
-                  ),
-                  title: Text(
-                    convocado
-                        ? "Você foi convocado para a equipe!"
-                        : "Você não foi convocado.",
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                ),
+              Text(
+                "Jogo",
               ),
+              const SizedBox(height: 10),
+              _buildGameWithCard(),
               const SizedBox(height: 16),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: const BorderSide(color: AppColors.primary),
-                    ),
-                  ),
-                  onPressed: () {
-                    final CartazEntity cartazExemplo = CartazEntity(
-                      titulo: "Final do Campeonato Municipal",
-                      equipeCasa: "Futebol Clube Luanda",
-                      equipeVisitante: "Benfica de Talatona",
-                      imagemEquipeCasa:
-                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
-                      imagemEquipeVisitante:
-                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
-                      logoCompeticao:
-                          "https://example.com/imagens/campeonato-logo.png",
-                      dataHora: DateTime(2025, 6, 15, 16, 30),
-                      local: "Estádio 11 de Novembro",
-                      descricao: 'Descrição do jogo',
-                    );
-                    context.pushTransparentRoute(SecondPage(
-                      cartaz: cartazExemplo,
-                    ));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        AppIcons.images,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        "Partilhar team inicial",
-                        style: TextStyle(color: AppColors.lightWightColor),
-                      ),
-                    ],
-                  )),
-              Card(
-                color: noOnzeInicial ? Colors.blue[100] : Colors.grey[300],
-                child: ListTile(
-                  leading: Icon(
-                    noOnzeInicial ? Icons.star : Icons.star_border,
-                    color: noOnzeInicial ? Colors.blue : Colors.grey,
-                  ),
-                  title: Text(
-                    noOnzeInicial
-                        ? "Você está no team inicial!"
-                        : "Você não está no 11 inicial.",
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
+              _buildCardResponse(),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      showGameWithCard(),
-                      // const SizedBox(height: 5),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(20),
-                            topLeft: Radius.circular(20),
-                          ),
-                        ),
-                        child: const Text("Sábado, 17 de Maio 2025"),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Card(
-                color: Colors.teal[100],
-                child: ListTile(
-                  leading: const Icon(Icons.person_pin, color: Colors.teal),
-                  title: const Text(
-                    "Sua Posição",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: Text(posicao),
-                ),
-              ),
               if (convocado) ...[
                 const SizedBox(height: 16),
                 Card(
@@ -393,176 +250,392 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
     );
   }
 
-  Widget showGameWithCard() {
-    return Column(
-      children: [
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-                side: const BorderSide(color: AppColors.primary),
-              ),
-            ),
-            onPressed: () {
-              final CartazEntity cartazExemplo = CartazEntity(
-                titulo: "Final do Campeonato Municipal",
-                equipeCasa: "Futebol Clube Luanda",
-                equipeVisitante: "Benfica de Talatona",
-                imagemEquipeCasa:
-                    "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
-                imagemEquipeVisitante:
-                    "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
-                logoCompeticao:
-                    "https://example.com/imagens/campeonato-logo.png",
-                dataHora: DateTime(2025, 6, 15, 16, 30),
-                local: "Estádio 11 de Novembro",
-                descricao: 'Descrição do jogo',
-              );
-              context.pushTransparentRoute(SecondPage(
-                cartaz: cartazExemplo,
-              ));
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  AppIcons.images,
-                  color: Colors.white,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  "Partilhar do cartaz",
-                  style: TextStyle(color: AppColors.lightWightColor),
-                ),
-              ],
-            )),
-        const SizedBox(height: 5),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(5),
-                child: const Text(
-                  "Exibição",
-                  style: TextStyle(
-                    // color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
+  Widget _buildGameWithCard() {
+    return SizedBox(
+      width: double.infinity,
+      child: GestureDetector(
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(color: AppColors.primary),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    )),
+                onPressed: () {
+                  final CartazEntity cartazExemplo = CartazEntity(
+                    titulo: "Final do Campeonato Municipal",
+                    equipeCasa: "Futebol Clube Luanda",
+                    equipeVisitante: "Benfica de Talatona",
+                    imagemEquipeCasa:
+                        "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
+                    imagemEquipeVisitante:
+                        "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
+                    logoCompeticao:
+                        "https://example.com/imagens/campeonato-logo.png",
+                    dataHora: DateTime(2025, 6, 15, 16, 30),
+                    local: "Estádio 11 de Novembro",
+                    descricao: 'Descrição do jogo',
+                  );
+                  context.pushTransparentRoute(SecondPage(
+                    cartaz: cartazExemplo,
+                  ));
+                },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            right: BorderSide(
-                                width: 2, color: Colors.grey.shade200),
+                    SvgPicture.asset(
+                      AppIcons.images,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      "Partilhar do cartaz",
+                      style: TextStyle(color: AppColors.lightWightColor),
+                    ),
+                  ],
+                )),
+            const SizedBox(height: 5),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Text(
+                      "Exibição",
+                      style: TextStyle(
+                        // color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                        )),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                    width: 2, color: Colors.grey.shade200),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(children: [
+                                        ClipOval(
+                                          child: CachedNetworkImage(
+                                              width: 30,
+                                              height: 30,
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                                  "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text(
+                                          "Dourada FC",
+                                          style: TextStyle(),
+                                        ),
+                                      ]),
+                                    ),
+                                    const Text("-")
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(children: [
+                                        ClipOval(
+                                          child: CachedNetworkImage(
+                                              width: 30,
+                                              height: 30,
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                                  "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text(
+                                          "Ell Fantasma",
+                                          style: TextStyle(),
+                                        ),
+                                      ]),
+                                    ),
+                                    const Text("-")
+                                  ],
+                                ),
+                                const SizedBox(width: 10),
+                              ],
+                            ),
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Row(children: [
-                                    ClipOval(
-                                      child: CachedNetworkImage(
-                                          width: 30,
-                                          height: 30,
-                                          fit: BoxFit.cover,
-                                          imageUrl:
-                                              "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    const Text(
-                                      "Dourada FC",
-                                      style: TextStyle(),
-                                    ),
-                                  ]),
+                        const SizedBox(height: 10),
+                        Container(
+                          width: 50,
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: SvgPicture.asset(
+                                  AppIcons.football,
+                                  width: 20,
                                 ),
-                                const Text("-")
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Row(children: [
-                                    ClipOval(
-                                      child: CachedNetworkImage(
-                                          width: 30,
-                                          height: 30,
-                                          fit: BoxFit.cover,
-                                          imageUrl:
-                                              "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    const Text(
-                                      "Ell Fantasma",
-                                      style: TextStyle(),
-                                    ),
-                                  ]),
+                              ),
+                              const SizedBox(height: 5),
+                              const Text(
+                                "20:00",
+                                style: TextStyle(
+                                  // color: Colors.red,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                const Text("-")
-                              ],
-                            ),
-                            const SizedBox(width: 10),
-                          ],
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
+              ),
+              child: const Text("Sábado, 17 de Maio 2025"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCardResponse() {
+    return SizedBox(
+      width: double.infinity,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          border: Border.all(
+            width: 1,
+            color: Colors.grey.shade400,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: GestureDetector(
+          onTap: () {},
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      child: const Text(
+                        "Convocatória",
+                        style: TextStyle(
+                          // color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
                     Container(
-                      width: 50,
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.only(left: 10),
-                      child: Column(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade50,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          )),
+                      child: Row(
                         children: [
-                          Center(
-                            child: SvgPicture.asset(
-                              AppIcons.football,
-                              width: 20,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            "20:00",
-                            style: TextStyle(
-                              // color: Colors.red,
-                              fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Row(children: [
+                                          ClipOval(
+                                            child: CachedNetworkImage(
+                                                width: 30,
+                                                height: 30,
+                                                fit: BoxFit.cover,
+                                                imageUrl:
+                                                    "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          const Text(
+                                            "Dourada FC",
+                                            style: TextStyle(),
+                                          ),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Row(children: [
+                                          ClipOval(
+                                            child: CachedNetworkImage(
+                                                width: 30,
+                                                height: 30,
+                                                fit: BoxFit.cover,
+                                                imageUrl:
+                                                    "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          const Text(
+                                            "Ell Fantasma",
+                                            style: TextStyle(),
+                                          ),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Atacante (ST)",
+                      style: TextStyle(
+                        fontWeight: ui.FontWeight.bold,
+                      ),
+                    ),
+                    const Text("Sábado, 17 de Maio 2025"),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.lightWightColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Colors.red.shade500),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.close,
+                              width: 22,
+                              color: Colors.red.shade500,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              "Recusar",
+                              style: TextStyle(color: Colors.red.shade500),
+                            ),
+                          ],
+                        )),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: AppColors.primary),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.check,
+                              width: 22,
+                              color: AppColors.white,
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
+                              "Recusar",
+                              style: TextStyle(
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
               ),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
