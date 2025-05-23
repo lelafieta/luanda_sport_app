@@ -1,8 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:luanda_sport_app/src/features/matches/domain/entities/cartaz_entity.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../matches/presentation/views/match_cartaz_view.dart';
@@ -17,9 +23,9 @@ class PlayerFeedView extends StatefulWidget {
 
 class _PlayerFeedViewState extends State<PlayerFeedView> {
   // Simulações para exemplo
-  final bool convocado = true;
-  final bool noOnzeInicial = true;
-  final bool isTreino = true; // true para mostrar treino
+  final bool convocado = false;
+  final bool noOnzeInicial = false;
+  final bool isTreino = false; // true para mostrar treino
 
   // Detalhes do evento atual
   final String adversario = "Petro de Luanda";
@@ -44,6 +50,47 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: const BorderSide(color: AppColors.primary),
+                    ),
+                  ),
+                  onPressed: () {
+                    final CartazEntity cartazExemplo = CartazEntity(
+                      titulo: "Final do Campeonato Municipal",
+                      equipeCasa: "Futebol Clube Luanda",
+                      equipeVisitante: "Benfica de Talatona",
+                      imagemEquipeCasa:
+                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
+                      imagemEquipeVisitante:
+                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
+                      logoCompeticao:
+                          "https://example.com/imagens/campeonato-logo.png",
+                      dataHora: DateTime(2025, 6, 15, 16, 30),
+                      local: "Estádio 11 de Novembro",
+                      descricao: 'Descrição do jogo',
+                    );
+                    context.pushTransparentRoute(SecondPage(
+                      cartaz: cartazExemplo,
+                    ));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AppIcons.images,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        "Partilhar Convocatória",
+                        style: TextStyle(color: AppColors.lightWightColor),
+                      ),
+                    ],
+                  )),
               Card(
                 color: convocado ? Colors.green[100] : Colors.red[100],
                 child: ListTile(
@@ -61,6 +108,47 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                 ),
               ),
               const SizedBox(height: 16),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: const BorderSide(color: AppColors.primary),
+                    ),
+                  ),
+                  onPressed: () {
+                    final CartazEntity cartazExemplo = CartazEntity(
+                      titulo: "Final do Campeonato Municipal",
+                      equipeCasa: "Futebol Clube Luanda",
+                      equipeVisitante: "Benfica de Talatona",
+                      imagemEquipeCasa:
+                          "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg",
+                      imagemEquipeVisitante:
+                          "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg",
+                      logoCompeticao:
+                          "https://example.com/imagens/campeonato-logo.png",
+                      dataHora: DateTime(2025, 6, 15, 16, 30),
+                      local: "Estádio 11 de Novembro",
+                      descricao: 'Descrição do jogo',
+                    );
+                    context.pushTransparentRoute(SecondPage(
+                      cartaz: cartazExemplo,
+                    ));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AppIcons.images,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        "Partilhar team inicial",
+                        style: TextStyle(color: AppColors.lightWightColor),
+                      ),
+                    ],
+                  )),
               Card(
                 color: noOnzeInicial ? Colors.blue[100] : Colors.grey[300],
                 child: ListTile(
@@ -70,7 +158,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                   ),
                   title: Text(
                     noOnzeInicial
-                        ? "Você está no 11 inicial!"
+                        ? "Você está no team inicial!"
                         : "Você não está no 11 inicial.",
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w600),
