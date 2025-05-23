@@ -4,10 +4,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/call_up_model.dart';
 import 'i_call_up_datasource.dart';
 
-class CallUpRemoteDataSsource extends ICallUpRemoteDataSource {
+class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
   final SupabaseClient client;
 
-  CallUpRemoteDataSsource({required this.client});
+  CallUpRemoteDataSource({required this.client});
 
   @override
   Future<Unit> cancelCallUp(String id) async {

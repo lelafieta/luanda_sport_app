@@ -1,5 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_coach_usecase.dart';
+import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_player_usecase.dart';
+import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/update_call_up_status_usecase.dart';
+import 'package:luanda_sport_app/src/features/call_ups/presentation/call_up_action/call_up_action_cubit.dart';
 import 'package:luanda_sport_app/src/features/players/data/repositories/player_stats_repository.dart';
 import 'package:luanda_sport_app/src/features/players/domain/repositories/i_player_stats_repository.dart';
 import 'package:luanda_sport_app/src/features/players/domain/usecases/create_player_stats_usecase.dart';
@@ -26,6 +30,13 @@ import '../features/auth/domain/repositories/i_auth_repository.dart';
 import '../features/auth/domain/usecases/is_logged_in_usecase.dart';
 import '../features/auth/domain/usecases/login_usecase.dart';
 import '../features/auth/presentation/cubit/auth_cubit.dart';
+import '../features/call_ups/data/datasources/call_up_datasource.dart';
+import '../features/call_ups/data/datasources/i_call_up_datasource.dart';
+import '../features/call_ups/data/repositories/call_up_repository.dart';
+import '../features/call_ups/domain/repositories/i_call_up_repository.dart';
+import '../features/call_ups/domain/usecases/cancel_call_up_usecase.dart';
+import '../features/call_ups/domain/usecases/create_call_up_usecase.dart';
+import '../features/call_ups/domain/usecases/delete_call_up_usecase.dart';
 import '../features/player_teams/data/datasources/i_player_team_datasource.dart';
 import '../features/player_teams/data/datasources/player_team_datasource.dart';
 import '../features/player_teams/data/repositories/player_team_repository.dart';
@@ -152,6 +163,14 @@ void _registerCubits() {
         getPlayerTeamUseCase: sl(),
         createPlayerTeamUseCase: sl(),
       ));
+
+  // CALL UP
+  sl.registerFactory(() => CallUpActionCubit(
+        createCallUpUseCase: sl(),
+        cancelCallUpUseCase: sl(),
+        updateCallUpStatusUseCase: sl(),
+        deleteCallUpUseCase: sl(),
+      ));
 }
 
 void _registerRepositories() {
@@ -183,6 +202,10 @@ void _registerRepositories() {
   // PLAYER TEAM
   sl.registerLazySingleton<IPlayerTeamRepository>(
       () => PlayerTeamRepository(playerTeamDataSource: sl()));
+
+  // CALL UP
+  sl.registerLazySingleton<ICallUpRepository>(
+      () => CallUpRepository(callUpDataSource: sl()));
 }
 
 void _registerDatasources() {
@@ -216,6 +239,10 @@ void _registerDatasources() {
   // PLAYER TEAM
   sl.registerLazySingleton<IPlayerTeamRemoteDataSource>(
       () => PlayerTeamRemoteDataSource(client: sl()));
+
+  // CALL UP
+  sl.registerLazySingleton<ICallUpRemoteDataSource>(
+      () => CallUpRemoteDataSource(client: sl()));
 }
 
 void _registerUseCases() {
@@ -284,6 +311,17 @@ void _registerUseCases() {
       () => GetPlayerTeamsUseCase(playerTeamRespository: sl()));
   sl.registerLazySingleton(
       () => CreatePlayerTeamUseCase(playerTeamRespository: sl()));
+
+  // CALL UP
+  sl.registerLazySingleton(() => CreateCallUpUseCase(callUpRepository: sl()));
+  sl.registerLazySingleton(() => CancelCallUpUseCase(callUpRepository: sl()));
+  sl.registerLazySingleton(() => DeleteCallUpUseCase(callUpRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetCallUpsByCoachUseCase(callUpRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetCallUpsByPlayerUseCase(callUpRepository: sl()));
+  sl.registerLazySingleton(
+      () => UpdateCallUpStatusUseCase(callUpRepository: sl()));
 }
 
 void _registerExternal() {

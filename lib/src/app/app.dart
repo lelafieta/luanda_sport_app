@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:luanda_sport_app/src/features/call_ups/presentation/call_up_action/call_up_action_cubit.dart';
+import 'package:luanda_sport_app/src/features/call_ups/presentation/cubit/call_up_cubit.dart';
 
 import '../config/routes/app_pages.dart';
 import '../config/themes/app_theme.dart';
@@ -47,6 +49,8 @@ class GameOnApp extends StatelessWidget {
           BlocProvider(create: (context) => di.sl<GetMyPlayerDataCubit>()),
           BlocProvider(create: (context) => di.sl<FetchPlayerStatsCubit>()),
           BlocProvider(create: (context) => di.sl<PlayerTeamCubit>()),
+          BlocProvider(create: (context) => di.sl<CallUpActionCubit>()),
+          BlocProvider(create: (context) => di.sl<CallUpCubit>()),
         ],
         child: GetMaterialApp(
           title: 'Luanda Sport',
