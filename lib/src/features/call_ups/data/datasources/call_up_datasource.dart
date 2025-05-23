@@ -39,7 +39,6 @@ class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
 
   @override
   Future<List<CallUpModel>> getCallUpsByPlayer(String playerId) async {
-    print("CHEGOU!!");
     final response = await client
         .from('call_ups')
         .select('*,  coaches(*), players(*), competitions(*)')
@@ -52,5 +51,16 @@ class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
   Future<Unit> updateCallUpStatus(String id, String status) async {
     await client.from('call_ups').update({'status': status}).eq('id', id);
     return unit;
+  }
+
+  @override
+  Future<List<CallUpModel>> getCallUpsByPlayerPending(String playerId) async {
+    final response = await client
+        .from('call_ups')
+        .select('*,  coaches(*), players(*), competitions(*)')
+        .eq('status', 'pending')
+        .eq('player_id', playerId);
+
+    return (response as List).map((json) => CallUpModel.fromMap(json)).toList();
   }
 }

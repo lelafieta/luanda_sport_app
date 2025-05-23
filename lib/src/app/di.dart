@@ -19,9 +19,10 @@ import '../features/call_ups/domain/repositories/i_call_up_repository.dart';
 import '../features/call_ups/domain/usecases/cancel_call_up_usecase.dart';
 import '../features/call_ups/domain/usecases/create_call_up_usecase.dart';
 import '../features/call_ups/domain/usecases/delete_call_up_usecase.dart';
+import '../features/call_ups/domain/usecases/get_call_ups_by_player_pending_usecase.dart';
 import '../features/call_ups/domain/usecases/get_call_ups_by_player_usecase.dart';
 import '../features/call_ups/domain/usecases/update_call_up_status_usecase.dart';
-import '../features/call_ups/presentation/call_up_action/call_up_action_cubit.dart';
+import '../features/call_ups/presentation/cubit/call_up_action/call_up_action_cubit.dart';
 import '../features/call_ups/presentation/cubit/call_up_cubit.dart';
 import '../features/player_teams/data/datasources/i_player_team_datasource.dart';
 import '../features/player_teams/data/datasources/player_team_datasource.dart';
@@ -173,7 +174,9 @@ void _registerCubits() {
       deleteCallUpUseCase: sl()));
 
   sl.registerFactory(() => CallUpCubit(
-      getCallUpByCoachUseCase: sl(), getCallUpByPlayerUseCase: sl()));
+      getCallUpByCoachUseCase: sl(),
+      getCallUpByPlayerUseCase: sl(),
+      getCallUpByPlayerPendingUseCase: sl()));
 }
 
 void _registerRepositories() {
@@ -325,6 +328,8 @@ void _registerUseCases() {
       () => GetCallUpsByPlayerUseCase(callUpRepository: sl()));
   sl.registerLazySingleton(
       () => UpdateCallUpStatusUseCase(callUpRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetCallUpsByPlayerPendingUseCase(callUpRepository: sl()));
 }
 
 void _registerExternal() {

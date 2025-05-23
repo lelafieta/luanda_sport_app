@@ -1,5 +1,6 @@
 import '../../../coaches/data/models/coach_model.dart';
 import '../../../competitions/data/models/compeition_model.dart';
+import '../../../matches/data/models/match_model.dart';
 import '../../../players/data/models/player_model.dart';
 import '../../domain/entities/call_up_entity.dart';
 
@@ -19,6 +20,7 @@ class CallUpModel extends CallUpEntity {
     super.coach,
     super.competition,
     super.player,
+    super.match,
   });
 
   factory CallUpModel.fromMap(Map<String, dynamic> map) {
@@ -44,6 +46,7 @@ class CallUpModel extends CallUpEntity {
       competition: map['competitions'] != null
           ? CompetitionModel.fromMap(map['competitions'])
           : null,
+      match: map['match'] != null ? MatchModel.fromMap(map['match']) : null,
     );
   }
 

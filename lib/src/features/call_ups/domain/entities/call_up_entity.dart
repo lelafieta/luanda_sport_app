@@ -1,5 +1,6 @@
 import '../../../coaches/domain/entities/coach_entity.dart';
 import '../../../competitions/domain/entities/competition_entity.dart';
+import '../../../matches/domain/entities/match_entity.dart';
 import '../../../players/domain/entities/player_entity.dart';
 
 class CallUpEntity {
@@ -17,20 +18,23 @@ class CallUpEntity {
   final CoachEntity? coach;
   final CompetitionEntity? competition;
   final PlayerEntity? player;
+  final MatchEntity? match;
 
-  const CallUpEntity(
-      {this.id,
-      this.matchId,
-      this.competitionId,
-      required this.playerId,
-      required this.status,
-      this.sentAt,
-      this.respondedAt,
-      this.notes,
-      this.isCancelled,
-      this.visibleUntil,
-      this.coachId,
-      this.coach,
-      this.competition,
-      this.player});
+  const CallUpEntity({
+    this.id,
+    this.matchId,
+    this.competitionId,
+    required this.playerId,
+    required this.status,
+    this.sentAt,
+    this.respondedAt,
+    this.notes,
+    this.isCancelled,
+    this.visibleUntil,
+    this.coachId,
+    this.coach,
+    this.competition,
+    this.player,
+    this.match,
+  });
 }

@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luanda_sport_app/src/features/call_ups/domain/params/update_call_up_status_params.dart';
 
-import '../../domain/entities/call_up_entity.dart';
-import '../../domain/usecases/cancel_call_up_usecase.dart';
-import '../../domain/usecases/create_call_up_usecase.dart';
-import '../../domain/usecases/delete_call_up_usecase.dart';
-import '../../domain/usecases/update_call_up_status_usecase.dart';
+import '../../../domain/entities/call_up_entity.dart';
+import '../../../domain/usecases/cancel_call_up_usecase.dart';
+import '../../../domain/usecases/create_call_up_usecase.dart';
+import '../../../domain/usecases/delete_call_up_usecase.dart';
+import '../../../domain/usecases/update_call_up_status_usecase.dart';
 
 part 'call_up_action_state.dart';
 

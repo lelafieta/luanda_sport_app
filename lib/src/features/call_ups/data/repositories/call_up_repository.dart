@@ -75,4 +75,15 @@ class CallUpRepository extends ICallUpRepository {
       return left(Failure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<CallUpEntity>>> getCallUpsByPlayerPending(
+      String playerId) async {
+    try {
+      final result = await callUpDataSource.getCallUpsByPlayerPending(playerId);
+      return right(result);
+    } catch (e) {
+      return left(Failure(message: e.toString()));
+    }
+  }
 }

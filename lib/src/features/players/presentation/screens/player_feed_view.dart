@@ -50,7 +50,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
 
   @override
   void initState() {
-    context.read<CallUpCubit>().getCallUpByPlayer(AppEntity.uId!);
+    context.read<CallUpCubit>().getCallUpByPlayerPending(AppEntity.uId!);
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Proximo jogo",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -460,6 +460,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
             itemBuilder: (context, index) {
+              final callUp = callUps[index];
               return SizedBox(
                 width: double.infinity,
                 child: Container(
@@ -491,14 +492,17 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(5),
-                                child: const Text(
-                                  "Exibição",
-                                  style: TextStyle(
+                                child: Text(
+                                  (callUp.competitionId == null)
+                                      ? "Exibição"
+                                      : "Campeonato",
+                                  style: const TextStyle(
                                     // color: AppColors.primary,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 5),
                               Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
@@ -520,12 +524,16 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                                                 Expanded(
                                                   child: Row(children: [
                                                     ClipOval(
-                                                      child: CachedNetworkImage(
-                                                          width: 30,
-                                                          height: 30,
-                                                          fit: BoxFit.cover,
-                                                          imageUrl:
-                                                              "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
+                                                      child: (callUp.match!
+                                                                  .homeTeam ==
+                                                              null)
+                                                          ? Container()
+                                                          : CachedNetworkImage(
+                                                              width: 30,
+                                                              height: 30,
+                                                              fit: BoxFit.cover,
+                                                              imageUrl:
+                                                                  "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
                                                     ),
                                                     const SizedBox(width: 8),
                                                     const Text(
