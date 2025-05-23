@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -53,11 +54,23 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Jogo",
+                "Proximo jogo",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
               const SizedBox(height: 10),
               _buildGameWithCard(),
               const SizedBox(height: 16),
+              Text(
+                "Convocatórias",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 10),
               _buildCardResponse(),
               const SizedBox(height: 16),
               if (convocado) ...[
@@ -475,7 +488,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                     Container(
                       padding: const EdgeInsets.all(5),
                       child: const Text(
-                        "Convocatória",
+                        "Exibição",
                         style: TextStyle(
                           // color: AppColors.primary,
                           fontWeight: FontWeight.w600,
