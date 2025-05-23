@@ -8,6 +8,7 @@ import 'package:luanda_sport_app/src/features/players/presentation/cubit/get_my_
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/resources/app_images.dart';
+import '../../../achievements/presentation/views/achievements_view.dart';
 import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../widgets/my_profile_widget.dart';
 import '../widgets/player_stats_widget.dart';
@@ -119,7 +120,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                     return const SizedBox.shrink();
                   },
                 ),
-                Text("data"),
+                AchievementsView(),
               ],
             ),
           ),

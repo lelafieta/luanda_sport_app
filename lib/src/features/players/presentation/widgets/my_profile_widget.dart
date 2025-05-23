@@ -185,38 +185,45 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
             ),
           ),
           const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CachedNetworkImage(
-                imageUrl:
-                    "https://template.canva.com/EAGP4Vom1pY/1/0/1600w-IOa8p4GmFqQ.jpg",
-                imageBuilder: (context, imageProvider) => CircleAvatar(
-                  radius: 20,
-                  backgroundImage: imageProvider,
-                ),
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-              const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${widget.player.team!.name}",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    "Equipe actual",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey,
+          (widget.player.team == null)
+              ? const Text(
+                  "Sem equipe",
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl:
+                          "https://template.canva.com/EAGP4Vom1pY/1/0/1600w-IOa8p4GmFqQ.jpg",
+                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                        radius: 20,
+                        backgroundImage: imageProvider,
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${widget.player.team!.name}",
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                        Text(
+                          "Equipe actual",
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
           Divider(
             color: Colors.grey[300],
             thickness: .5,
@@ -227,7 +234,9 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.footballJersey,
             ),
-            title: Text("${widget.player.shirtNumber}"),
+            title: (widget.player.shirtNumber == null)
+                ? const Text("-- -- --")
+                : Text("${widget.player.shirtNumber}"),
             subtitle: const Text("Camisa"),
             onTap: () {
               // Navegar para a tela de configurações
@@ -238,7 +247,9 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.footballShoesShoe,
             ),
-            title: Text("${widget.player.foot}"),
+            title: (widget.player.foot == null)
+                ? const Text("-- -- --")
+                : Text("${widget.player.foot}"),
             subtitle: const Text("Pé"),
             onTap: () {
               // Navegar para a tela de configurações
@@ -249,7 +260,9 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.soccerField,
             ),
-            title: Text("${widget.player.position}"),
+            title: (widget.player.position == null)
+                ? const Text("-- -- --")
+                : Text("${widget.player.position}"),
             subtitle: const Text("Posição"),
             onTap: () {
               // Navegar para a tela de configurações
@@ -260,8 +273,9 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               width: 25,
               AppIcons.birthdayCake,
             ),
-            title: Text(
-                "${AppDateUtils.formatDate(data: widget.player.birthDate!)}"),
+            title: (widget.player.birthDate == null)
+                ? const Text("-- -- --")
+                : Text(AppDateUtils.formatDate(data: widget.player.birthDate!)),
             subtitle: const Text("Aniversário"),
             onTap: () {
               // Navegar para a tela de configurações

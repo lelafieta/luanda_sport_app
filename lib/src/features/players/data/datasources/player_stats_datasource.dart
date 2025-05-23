@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/params/player_stats_params.dart';
-import '../models/player_model.dart';
 import '../models/player_stats_model.dart';
 import 'i_player_stats_datasource.dart';
 

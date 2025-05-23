@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import '../../domain/entities/player_stats_entity.dart';
 import '../../domain/params/player_stats_params.dart';
 import '../models/player_stats_model.dart';
 

@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:luanda_sport_app/src/core/utils/warning_widget.dart';
 
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
@@ -61,6 +62,11 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                   },
                   builder: (context, state) {
                     if (state is PlayerTeamLoaded) {
+                      if (state.playerTeams.isEmpty) {
+                        // return WarningWidget();
+                        return const Text("Ainda nunca passou em uma equipe");
+                      }
+
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         playerTeam.value = state.playerTeams.firstWhere(
                           (team) => team.team?.id == selectedTeamId,
@@ -96,7 +102,7 @@ class _PlayerStatsWidgetState extends State<PlayerStatsWidget> {
                         ),
                         dropdownBuilder: (context, item) {
                           if (item == null || item.team == null) {
-                            return const Text("Selecione um time");
+                            return const Text("Selecione um time de passagem");
                           }
                           return Row(
                             children: [
