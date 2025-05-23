@@ -4,9 +4,10 @@ import '../../../../core/usecases/base_usecases.dart';
 import '../entities/call_up_entity.dart';
 import '../repositories/i_call_up_repository.dart';
 
-class GetCallUpByCoachUseCase extends BaseUseCases<List<CallUpEntity>, String> {
+class GetCallUpsByCoachUseCase
+    extends BaseUseCases<List<CallUpEntity>, String> {
   final ICallUpRepository callUpRepository;
-  GetCallUpByCoachUseCase({required this.callUpRepository});
+  GetCallUpsByCoachUseCase({required this.callUpRepository});
 
   @override
   Future<Either<Failure, List<CallUpEntity>>> call(String params) {
