@@ -11,7 +11,7 @@ class PlayerModel extends PlayerEntity {
     super.nickname,
     super.shirtNumber,
     super.position,
-    super.type, // Adicionado aqui
+    super.type,
     super.nationality,
     super.birthDate,
     super.heightCm,
@@ -19,6 +19,10 @@ class PlayerModel extends PlayerEntity {
     super.foot,
     super.avatarUrl,
     super.status,
+    super.videoHighlightUrl,
+    super.dominantHand,
+    super.isActive,
+    super.level,
     super.createdAt,
     super.updatedAt,
     super.createdByProfile,
@@ -34,7 +38,7 @@ class PlayerModel extends PlayerEntity {
       nickname: map['nickname'] as String?,
       shirtNumber: map['shirt_number'] as int?,
       position: map['position'] as String?,
-      type: map['type'] as String?, // Adicionado aqui
+      type: map['type'] as String?,
       nationality: map['nationality'] as String?,
       birthDate: map['birth_date'] != null
           ? DateTime.tryParse(map['birth_date'])
@@ -44,6 +48,10 @@ class PlayerModel extends PlayerEntity {
       foot: map['foot'] as String?,
       avatarUrl: map['avatar_url'] as String?,
       status: map['status'] as String?,
+      videoHighlightUrl: map['video_highlight_url'] as String?,
+      dominantHand: map['dominant_hand'] as String?,
+      isActive: map['is_active'] as bool?,
+      level: map['level'] as String?,
       createdAt: map['created_at'] != null
           ? DateTime.tryParse(map['created_at'])
           : null,
@@ -66,7 +74,7 @@ class PlayerModel extends PlayerEntity {
       nickname: entity.nickname,
       shirtNumber: entity.shirtNumber,
       position: entity.position,
-      type: entity.type, // Adicionado aqui
+      type: entity.type,
       nationality: entity.nationality,
       birthDate: entity.birthDate,
       heightCm: entity.heightCm,
@@ -74,9 +82,14 @@ class PlayerModel extends PlayerEntity {
       foot: entity.foot,
       avatarUrl: entity.avatarUrl,
       status: entity.status,
+      videoHighlightUrl: entity.videoHighlightUrl,
+      dominantHand: entity.dominantHand,
+      isActive: entity.isActive,
+      level: entity.level,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       createdByProfile: entity.createdByProfile,
+      team: entity.team,
     );
   }
 
@@ -88,7 +101,7 @@ class PlayerModel extends PlayerEntity {
     String? nickname,
     int? shirtNumber,
     String? position,
-    String? type, // Adicionado aqui
+    String? type,
     String? nationality,
     DateTime? birthDate,
     int? heightCm,
@@ -96,9 +109,14 @@ class PlayerModel extends PlayerEntity {
     String? foot,
     String? avatarUrl,
     String? status,
+    String? videoHighlightUrl,
+    String? dominantHand,
+    bool? isActive,
+    String? level,
     DateTime? createdAt,
     DateTime? updatedAt,
     ProfileModel? createdByProfile,
+    TeamModel? team,
   }) {
     return PlayerModel(
       id: id ?? this.id,
@@ -108,7 +126,7 @@ class PlayerModel extends PlayerEntity {
       nickname: nickname ?? this.nickname,
       shirtNumber: shirtNumber ?? this.shirtNumber,
       position: position ?? this.position,
-      type: type ?? this.type, // Adicionado aqui
+      type: type ?? this.type,
       nationality: nationality ?? this.nationality,
       birthDate: birthDate ?? this.birthDate,
       heightCm: heightCm ?? this.heightCm,
@@ -116,9 +134,14 @@ class PlayerModel extends PlayerEntity {
       foot: foot ?? this.foot,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       status: status ?? this.status,
+      videoHighlightUrl: videoHighlightUrl ?? this.videoHighlightUrl,
+      dominantHand: dominantHand ?? this.dominantHand,
+      isActive: isActive ?? this.isActive,
+      level: level ?? this.level,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       createdByProfile: createdByProfile ?? this.createdByProfile,
+      team: team ?? this.team,
     );
   }
 
@@ -131,7 +154,7 @@ class PlayerModel extends PlayerEntity {
       'nickname': nickname,
       'shirt_number': shirtNumber,
       'position': position,
-      'type': type, // Adicionado aqui
+      'type': type,
       'nationality': nationality,
       'birth_date': birthDate?.toIso8601String(),
       'height_cm': heightCm,
@@ -139,6 +162,10 @@ class PlayerModel extends PlayerEntity {
       'foot': foot,
       'avatar_url': avatarUrl,
       'status': status,
+      'video_highlight_url': videoHighlightUrl,
+      'dominant_hand': dominantHand,
+      'is_active': isActive,
+      'level': level,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };

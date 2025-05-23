@@ -1,5 +1,4 @@
-import 'package:luanda_sport_app/src/features/profiles/domain/entities/profile_entity.dart';
-
+import '../../../profiles/domain/entities/profile_entity.dart';
 import '../../../teams/domain/entities/team_entity.dart';
 
 class PlayerEntity {
@@ -17,7 +16,11 @@ class PlayerEntity {
   final String? foot;
   final String? avatarUrl;
   final String? status;
-  final String? type;
+  final String? type; // 'real' | 'fictitious'
+  final String? videoHighlightUrl;
+  final String? dominantHand;
+  final bool? isActive;
+  final String? level; // 'professional' | 'amateur' | 'youth'
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final ProfileEntity? createdByProfile;
@@ -31,7 +34,6 @@ class PlayerEntity {
     this.nickname,
     this.shirtNumber,
     this.position,
-    this.type,
     this.nationality,
     this.birthDate,
     this.heightCm,
@@ -39,6 +41,11 @@ class PlayerEntity {
     this.foot,
     this.avatarUrl,
     this.status,
+    this.type,
+    this.videoHighlightUrl,
+    this.dominantHand,
+    this.isActive,
+    this.level,
     this.createdAt,
     this.updatedAt,
     this.createdByProfile,
