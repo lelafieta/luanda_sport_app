@@ -1,8 +1,20 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../call_ups/domain/usecases/update_call_up_status_usecase.dart';
 part 'call_up_response_state.dart';
 
 class CallUpResponseCubit extends Cubit<CallUpResponseState> {
-  CallUpResponseCubit() : super(CallUpResponseInitial());
+  final UpdateCallUpStatusUseCase updateCallUpStatusUseCase;
+  CallUpResponseCubit({
+    required this.updateCallUpStatusUseCase,
+  }) : super(CallUpResponseInitial());
+
+  Future<void> callUpUpdateStatus(UpdateCallUpStatusParams params) async {
+    emit(CallUpResponseLoading());
+    final result = await updateCallUpStatusUseCase(params);
+
+    result.fold(
+        (failure) => emit(CallUpResponseFailure(error: failure.message)),
+        (success) => emit(const CallUpResponseSuccess()));
+  }
 }
