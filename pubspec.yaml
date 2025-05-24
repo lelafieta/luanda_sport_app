@@ -91,6 +91,8 @@ dependencies:
   path_provider: ^2.1.4
   firebase_core: ^3.4.0
   flutter_image_slideshow: ^0.1.6
+  flutter_dropdown_alert: ^1.0.7
+  material_dialogs: ^1.1.5
 
 dev_dependencies:
   flutter_test:

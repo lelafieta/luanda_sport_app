@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_coach_usecase.dart';
 import 'package:get_it/get_it.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/call_up_response/call_up_response_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/cache/i_secure_storage_helper.dart';
 import '../core/cache/secure_storage_helper.dart';
@@ -177,6 +178,9 @@ void _registerCubits() {
       getCallUpByCoachUseCase: sl(),
       getCallUpByPlayerUseCase: sl(),
       getCallUpByPlayerPendingUseCase: sl()));
+
+  sl.registerFactory(
+      () => CallUpResponseCubit(updateCallUpStatusUseCase: sl()));
 }
 
 void _registerRepositories() {

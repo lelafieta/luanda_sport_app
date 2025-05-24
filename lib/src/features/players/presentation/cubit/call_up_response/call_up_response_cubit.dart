@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../call_ups/domain/params/update_call_up_status_params.dart';
 import '../../../../call_ups/domain/usecases/update_call_up_status_usecase.dart';
 part 'call_up_response_state.dart';
 

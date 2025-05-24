@@ -10,12 +10,17 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:luanda_sport_app/src/core/utils/app_date_utils.dart';
 import 'package:luanda_sport_app/src/features/call_ups/domain/entities/call_up_entity.dart';
+import 'package:luanda_sport_app/src/features/call_ups/domain/params/update_call_up_status_params.dart';
 import 'package:luanda_sport_app/src/features/matches/domain/entities/cartaz_entity.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../app/app_entity.dart';
 import '../../../../config/themes/app_colors.dart';
@@ -23,6 +28,7 @@ import '../../../../core/resources/app_icons.dart';
 import '../../../../core/utils/position_utils.dart';
 import '../../../call_ups/presentation/cubit/call_up_cubit.dart';
 import '../../../matches/presentation/views/match_cartaz_view.dart';
+import '../cubit/call_up_response/call_up_response_cubit.dart';
 import 'print_image.dart';
 
 class PlayerFeedView extends StatefulWidget {
@@ -66,9 +72,9 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
                   "Proximo jogo",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -474,37 +480,51 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
   }
 
   Widget _buildCallUpsWidget() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: BlocBuilder<CallUpCubit, CallUpState>(
-        builder: (context, state) {
-          if (state is CallUpLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is CallUpLoaded) {
-            final callUps = state.callUps;
-            if (callUps.isEmpty) {
-              return const Text("Sem nenhuma convocatória");
-            }
+    return BlocConsumer<CallUpResponseCubit, CallUpResponseState>(
+      listener: (context, state) {
+        EasyLoading.dismiss();
+        if (state is CallUpResponseLoading) {
+          EasyLoading.show();
+        } else if (state is CallUpResponseSuccess) {
+          context.read<CallUpCubit>().getCallUpByPlayerPending(AppEntity.uId!);
+        } else if (state is CallUpResponseFailure) {
+          EasyLoading.showError(state.error);
+        }
+      },
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: BlocBuilder<CallUpCubit, CallUpState>(
+            builder: (context, state) {
+              if (state is CallUpLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is CallUpLoaded) {
+                final callUps = state.callUps;
+                if (callUps.isEmpty) {
+                  return const Text("Sem nenhuma convocatória");
+                }
 
-            return FadeIn(
-              child: ListView.separated(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final callUp = callUps[index];
+                return FadeIn(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final callUp = callUps[index];
 
-                  return _callUpComponent(callUp);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: callUps.length,
-              ),
-            );
-          }
-          return SizedBox.shrink();
-        },
-      ),
+                      return _callUpComponent(callUp);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                    itemCount: callUps.length,
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -749,7 +769,49 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                             side: BorderSide(color: Colors.red.shade500),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Dialogs.materialDialog(
+                              msg:
+                                  'Tens a certeza que deseja recusar a convocatória?',
+                              title: "Recusar",
+                              color: Colors.white,
+                              context: context,
+                              titleAlign: TextAlign.center,
+                              msgAlign: TextAlign.center,
+                              actions: [
+                                IconsOutlineButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  text: 'Cancelar',
+                                  iconData: Icons.cancel_outlined,
+                                  textStyle: TextStyle(color: Colors.grey),
+                                  iconColor: Colors.grey,
+                                ),
+                                IconsButton(
+                                  padding: const EdgeInsets.all(10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  onPressed: () {
+                                    context
+                                        .read<CallUpResponseCubit>()
+                                        .callUpUpdateStatus(
+                                            UpdateCallUpStatusParams(
+                                                id: callUp.id!,
+                                                status: "declined"));
+
+                                    Navigator.of(context).pop();
+                                  },
+                                  text: 'Recusar',
+                                  iconData: Icons.close,
+                                  color: Colors.red.shade700,
+                                  textStyle:
+                                      const TextStyle(color: Colors.white),
+                                  iconColor: Colors.white,
+                                ),
+                              ]);
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -773,10 +835,14 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                         backgroundColor: AppColors.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: AppColors.primary),
+                          side: const BorderSide(color: AppColors.primary),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        // context.read<CallUpResponseCubit>().callUpUpdateStatus(
+                        //     UpdateCallUpStatusParams(
+                        //         id: callUp.id!, status: "accepted"));
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -787,7 +853,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                           ),
                           const SizedBox(width: 10),
                           const Text(
-                            "Recusar",
+                            "Aceitar",
                             style: TextStyle(
                               color: AppColors.white,
                             ),
