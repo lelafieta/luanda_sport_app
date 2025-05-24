@@ -99,7 +99,6 @@ class _PlayerScreenState extends State<PlayerScreen>
                 const PlayerFeedView(),
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
-                    print(state);
                     if (state is GetMyPlayerDataLoading) {
                       return const Center(
                         child: CircularProgressIndicator(),
