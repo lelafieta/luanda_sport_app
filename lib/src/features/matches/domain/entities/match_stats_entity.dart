@@ -1,5 +1,3 @@
-import '../../data/models/match_model.dart';
-
 class MatchStatsEntity {
   final String? id;
   final int? goalsHome;

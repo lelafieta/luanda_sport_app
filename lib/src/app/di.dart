@@ -25,6 +25,27 @@ import '../features/call_ups/domain/usecases/get_call_ups_by_player_usecase.dart
 import '../features/call_ups/domain/usecases/update_call_up_status_usecase.dart';
 import '../features/call_ups/presentation/cubit/call_up_action/call_up_action_cubit.dart';
 import '../features/call_ups/presentation/cubit/call_up_cubit.dart';
+import '../features/matches/data/datasources/i_match_datasource.dart';
+import '../features/matches/data/datasources/match_datasource.dart';
+import '../features/matches/data/repositories/match_repository.dart';
+import '../features/matches/domain/repositories/i_match_repository.dart';
+import '../features/matches/domain/usecases/assign_players_to_match_usecase.dart';
+import '../features/matches/domain/usecases/create_match_usecase.dart';
+import '../features/matches/domain/usecases/delete_match_usecase.dart';
+import '../features/matches/domain/usecases/generate_match_report_usecase.dart';
+import '../features/matches/domain/usecases/get_all_matches_usecase.dart';
+import '../features/matches/domain/usecases/get_latest_matches_usecase.dart';
+import '../features/matches/domain/usecases/get_match_by_id_usecase.dart';
+import '../features/matches/domain/usecases/get_match_events_usecase.dart';
+import '../features/matches/domain/usecases/get_match_stats_usecase.dart';
+import '../features/matches/domain/usecases/get_matches_by_player_usecase.dart';
+import '../features/matches/domain/usecases/get_matches_by_team_usecase.dart';
+import '../features/matches/domain/usecases/get_top_scorers_in_match_usecase.dart';
+import '../features/matches/domain/usecases/get_up_coming_matches_by_player_usecase.dart';
+import '../features/matches/domain/usecases/get_upcoming_matches_usecase.dart';
+import '../features/matches/domain/usecases/search_matches_usecase.dart';
+import '../features/matches/domain/usecases/set_match_score_usecase.dart';
+import '../features/matches/domain/usecases/update_match_usecase.dart';
 import '../features/player_teams/data/datasources/i_player_team_datasource.dart';
 import '../features/player_teams/data/datasources/player_team_datasource.dart';
 import '../features/player_teams/data/repositories/player_team_repository.dart';
@@ -53,6 +74,7 @@ import '../features/players/domain/usecases/update_player_usecase.dart';
 import '../features/players/presentation/cubit/fetch_player_stats/fetch_player_stats_cubit.dart';
 import '../features/players/presentation/cubit/fetch_players_team/fetch_players_team_cubit.dart';
 import '../features/players/presentation/cubit/get_my_player_data/get_my_player_data_cubit.dart';
+import '../features/players/presentation/cubit/player_upcoming_match/player_upcoming_match_cubit.dart';
 import '../features/squads/data/datasources/i_squad_datasource.dart';
 import '../features/squads/data/datasources/squad_datasource.dart';
 import '../features/squads/data/repositories/squad_repository.dart';
@@ -181,6 +203,9 @@ void _registerCubits() {
 
   sl.registerFactory(
       () => CallUpResponseCubit(updateCallUpStatusUseCase: sl()));
+
+  sl.registerFactory(
+      () => PlayerUpcomingMatchCubit(getUpComingMatchesByPlayerUseCase: sl()));
 }
 
 void _registerRepositories() {
@@ -216,6 +241,10 @@ void _registerRepositories() {
   // CALL UP
   sl.registerLazySingleton<ICallUpRepository>(
       () => CallUpRepository(callUpDataSource: sl()));
+
+  // MATCH
+  sl.registerLazySingleton<IMatchRepository>(
+      () => MatchRepository(matchDataSource: sl()));
 }
 
 void _registerDatasources() {
@@ -253,6 +282,10 @@ void _registerDatasources() {
   // CALL UP
   sl.registerLazySingleton<ICallUpRemoteDataSource>(
       () => CallUpRemoteDataSource(client: sl()));
+
+  // MATCH
+  sl.registerLazySingleton<IMatchRemoteDataSource>(
+      () => MatchRemoteDataSource(client: sl()));
 }
 
 void _registerUseCases() {
@@ -334,6 +367,26 @@ void _registerUseCases() {
       () => UpdateCallUpStatusUseCase(callUpRepository: sl()));
   sl.registerLazySingleton(
       () => GetCallUpsByPlayerPendingUseCase(callUpRepository: sl()));
+
+  // MATCH
+  sl.registerLazySingleton(() => AssignPlayersToMatchUseCase(repository: sl()));
+  sl.registerLazySingleton(() => CreateMatchUseCase(repository: sl()));
+  sl.registerLazySingleton(() => DeleteMatchUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GenerateMatchReportUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetAllMatchesUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetLatestMatchesUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetMatchByIdUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetMatchEventsUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetMatchStatsUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetMatchesByPlayerUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetMatchesByTeamUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetTopScorersInMatchUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => GetUpComingMatchesByPlayerUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetUpcomingMatchesUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SearchMatchesUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SetMatchScoreUseCase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateMatchUseCase(repository: sl()));
 }
 
 void _registerExternal() {
