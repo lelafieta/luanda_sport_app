@@ -20,6 +20,7 @@ abstract class IMatchRemoteDataSource {
   Future<List<MatchModel>> getMatchesByTeam(String teamId);
   Future<List<MatchModel>> getMatchesByPlayer(String playerId);
   Future<List<MatchModel>> searchMatches(Map<String, dynamic> filters);
+  Future<List<MatchModel>> getUpcomingMatchesByPlayer(String playerId);
 
   // 📊 Resultados e Estatísticas
   Future<MatchStatsModel?> getMatchStats(String matchId);

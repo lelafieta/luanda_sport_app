@@ -185,4 +185,15 @@ class MatchRepository implements IMatchRepository {
       return left(Failure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<MatchEntity>>> getUpcomingMatchesByPlayer(
+      String playerId) async {
+    try {
+      final result = await matchDataSource.getUpcomingMatchesByPlayer(playerId);
+      return right(result);
+    } catch (e) {
+      return left(Failure(message: e.toString()));
+    }
+  }
 }

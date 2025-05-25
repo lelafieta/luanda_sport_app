@@ -27,6 +27,9 @@ abstract class IMatchRepository {
   Future<Either<Failure, List<MatchEntity>>> searchMatches(
       Map<String, dynamic> filters);
 
+  Future<Either<Failure, List<MatchEntity>>> getUpcomingMatchesByPlayer(
+      String playerId);
+
   // 📊 Resultados e Estatísticas
   Future<Either<Failure, MatchStatsEntity?>> getMatchStats(String matchId);
   Future<Either<Failure, List<PlayerEntity>>> getTopScorersInMatch(

@@ -190,4 +190,19 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
     // Vamos simular um retorno com a URL do relatório
     return 'https://example.com/reports/match_$matchId.pdf';
   }
+
+  @override
+  Future<List<MatchModel>> getUpcomingMatchesByPlayer(String playerId) async {
+    final response = await client
+        .from('match_players')
+        .select('match:match_id(*, home_team(*), away_team(*), competition(*))')
+        .eq('player_id', playerId);
+
+    final matches = (response as List)
+        .map((e) => MatchModel.fromMap(e['match']))
+        .where((match) => match.matchDate!.isAfter(DateTime.now()))
+        .toList();
+
+    return matches;
+  }
 }
