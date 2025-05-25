@@ -41,12 +41,10 @@ class MatchModel extends MatchEntity {
       isExhibition: map['is_exhibition'],
       matchType: map['match_type'],
       stadium: map['stadium'],
-      homeTeam: map['home_team'] != null
-          ? TeamModel.fromJson(map['home_team'])
-          : null,
-      awayTeam: map['away_team'] != null
-          ? TeamModel.fromJson(map['away_team'])
-          : null,
+      homeTeam:
+          map['home_team'] != null ? TeamModel.fromMap(map['home_team']) : null,
+      awayTeam:
+          map['away_team'] != null ? TeamModel.fromMap(map['away_team']) : null,
       competition: map['competition'] != null
           ? CompetitionModel.fromMap(map['competition'])
           : null,

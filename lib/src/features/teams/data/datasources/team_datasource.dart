@@ -26,7 +26,7 @@ class TeamRemoteDataSource implements ITeamRemoteDataSource {
         await client.from('teams').select('*, created_by_profile:profiles(*)');
 
     final data = response as List<dynamic>;
-    return data.map((item) => TeamModel.fromJson(item)).toList();
+    return data.map((item) => TeamModel.fromMap(item)).toList();
   }
 
   @override
@@ -35,7 +35,7 @@ class TeamRemoteDataSource implements ITeamRemoteDataSource {
         await client.from('teams').select('*, created_by_profile:profiles(*)');
 
     final data = response as List<dynamic>;
-    return data.map((item) => TeamModel.fromJson(item)).toList();
+    return data.map((item) => TeamModel.fromMap(item)).toList();
   }
 
   @override
@@ -46,7 +46,7 @@ class TeamRemoteDataSource implements ITeamRemoteDataSource {
         .eq('id', id)
         .single();
 
-    return TeamModel.fromJson(response);
+    return TeamModel.fromMap(response);
   }
 
   @override

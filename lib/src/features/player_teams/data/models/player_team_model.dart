@@ -45,7 +45,7 @@ class PlayerTeamModel extends PlayerTeamEntity {
           ? PlayerModel.fromMap(json['players'])
           : null,
       team: json['teams'] != null && json['teams'] is Map<String, dynamic>
-          ? TeamModel.fromJson(json['teams'])
+          ? TeamModel.fromMap(json['teams'])
           : null,
     );
   }

@@ -27,7 +27,7 @@ class TeamModel extends TeamEntity {
       super.formation,
       super.gameType});
 
-  factory TeamModel.fromJson(Map<String, dynamic> json) {
+  factory TeamModel.fromMap(Map<String, dynamic> json) {
     return TeamModel(
       id: json['id'] as String?,
       name: json['name'] as String?,

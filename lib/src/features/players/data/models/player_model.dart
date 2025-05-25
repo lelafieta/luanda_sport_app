@@ -61,7 +61,7 @@ class PlayerModel extends PlayerEntity {
       createdByProfile: map['created_by_profile'] != null
           ? ProfileModel.fromJson(map['created_by_profile'])
           : null,
-      team: map['teams'] != null ? TeamModel.fromJson(map['teams']) : null,
+      team: map['teams'] != null ? TeamModel.fromMap(map['teams']) : null,
     );
   }
 

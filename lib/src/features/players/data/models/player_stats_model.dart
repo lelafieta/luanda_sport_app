@@ -45,7 +45,7 @@ class PlayerStatsModel extends PlayerStatsEntity {
           ? PlayerModel.fromMap(map['players'] as Map<String, dynamic>)
           : null,
       team: map['team'] != null
-          ? TeamModel.fromJson(map['teams'] as Map<String, dynamic>)
+          ? TeamModel.fromMap(map['teams'] as Map<String, dynamic>)
           : null,
       createdAt:
           map['created_at'] != null ? DateTime.parse(map['created_at']) : null,
