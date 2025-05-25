@@ -400,51 +400,113 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                             ),
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Row(children: [
-                                        ClipOval(
-                                          child: CachedNetworkImage(
-                                              width: 30,
-                                              height: 30,
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  "https://template.canva.com/EAF1_XF3BJ4/2/0/1600w-dbetIJWoTcY.jpg"),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        const Text(
-                                          "Dourada FC",
-                                          style: TextStyle(),
-                                        ),
-                                      ]),
-                                    ),
-                                    const Text("-")
-                                  ],
-                                ),
+                                (match.homeTeam == null)
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(children: [
+                                              ClipOval(
+                                                child: Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              const Text(
+                                                "Equipe de Casa",
+                                                style: TextStyle(),
+                                              ),
+                                            ]),
+                                          ),
+                                          const Text("-")
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(children: [
+                                              ClipOval(
+                                                child:
+                                                    (match.homeTeam!.logoUrl ==
+                                                            null)
+                                                        ? Container(
+                                                            width: 30,
+                                                            height: 30,
+                                                            color: Colors.grey)
+                                                        : CachedNetworkImage(
+                                                            width: 30,
+                                                            height: 30,
+                                                            fit: BoxFit.cover,
+                                                            imageUrl: match
+                                                                .homeTeam!
+                                                                .logoUrl
+                                                                .toString()),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                match.homeTeam!.name.toString(),
+                                                style: const TextStyle(),
+                                              ),
+                                            ]),
+                                          ),
+                                          const Text("-")
+                                        ],
+                                      ),
                                 const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Row(children: [
-                                        ClipOval(
-                                          child: CachedNetworkImage(
-                                              width: 30,
-                                              height: 30,
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  "https://template.canva.com/EAGVBjukC4Q/1/0/1600w-2noOBANFgDY.jpg"),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        const Text(
-                                          "Ell Fantasma",
-                                          style: TextStyle(),
-                                        ),
-                                      ]),
-                                    ),
-                                    const Text("-")
-                                  ],
-                                ),
+                                (match.awayTeam == null)
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(children: [
+                                              ClipOval(
+                                                child: Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              const Text(
+                                                "Equipe de Casa",
+                                                style: TextStyle(),
+                                              ),
+                                            ]),
+                                          ),
+                                          const Text("-")
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(children: [
+                                              ClipOval(
+                                                child:
+                                                    (match.awayTeam!.logoUrl ==
+                                                            null)
+                                                        ? Container(
+                                                            width: 30,
+                                                            height: 30,
+                                                            color: Colors.grey)
+                                                        : CachedNetworkImage(
+                                                            width: 30,
+                                                            height: 30,
+                                                            fit: BoxFit.cover,
+                                                            imageUrl: match
+                                                                .awayTeam!
+                                                                .logoUrl
+                                                                .toString()),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                match.awayTeam!.name.toString(),
+                                                style: const TextStyle(),
+                                              ),
+                                            ]),
+                                          ),
+                                          const Text("-")
+                                        ],
+                                      ),
                                 const SizedBox(width: 10),
                               ],
                             ),
@@ -464,9 +526,9 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                                 ),
                               ),
                               const SizedBox(height: 5),
-                              const Text(
-                                "20:00",
-                                style: TextStyle(
+                              Text(
+                                "${match.matchDate!.hour}:${match.matchDate!.minute}",
+                                style: const TextStyle(
                                   // color: Colors.red,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -490,7 +552,10 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                   topLeft: Radius.circular(20),
                 ),
               ),
-              child: const Text("Sábado, 17 de Maio 2025"),
+              child: Text(AppDateUtils.formatDate(
+                showWeekday: true,
+                data: match.matchDate!,
+              )),
             )
           ],
         ),

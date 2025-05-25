@@ -29,7 +29,9 @@ class AppDateUtils {
       parts.add(DateFormat('yyyy').format(data)); // Exemplo: 2025
     }
 
-    String dateString = parts.join(' de '); // Monta a data
+    // String dateString = parts.join(' de '); // Monta a data
+
+    String dateString = '${parts.first}, ${parts.sublist(1).join(' de ')}';
 
     if (showTime) {
       String timeString = DateFormat('HH:mm').format(data); // Exemplo: 10:35
