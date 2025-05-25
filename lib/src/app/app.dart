@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:luanda_sport_app/src/features/call_ups/presentation/cubit/call_up_action/call_up_action_cubit.dart';
 import 'package:luanda_sport_app/src/features/call_ups/presentation/cubit/call_up_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_upcoming_match/player_upcoming_match_cubit.dart';
 
 import '../config/routes/app_pages.dart';
 import '../config/themes/app_theme.dart';
@@ -53,6 +54,7 @@ class GameOnApp extends StatelessWidget {
           BlocProvider(create: (context) => di.sl<CallUpActionCubit>()),
           BlocProvider(create: (context) => di.sl<CallUpCubit>()),
           BlocProvider(create: (context) => di.sl<CallUpResponseCubit>()),
+          BlocProvider(create: (context) => di.sl<PlayerUpcomingMatchCubit>()),
         ],
         child: GetMaterialApp(
           title: 'Luanda Sport',

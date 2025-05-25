@@ -27,8 +27,10 @@ import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
 import '../../../../core/utils/position_utils.dart';
 import '../../../call_ups/presentation/cubit/call_up_cubit.dart';
+import '../../../matches/domain/entities/match_entity.dart';
 import '../../../matches/presentation/views/match_cartaz_view.dart';
 import '../cubit/call_up_response/call_up_response_cubit.dart';
+import '../cubit/player_upcoming_match/player_upcoming_match_cubit.dart';
 import 'print_image.dart';
 
 class PlayerFeedView extends StatefulWidget {
@@ -60,6 +62,9 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
   @override
   void initState() {
     context.read<CallUpCubit>().getCallUpByPlayerPending(AppEntity.uId!);
+    context
+        .read<PlayerUpcomingMatchCubit>()
+        .getUpComingMatchesByPlayer(AppEntity.uId!);
     super.initState();
   }
 
@@ -83,7 +88,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                 ),
               ),
               const SizedBox(height: 10),
-              _buildGameWithCard(),
+              _buildUpComingMatchesWidget(),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: const Text(
@@ -262,30 +267,40 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
     );
   }
 
-  Widget _buildGameWithCard() {
-    return ImageSlideshow(
-      width: double.infinity,
-      height: 250,
-      initialPage: 0,
-      indicatorColor: Colors.blue,
-      indicatorBackgroundColor: Colors.grey,
-      children: [
-        nextMatchWidget(),
-        nextMatchWidget(),
-      ],
+  Widget _buildUpComingMatchesWidget() {
+    return BlocBuilder<PlayerUpcomingMatchCubit, PlayerUpcomingMatchState>(
+      builder: (context, state) {
+        if (state is PlayerUpcomingMatchLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is PlayerUpcomingMatchLoaded) {
+          final matches = state.upcomingMatches;
 
-      /// Called whenever the page in the center of the viewport changes.
-      onPageChanged: (value) {
-        print('Page changed: $value');
+          if (matches.isEmpty) {
+            return const Center(child: Text("Sem jogos"));
+          }
+
+          return ImageSlideshow(
+            width: double.infinity,
+            height: 250,
+            initialPage: 0,
+            indicatorColor: Colors.blue,
+            indicatorBackgroundColor: Colors.grey,
+            onPageChanged: (value) {
+              print('Page changed: $value');
+            },
+            autoPlayInterval: 0,
+            isLoop: false,
+            children: matches.map((match) {
+              return nextMatchWidget(match);
+            }).toList(),
+          );
+        }
+        return const SizedBox.shrink();
       },
-
-      autoPlayInterval: 0,
-
-      isLoop: false,
     );
   }
 
-  Widget nextMatchWidget() {
+  Widget nextMatchWidget(MatchEntity match) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -352,9 +367,11 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(5),
-                    child: const Text(
-                      "Exibição",
-                      style: TextStyle(
+                    child: Text(
+                      match.isExhibition == true
+                          ? "Exibição"
+                          : match.competition!.name,
+                      style: const TextStyle(
                         // color: AppColors.primary,
                         fontWeight: FontWeight.w600,
                       ),
