@@ -317,9 +317,11 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                     local: "Estádio 11 de Novembro",
                     descricao: 'Descrição do jogo',
                   );
-                  context.pushTransparentRoute(SecondPage(
-                    cartaz: cartazExemplo,
-                  ));
+                  context.pushTransparentRoute(
+                    SecondPage(
+                      cartaz: cartazExemplo,
+                    ),
+                  );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -330,7 +332,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
                     ),
                     const SizedBox(width: 10),
                     const Text(
-                      "Partilhar do cartaz",
+                      "Partilhar cartaz",
                       style: TextStyle(color: AppColors.lightWightColor),
                     ),
                   ],
@@ -501,7 +503,7 @@ class _PlayerFeedViewState extends State<PlayerFeedView> {
               } else if (state is CallUpLoaded) {
                 final callUps = state.callUps;
                 if (callUps.isEmpty) {
-                  return const Text("Sem nenhuma convocatória");
+                  return const Center(child: Text("Sem convocatória"));
                 }
 
                 return FadeIn(
