@@ -4,13 +4,13 @@ import '../../../../core/usecases/base_usecases.dart';
 import '../entities/match_entity.dart';
 import '../repositories/i_match_repository.dart';
 
-class GetMatchesByTeamUseCase extends BaseUseCases<dynamic, dynamic> {
+class GetMatchesByTeamUseCase extends BaseUseCases<List<MatchEntity>, String> {
   final IMatchRepository repository;
 
   GetMatchesByTeamUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, dynamic>> call(dynamic params) {
-    return repository.getMatchesByTeamUseCase(params);
+  Future<Either<Failure, List<MatchEntity>>> call(String params) {
+    return repository.getMatchesByTeam(params);
   }
 }

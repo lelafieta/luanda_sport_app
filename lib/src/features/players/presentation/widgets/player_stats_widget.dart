@@ -13,7 +13,7 @@ import '../../../../core/resources/app_images.dart';
 import '../../../player_teams/domain/entities/player_team_entity.dart';
 import '../../../player_teams/presentation/cubit/player_team_cubit.dart';
 import '../../domain/entities/player_entity.dart';
-import '../cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
+import '../cubit/fetch_player_stats/fetch_player_stats_cubit.dart';
 import 'player_team_dropdown_skeleton.dart';
 
 class PlayerStatsWidget extends StatefulWidget {

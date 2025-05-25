@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../players/data/models/player_model.dart';
+import '../../domain/params/set_match_score_params.dart';
 import '../models/match_event_model.dart';
 import '../models/match_model.dart';
 import '../models/match_stats_model.dart';
@@ -35,9 +36,11 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
   }
 
   @override
-  Future<void> setMatchScore(
-      String matchId, Map<String, dynamic> scoreData) async {
-    await client.from('matches').update(scoreData).eq('id', matchId);
+  Future<void> setMatchScore(SetMatchScoreParams params) async {
+    await client
+        .from('matches')
+        .update(params.scoreData)
+        .eq('id', params.matchId);
   }
 
   @override
@@ -89,7 +92,7 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
   }
 
   @override
-  Future<MatchModel> getMatchById(String matchId) async {
+  Future<MatchModel?> getMatchById(String matchId) async {
     final res = await client.from('matches').select('''
           *,
           home_team:teams(*),
@@ -155,7 +158,7 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
   }
 
   @override
-  Future<MatchStatsModel> getMatchStats(String matchId) async {
+  Future<MatchStatsModel?> getMatchStats(String matchId) async {
     final res = await client
         .from('match_stats')
         .select('*')

@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:luanda_sport_app/src/core/resources/app_images.dart';
 import 'package:luanda_sport_app/src/core/strings/app_strings.dart';
 import 'package:luanda_sport_app/src/features/players/domain/entities/player_entity.dart';
-import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_players_team/fetch_players_team_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/action_team_squad_cubit/action_team_squad_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/cubit/get_team_equipament_cubit/get_team_equipament_cubit.dart';

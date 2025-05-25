@@ -7,7 +7,7 @@ class MatchEventEntity {
   final String? matchId;
   final String? playerId;
   final String? teamId;
-  final String? eventType; // pode ser convertido para Enum
+  final String? eventType;
   final int? minute;
   final String? period;
   final String? description;

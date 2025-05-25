@@ -50,9 +50,9 @@ import '../features/players/domain/usecases/get_player_stats_by_team_usecase.dar
 import '../features/players/domain/usecases/get_players_by_team_usecase.dart';
 import '../features/players/domain/usecases/update_player_stats_usecase.dart';
 import '../features/players/domain/usecases/update_player_usecase.dart';
-import '../features/players/presentation/cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
-import '../features/players/presentation/cubit/fetch_players_team_cubit/fetch_players_team_cubit.dart';
-import '../features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
+import '../features/players/presentation/cubit/fetch_player_stats/fetch_player_stats_cubit.dart';
+import '../features/players/presentation/cubit/fetch_players_team/fetch_players_team_cubit.dart';
+import '../features/players/presentation/cubit/get_my_player_data/get_my_player_data_cubit.dart';
 import '../features/squads/data/datasources/i_squad_datasource.dart';
 import '../features/squads/data/datasources/squad_datasource.dart';
 import '../features/squads/data/repositories/squad_repository.dart';

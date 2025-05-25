@@ -4,13 +4,13 @@ import '../../../../core/usecases/base_usecases.dart';
 import '../entities/match_entity.dart';
 import '../repositories/i_match_repository.dart';
 
-class CreateMatchUseCase extends BaseUseCases<dynamic, dynamic> {
+class CreateMatchUseCase extends BaseUseCases<Unit, MatchEntity> {
   final IMatchRepository repository;
 
   CreateMatchUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, dynamic>> call(dynamic params) {
-    return repository.createMatchUseCase(params);
+  Future<Either<Failure, Unit>> call(MatchEntity params) {
+    return repository.createMatch(params);
   }
 }

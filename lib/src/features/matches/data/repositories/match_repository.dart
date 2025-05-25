@@ -4,6 +4,8 @@ import '../../../players/domain/entities/player_entity.dart';
 import '../../domain/entities/match_entity.dart';
 import '../../domain/entities/match_event_entity.dart';
 import '../../domain/entities/match_stats_entity.dart';
+import '../../domain/params/assign_players_to_match_params.dart';
+import '../../domain/params/set_match_score_params.dart';
 import '../../domain/repositories/i_match_repository.dart';
 import '../datasources/i_match_datasource.dart';
 import '../models/match_model.dart';
@@ -47,9 +49,9 @@ class MatchRepository implements IMatchRepository {
 
   @override
   Future<Either<Failure, Unit>> setMatchScore(
-      String matchId, Map<String, dynamic> scoreData) async {
+      SetMatchScoreParams params) async {
     try {
-      await matchDataSource.setMatchScore(matchId, scoreData);
+      await matchDataSource.setMatchScore(params);
       return right(unit);
     } catch (e) {
       return left(Failure(message: e.toString()));
@@ -58,9 +60,10 @@ class MatchRepository implements IMatchRepository {
 
   @override
   Future<Either<Failure, Unit>> assignPlayersToMatch(
-      String matchId, List<String> playerIds) async {
+      AssignPlayersToMatchParams params) async {
     try {
-      await matchDataSource.assignPlayersToMatch(matchId, playerIds);
+      await matchDataSource.assignPlayersToMatch(
+          params.matchId, params.playerIds);
       return right(unit);
     } catch (e) {
       return left(Failure(message: e.toString()));
@@ -98,7 +101,7 @@ class MatchRepository implements IMatchRepository {
   }
 
   @override
-  Future<Either<Failure, MatchEntity>> getMatchById(String matchId) async {
+  Future<Either<Failure, MatchEntity?>> getMatchById(String matchId) async {
     try {
       final result = await matchDataSource.getMatchById(matchId);
       return right(result);
@@ -141,7 +144,7 @@ class MatchRepository implements IMatchRepository {
   }
 
   @override
-  Future<Either<Failure, MatchStatsEntity>> getMatchStats(
+  Future<Either<Failure, MatchStatsEntity?>> getMatchStats(
       String matchId) async {
     try {
       final result = await matchDataSource.getMatchStats(matchId);

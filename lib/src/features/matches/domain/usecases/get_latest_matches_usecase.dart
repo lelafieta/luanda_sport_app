@@ -10,7 +10,7 @@ class GetLatestMatchesUseCase extends BaseUseCases<dynamic, dynamic> {
   GetLatestMatchesUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, dynamic>> call(dynamic params) {
-    return repository.getLatestMatchesUseCase(params);
+  Future<Either<Failure, List<MatchEntity>>> call(dynamic params) {
+    return repository.getLatestMatches();
   }
 }

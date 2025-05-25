@@ -11,6 +11,6 @@ class GenerateMatchReportUseCase extends BaseUseCases<dynamic, dynamic> {
 
   @override
   Future<Either<Failure, dynamic>> call(dynamic params) {
-    return repository.generateMatchReportUseCase(params);
+    return repository.generateMatchReport(params);
   }
 }

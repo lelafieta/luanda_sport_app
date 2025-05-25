@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luanda_sport_app/src/app/app_entity.dart';
-import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_player_stats_cubit/fetch_player_stats_cubit.dart';
-import 'package:luanda_sport_app/src/features/players/presentation/cubit/get_my_player_data_cubit/get_my_player_data_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/fetch_player_stats/fetch_player_stats_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/get_my_player_data/get_my_player_data_cubit.dart';
 
 import '../../../../config/themes/app_colors.dart';
 import '../../../../core/resources/app_icons.dart';
