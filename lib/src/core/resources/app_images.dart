@@ -40,4 +40,5 @@ class AppImages {
   static const String design2 = "assets/images/design-2.png";
   static const String cartaz1 = "assets/images/cartaz-1.png";
   static const String cartaz2 = "assets/images/cartaz-2.png";
+  static const String cartaz4 = "assets/images/cartaz-4.jpg";
 }

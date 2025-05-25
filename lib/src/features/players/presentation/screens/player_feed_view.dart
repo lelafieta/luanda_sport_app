@@ -967,13 +967,13 @@ class SecondPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DismissiblePage(
       isFullScreen: false,
-      disabled: false,
+      disabled: true,
       minRadius: 10,
       maxRadius: 10,
       dragSensitivity: 1.0,
       maxTransformValue: .8,
       direction: DismissiblePageDismissDirection.multi,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black12,
       onDragStart: () {
         print('onDragStart');
       },

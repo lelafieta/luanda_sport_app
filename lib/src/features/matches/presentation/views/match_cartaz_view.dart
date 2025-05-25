@@ -252,7 +252,7 @@ class PosterTemplate extends StatelessWidget {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      AppImages.cartaz2,
+                      AppImages.cartaz4,
                     ),
                     filterQuality: FilterQuality.none,
                     fit: BoxFit.cover,
@@ -260,127 +260,127 @@ class PosterTemplate extends StatelessWidget {
                 ),
               ),
 
-              // Imagem equipe casa
-              Positioned(
-                bottom: height * 0.35,
-                left: width * 0.18,
-                child: SizedBox(
-                  width: width * 0.22,
-                  height: width * 0.22,
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: cartaz.imagemEquipeCasa,
-                      fit: BoxFit.contain,
-                      placeholder: (_, __) => const CircularProgressIndicator(),
-                      errorWidget: (_, __, ___) => const Icon(Icons.error),
-                    ),
-                  ),
-                ),
-              ),
+              // // Imagem equipe casa
+              // Positioned(
+              //   bottom: height * 0.35,
+              //   left: width * 0.18,
+              //   child: SizedBox(
+              //     width: width * 0.22,
+              //     height: width * 0.22,
+              //     child: ClipOval(
+              //       child: CachedNetworkImage(
+              //         imageUrl: cartaz.imagemEquipeCasa,
+              //         fit: BoxFit.contain,
+              //         placeholder: (_, __) => const CircularProgressIndicator(),
+              //         errorWidget: (_, __, ___) => const Icon(Icons.error),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-              // Imagem equipe visitante
-              Positioned(
-                bottom: height * 0.35,
-                right: width * 0.18,
-                child: SizedBox(
-                  width: width * 0.22,
-                  height: width * 0.22,
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: cartaz.imagemEquipeVisitante,
-                      fit: BoxFit.contain,
-                      placeholder: (_, __) => const CircularProgressIndicator(),
-                      errorWidget: (_, __, ___) => const Icon(Icons.error),
-                    ),
-                  ),
-                ),
-              ),
+              // // Imagem equipe visitante
+              // Positioned(
+              //   bottom: height * 0.35,
+              //   right: width * 0.18,
+              //   child: SizedBox(
+              //     width: width * 0.22,
+              //     height: width * 0.22,
+              //     child: ClipOval(
+              //       child: CachedNetworkImage(
+              //         imageUrl: cartaz.imagemEquipeVisitante,
+              //         fit: BoxFit.contain,
+              //         placeholder: (_, __) => const CircularProgressIndicator(),
+              //         errorWidget: (_, __, ___) => const Icon(Icons.error),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-              // Nome equipe casa
-              Positioned(
-                bottom: height * 0.25,
-                left: width * 0.1,
-                child: SizedBox(
-                  width: width * 0.35,
-                  child: FittedBox(
-                    child: Text(
-                      cartaz.equipeCasa.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // // Nome equipe casa
+              // Positioned(
+              //   bottom: height * 0.25,
+              //   left: width * 0.1,
+              //   child: SizedBox(
+              //     width: width * 0.35,
+              //     child: FittedBox(
+              //       child: Text(
+              //         cartaz.equipeCasa.toUpperCase(),
+              //         style: const TextStyle(
+              //           color: Colors.black,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-              // Nome equipe visitante
-              Positioned(
-                bottom: height * 0.28,
-                right: width * 0.1,
-                child: SizedBox(
-                  width: width * 0.35,
-                  child: FittedBox(
-                    child: Text(
-                      cartaz.equipeVisitante.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // // Nome equipe visitante
+              // Positioned(
+              //   bottom: height * 0.28,
+              //   right: width * 0.1,
+              //   child: SizedBox(
+              //     width: width * 0.35,
+              //     child: FittedBox(
+              //       child: Text(
+              //         cartaz.equipeVisitante.toUpperCase(),
+              //         style: const TextStyle(
+              //           color: Colors.black,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-              // Data
-              Positioned(
-                bottom: height * 0.18,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Text(
-                    "20 de Julho de 2025",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: height * 0.035,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+              // // Data
+              // Positioned(
+              //   bottom: height * 0.18,
+              //   left: 0,
+              //   right: 0,
+              //   child: Center(
+              //     child: Text(
+              //       "20 de Julho de 2025",
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: height * 0.035,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-              // Hora
-              Positioned(
-                bottom: height * 0.11,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Text(
-                    "08:00",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: height * 0.035,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+              // // Hora
+              // Positioned(
+              //   bottom: height * 0.11,
+              //   left: 0,
+              //   right: 0,
+              //   child: Center(
+              //     child: Text(
+              //       "08:00",
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: height * 0.035,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
-              // Local
-              Positioned(
-                bottom: height * 0.05,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Text(
-                    cartaz.local,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: height * 0.025,
-                    ),
-                  ),
-                ),
-              ),
+              // // Local
+              // Positioned(
+              //   bottom: height * 0.05,
+              //   left: 0,
+              //   right: 0,
+              //   child: Center(
+              //     child: Text(
+              //       cartaz.local,
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: height * 0.025,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           );
         },
