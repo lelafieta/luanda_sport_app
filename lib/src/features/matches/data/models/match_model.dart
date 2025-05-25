@@ -51,6 +51,34 @@ class MatchModel extends MatchEntity {
     );
   }
 
+  factory MatchModel.fromEntity(MatchEntity entity) {
+    return MatchModel(
+      id: entity.id,
+      competitionId: entity.competitionId,
+      homeTeamId: entity.homeTeamId,
+      awayTeamId: entity.awayTeamId,
+      matchDate: entity.matchDate,
+      venue: entity.venue,
+      refereeId: entity.refereeId,
+      homeScore: entity.homeScore,
+      awayScore: entity.awayScore,
+      status: entity.status,
+      createdAt: entity.createdAt,
+      isExhibition: entity.isExhibition,
+      matchType: entity.matchType,
+      stadium: entity.stadium,
+      homeTeam: entity.homeTeam != null
+          ? TeamModel.fromEntity(entity.homeTeam!)
+          : null,
+      awayTeam: entity.awayTeam != null
+          ? TeamModel.fromEntity(entity.awayTeam!)
+          : null,
+      competition: entity.competition != null
+          ? CompetitionModel.fromEntity(entity.competition!)
+          : null,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

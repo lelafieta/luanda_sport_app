@@ -56,6 +56,30 @@ class CompetitionModel extends CompetitionEntity {
     );
   }
 
+  factory CompetitionModel.fromEntity(CompetitionEntity entity) {
+    return CompetitionModel(
+      id: entity.id,
+      name: entity.name,
+      type: entity.type,
+      gameType: entity.gameType,
+      playerType: entity.playerType,
+      season: entity.season,
+      startDate: entity.startDate,
+      endDate: entity.endDate,
+      category: entity.category,
+      maxTeams: entity.maxTeams,
+      maxPlayersPerTeam: entity.maxPlayersPerTeam,
+      registrationDeadline: entity.registrationDeadline,
+      location: entity.location,
+      latitude: entity.latitude,
+      longitude: entity.longitude,
+      createdBy: entity.createdBy,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      groupQtd: entity.groupQtd,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
