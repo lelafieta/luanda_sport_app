@@ -14,7 +14,7 @@ import 'package:luanda_sport_app/src/features/organizers/presentation/pages/orga
 import 'package:luanda_sport_app/src/features/splash&onboarding/presentation/pages/splash_page.dart';
 import 'package:luanda_sport_app/src/features/teams/presentation/pages/list_my_teams.dart';
 import '../../features/organizers/presentation/pages/organizer_home_page.dart';
-import '../../features/players/presentation/pages/player_page.dart';
+import '../../features/players/presentation/pages_/player_page.dart';
 import '../../features/teams/domain/entities/team_entity.dart';
 import '../../features/teams/presentation/pages/create_team_page.dart';
 import '../../features/teams/presentation/pages/team_deatils_page.dart';
@@ -28,7 +28,7 @@ class AppPages {
           pageBuilder: (context, animation, secondaryAnimation) {
             // return LuandaSportPage();
             // return const SplashPage();
-            return const LoginPage();
+            return const LuandaSportPage();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SharedAxisTransition(

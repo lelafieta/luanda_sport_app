@@ -1,384 +1,173 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:luanda_sport_app/src/core/resources/app_images.dart';
-import 'package:luanda_sport_app/src/features/communities/presentation/pages/community_page.dart';
-import 'package:luanda_sport_app/src/features/followers/presentation/pages/follower_page.dart';
-import 'package:tab_container/tab_container.dart';
 
-import '../../../../config/themes/app_colors.dart';
-import '../../../../core/resources/app_icons.dart';
-
-class PlayerPage extends StatefulWidget {
+class PlayerPage extends StatelessWidget {
   const PlayerPage({super.key});
 
   @override
-  State<PlayerPage> createState() => _PlayerPageState();
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Carlos João'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Resumo'),
+              Tab(text: 'Estatísticas'),
+              Tab(text: 'Partidas'),
+              Tab(text: 'Conquistas'),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [
+            PlayerSummaryTab(),
+            PlayerStatsTab(),
+            PlayerMatchesTab(),
+            PlayerAchievementsTab(),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
-  late TabController _tabController;
-  int selectedTabIndex = 0;
+class PlayerSummaryTab extends StatelessWidget {
+  const PlayerSummaryTab({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage('assets/images/player.jpg'),
+        ),
+        SizedBox(height: 12),
+        Center(
+            child: Text('Carlos João',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold))),
+        Center(child: Text('Atacante • Camisa 9')),
+        Center(child: Text('Time: Vitória FC')),
+        Center(child: Text('Nacionalidade: Angola')),
+        Center(child: Text('Nascimento: 10/02/2001')),
+      ],
+    );
   }
+}
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+class PlayerStatsTab extends StatelessWidget {
+  const PlayerStatsTab({super.key});
+
+  Widget _stat(String title, String value) {
+    return Column(
+      children: [
+        Text(value,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(title),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          // Container(
-          //   color: AppColors.primary,
-          //   child: TabBar(
-          //     controller: _tabController,
-          //     isScrollable: true,
-          //     tabAlignment: TabAlignment.center,
-          //     unselectedLabelColor: AppColors.white.withOpacity(.6),
-          //     labelColor: AppColors.white,
-          //     indicatorColor: Colors.white,
-          //     indicatorSize: TabBarIndicatorSize.tab,
-          //     onTap: (value) {
-          //       setState(() {
-          //         selectedTabIndex = value;
-          //       });
-          //     },
-          //     tabs: [
-          //       Tab(
-          //         icon: SvgPicture.asset(
-          //           AppIcons.football,
-          //           width: 20,
-          //           color: selectedTabIndex == 0
-          //               ? Colors.white
-          //               : AppColors.white.withOpacity(.6),
-          //         ),
-          //         text: 'Perfil',
-          //       ),
-          //       Tab(
-          //         icon: SvgPicture.asset(
-          //           AppIcons.settings,
-          //           color: selectedTabIndex == 1
-          //               ? Colors.white
-          //               : AppColors.white.withOpacity(.6),
-          //         ),
-          //         text: 'Configurações',
-          //       ),
-          //       Tab(
-          //         icon: SvgPicture.asset(
-          //           AppIcons.barsStaggered,
-          //           color: selectedTabIndex == 1
-          //               ? Colors.white
-          //               : AppColors.white.withOpacity(.6),
-          //         ),
-          //         text: 'Estatísticas',
-          //       ),
-          //       Tab(
-          //         icon: SvgPicture.asset(
-          //           AppIcons.thumbsup,
-          //           color: selectedTabIndex == 2
-          //               ? Colors.white
-          //               : AppColors.white.withOpacity(.6),
-          //         ),
-          //         text: 'Seguidores',
-          //       ),
-          //       Tab(
-          //         icon: SvgPicture.asset(
-          //           AppIcons.memo,
-          //           color: selectedTabIndex == 3
-          //               ? Colors.white
-          //               : AppColors.white.withOpacity(.6),
-          //         ),
-          //         text: 'Contracto',
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
-          Expanded(
-            child: Container(
-              color: AppColors.white,
-              child: TabContainer(
-                controller: _tabController,
-                tabEdge: TabEdge.right,
-                tabsStart: 0.1,
-                tabsEnd: 0.9,
-                tabMaxLength: 100,
-                borderRadius: BorderRadius.circular(10),
-                tabBorderRadius: BorderRadius.circular(10),
-                childPadding: const EdgeInsets.all(20.0),
-                selectedTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-                unselectedTextStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 13.0,
-                ),
-                colors: [
-                  Colors.red,
-                  Colors.green,
-                  Colors.blue,
-                ],
-                tabs: [
-                  Text('Tab 1'),
-                  Text('Tab 2'),
-                  Text('Tab 3'),
-                ],
-                children: [
-                  Container(
-                    child: Text('Child 1'),
-                  ),
-                  Container(
-                    child: Text('Child 2'),
-                  ),
-                  Container(
-                    child: Text('Child 3'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Expanded(
-          //   child: TabBarView(
-          //     controller: _tabController,
-          //     children: [
-          //       _buildPlayerProfile(),
-          //       CommunityPage(),
-          //       FollowerPage(),
-          //       Text("data"),
-          //       Center(child: Text('Jogos')),
-          //     ],
-          //   ),
-          // ),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Text('Estatísticas da Carreira',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _stat('Partidas', '85'),
+            _stat('Gols', '34'),
+            _stat('Assistências', '15'),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _stat('Amarelos', '6'),
+            _stat('Vermelhos', '1'),
+            _stat('Minutos', '5400'),
+          ],
+        ),
+      ],
     );
   }
+}
 
-  Widget _buildPlayerProfile() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          SizedBox(
-            width: 250,
-            height: 350,
-            // decoration: BoxDecoration(
-            //   color: Colors.white,
-            //   borderRadius: BorderRadius.circular(10),
-            //   boxShadow: [
-            //     BoxShadow(
-            //       blurRadius: 2,
-            //       color: Colors.black26,
-            //       offset: Offset(0, 2),
-            //     ),
-            //   ],
-            // ),
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  top: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Image.asset(
-                      AppImages.avatar,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Image.asset(
-                  AppImages.playerCard,
-                ),
-                const Positioned(
-                  top: 45,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: Text(
-                      "MAURO CONDA",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white, // opcional, depende da imagem
-                      ),
-                    ),
-                  ),
-                ),
-                const Positioned(
-                  bottom: 5,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: Text(
-                      "DOURADA FC",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white, // opcional, depende da imagem
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+class PlayerMatchesTab extends StatelessWidget {
+  const PlayerMatchesTab({super.key});
 
-            // child: Column(
-            //   children: [
-            //     Expanded(
-            //       child: Container(
-            //         width: double.infinity,
-            //         decoration: const BoxDecoration(
-            //           borderRadius: BorderRadius.only(
-            //             bottomRight: Radius.circular(100),
-            //             topLeft: Radius.circular(10),
-            //             topRight: Radius.circular(10),
-            //           ),
-            //           boxShadow: [
-            //             BoxShadow(
-            //               blurRadius: 2,
-            //               color: Colors.black54,
-            //               offset: Offset(0, 0),
-            //             ),
-            //           ],
-            //         ),
-            //         child: ClipRRect(
-            //           borderRadius: const BorderRadius.only(
-            //             bottomRight: Radius.circular(100),
-            //             topLeft: Radius.circular(10),
-            //             topRight: Radius.circular(10),
-            //           ),
-            //           child: Image.asset(
-            //             AppImages.avatar,
-            //             fit: BoxFit.cover,
-            //             width: double.infinity,
-            //             height: 200, // ou outro valor de altura que preferires
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.all(10),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         children: [
-            //           Text(
-            //             "12",
-            //             style: TextStyle(
-            //                 fontSize: 50,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //                 shadows: [
-            //                   Shadow(
-            //                     blurRadius: 2,
-            //                     color: Colors.black26,
-            //                     offset: Offset(0, 2),
-            //                   )
-            //                 ]),
-            //           ),
-            //           SizedBox(width: 10),
-            //           Text(
-            //             "|",
-            //             style: TextStyle(
-            //               fontSize: 30,
-            //               fontWeight: FontWeight.normal,
-            //               color: Colors.black,
-            //             ),
-            //           ),
-            //           SizedBox(width: 10),
-            //           Text(
-            //             "Bellingahm".toUpperCase(),
-            //             style: TextStyle(
-            //                 fontSize: 12,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //                 height: 1,
-            //                 overflow: TextOverflow.ellipsis),
-            //           ),
-            //         ],
-            //       ),
-            //     )
-            //   ],
-            // ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                ListTile(
-                  leading: SvgPicture.asset(
-                    AppIcons.footballShoesShoe,
-                    width: 26,
-                  ),
-                  title: Text(
-                    'Pé',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  subtitle: Text(
-                    "Direito",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                ListTile(
-                  leading: SvgPicture.asset(
-                    AppIcons.footballShoesShoe,
-                    width: 26,
-                  ),
-                  title: Text(
-                    'Posição',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  subtitle: Text(
-                    "Atacante",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                ListTile(
-                  leading: SvgPicture.asset(
-                    AppIcons.footballShoesShoe,
-                    width: 26,
-                  ),
-                  title: Text(
-                    'Camisa',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  subtitle: Text(
-                    "7",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                ListTile(
-                  leading: SvgPicture.asset(
-                    AppIcons.footballShoesShoe,
-                    width: 26,
-                  ),
-                  title: Text(
-                    'Equipe',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  subtitle: Text(
-                    "Dourada FC",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        MatchTile(
+            team: 'Vitória FC',
+            opponent: 'Petro Luanda',
+            result: '2-1',
+            goals: 1),
+        MatchTile(
+            team: 'Vitória FC',
+            opponent: '1º de Agosto',
+            result: '1-1',
+            goals: 0),
+        MatchTile(
+            team: 'Vitória FC',
+            opponent: 'Bravos Maquis',
+            result: '3-0',
+            goals: 2),
+      ],
+    );
+  }
+}
+
+class MatchTile extends StatelessWidget {
+  final String team;
+  final String opponent;
+  final String result;
+  final int goals;
+
+  const MatchTile({
+    super.key,
+    required this.team,
+    required this.opponent,
+    required this.result,
+    required this.goals,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.sports_soccer),
+      title: Text('$team vs $opponent'),
+      subtitle: Text('Resultado: $result'),
+      trailing: Text('Gols: $goals'),
+    );
+  }
+}
+
+class PlayerAchievementsTab extends StatelessWidget {
+  const PlayerAchievementsTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        Text('🏆 Artilheiro do Girabola 2023'),
+        SizedBox(height: 8),
+        Text('🥇 Melhor Jogador Sub-21 de Angola'),
+        SizedBox(height: 8),
+        Text('⚽ Golo Mais Bonito da Temporada 2022'),
+      ],
     );
   }
 }

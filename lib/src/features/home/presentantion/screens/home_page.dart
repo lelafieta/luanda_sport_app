@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:luanda_sport_app/src/features/feeds/presentation/views/feed_view.dart';
 import '../../../coaches/presentation/screens/coach_screen.dart';
-import '../../../competitions/presentation/pages/my_competition_details_page.dart';
 import '../../../fans/presentation/screens/fan_screen.dart';
 import '../../../organizers/presentation/screens/organizer_screen.dart';
-import '../../../players/presentation/screens/player_screen.dart';
+
+import '../../../players/presentation/pages/player_page.dart';
 import '../../../referees/presentation/screens/referee_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       switch (widget.arguments!["pageParams"]) {
         case "player":
-          content = const PlayerScreen();
+          content = const PlayerPage();
           break;
         case "fan":
           content = const FanScreen();
