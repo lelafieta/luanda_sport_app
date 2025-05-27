@@ -21,10 +21,10 @@ final class TrainingSessionLoaded extends TrainingSessionState {
 }
 
 final class TrainingSessionFailure extends TrainingSessionState {
-  final String message;
+  final String error;
 
-  const TrainingSessionFailure({required this.message});
+  const TrainingSessionFailure({required this.error});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [error];
 }
