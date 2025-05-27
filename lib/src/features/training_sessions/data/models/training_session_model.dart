@@ -1,17 +1,18 @@
 import '../../../coaches/data/models/coach_model.dart';
 import '../../../teams/data/models/team_model.dart';
-import '../../domain/entities/training_sessions_entity.dart';
+import '../../domain/entities/training_session_entity.dart';
 
 class TrainingSessionModel extends TrainingSessionEntity {
-  TrainingSessionModel(
-      {super.id,
-      super.coachId,
-      super.teamId,
-      super.sessionDate,
-      super.focus,
-      super.notes,
-      super.coach,
-      super.team});
+  TrainingSessionModel({
+    super.id,
+    super.coachId,
+    super.teamId,
+    super.sessionDate,
+    super.focus,
+    super.notes,
+    super.coach,
+    super.team,
+  });
 
   factory TrainingSessionModel.fromJson(Map<String, dynamic> json) {
     return TrainingSessionModel(
@@ -37,5 +38,18 @@ class TrainingSessionModel extends TrainingSessionEntity {
       'focus': focus,
       'notes': notes,
     };
+  }
+
+  factory TrainingSessionModel.fromEntity(TrainingSessionEntity entity) {
+    return TrainingSessionModel(
+      id: entity.id,
+      coachId: entity.coachId,
+      teamId: entity.teamId,
+      sessionDate: entity.sessionDate,
+      focus: entity.focus,
+      notes: entity.notes,
+      coach: entity.coach,
+      team: entity.team,
+    );
   }
 }
