@@ -9,6 +9,7 @@ import '../../../achievements/presentation/views/achievements_view.dart';
 import '../cubit/get_my_player_data/get_my_player_data_cubit.dart';
 import '../widgets/my_profile_widget.dart';
 import '../widgets/player_stats_widget.dart';
+import 'player_calendar_page.dart';
 import 'player_feed_page.dart';
 
 class PlayerPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     context.read<GetMyPlayerDataCubit>().fetchPlayerData(AppEntity.uId!);
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 8, vsync: this);
   }
 
   @override
@@ -57,9 +58,13 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
               },
               tabs: const [
                 Tab(text: 'Perfil'),
-                Tab(text: 'Feed'),
+                Tab(text: 'Calendário'),
                 Tab(text: 'Estatísticas'),
+                Tab(text: 'Competições'),
+                Tab(text: 'Convocatórias'),
+                Tab(text: 'Mensagens'),
                 Tab(text: 'Conquistas'),
+                Tab(text: 'Configurações'),
               ],
             ),
           ),
@@ -91,6 +96,10 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
                     return const SizedBox.shrink();
                   },
                 ),
+                CalendarPage(),
+                Text("data"),
+                Text("data"),
+                Text("data"),
                 const PlayerFeedPage(),
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {

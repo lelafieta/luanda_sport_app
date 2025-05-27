@@ -93,6 +93,7 @@ dependencies:
   flutter_image_slideshow: ^0.1.6
   flutter_dropdown_alert: ^1.0.7
   material_dialogs: ^1.1.5
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
