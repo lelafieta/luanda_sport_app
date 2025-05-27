@@ -1,173 +1,263 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../app/app_entity.dart';
+import '../../../../config/themes/app_colors.dart';
+import '../../../../core/resources/app_icons.dart';
+import '../../../../core/resources/app_images.dart';
+import '../../../achievements/presentation/views/achievements_view.dart';
+import '../cubit/get_my_player_data/get_my_player_data_cubit.dart';
+import '../widgets/my_profile_widget.dart';
+import '../widgets/player_stats_widget.dart';
+import 'player_feed_page.dart';
 
-class PlayerPage extends StatelessWidget {
+class PlayerPage extends StatefulWidget {
   const PlayerPage({super.key});
 
   @override
+  State<PlayerPage> createState() => _PlayerPageState();
+}
+
+class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
+  late TabController _tabController;
+  int selectedTabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<GetMyPlayerDataCubit>().fetchPlayerData(AppEntity.uId!);
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Carlos João'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Resumo'),
-              Tab(text: 'Estatísticas'),
-              Tab(text: 'Partidas'),
-              Tab(text: 'Conquistas'),
-            ],
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            color: AppColors.primary,
+            child: TabBar(
+              controller: _tabController,
+              tabAlignment: TabAlignment.center,
+              isScrollable: true,
+              unselectedLabelColor: AppColors.white.withOpacity(.6),
+              labelColor: AppColors.white,
+              indicatorColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.tab,
+              onTap: (value) {
+                setState(() {
+                  selectedTabIndex = value;
+                });
+              },
+              tabs: const [
+                Tab(text: 'Perfil'),
+                Tab(text: 'Feed'),
+                Tab(text: 'Estatísticas'),
+                Tab(text: 'Conquistas'),
+              ],
+            ),
           ),
-        ),
-        body: const TabBarView(
-          children: [
-            PlayerSummaryTab(),
-            PlayerStatsTab(),
-            PlayerMatchesTab(),
-            PlayerAchievementsTab(),
-          ],
-        ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
+                  builder: (context, state) {
+                    if (state is GetMyPlayerDataLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is GetMyPlayerDataFailure) {
+                      return const Center(
+                        child: Text("Erro ao carregar dados do jogador"),
+                      );
+                    } else if (state is GetMyPlayerDataLoaded) {
+                      if (state.player == null) {
+                        return const Center(
+                          child: Text("Nenhum jogador encontrado"),
+                        );
+                      }
+                      return MyProfileWidget(
+                        player: state.player!,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+                const PlayerFeedPage(),
+                BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
+                  builder: (context, state) {
+                    if (state is GetMyPlayerDataLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is GetMyPlayerDataFailure) {
+                      return const Center(
+                        child: Text("Erro ao carregar estatísticas"),
+                      );
+                    } else if (state is GetMyPlayerDataLoaded) {
+                      if (state.player == null) {
+                        return const Center(
+                          child: Text("Nenhuma estatística encontrada"),
+                        );
+                      }
+                      return PlayerStatsWidget(
+                        player: state.player!,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+                AchievementsView(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
-}
 
-class PlayerSummaryTab extends StatelessWidget {
-  const PlayerSummaryTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        CircleAvatar(
-          radius: 50,
-          backgroundImage: AssetImage('assets/images/player.jpg'),
-        ),
-        SizedBox(height: 12),
-        Center(
-            child: Text('Carlos João',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold))),
-        Center(child: Text('Atacante • Camisa 9')),
-        Center(child: Text('Time: Vitória FC')),
-        Center(child: Text('Nacionalidade: Angola')),
-        Center(child: Text('Nascimento: 10/02/2001')),
-      ],
-    );
-  }
-}
-
-class PlayerStatsTab extends StatelessWidget {
-  const PlayerStatsTab({super.key});
-
-  Widget _stat(String title, String value) {
-    return Column(
-      children: [
-        Text(value,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
-        Text(title),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        const Text('Estatísticas da Carreira',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _stat('Partidas', '85'),
-            _stat('Gols', '34'),
-            _stat('Assistências', '15'),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _stat('Amarelos', '6'),
-            _stat('Vermelhos', '1'),
-            _stat('Minutos', '5400'),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class PlayerMatchesTab extends StatelessWidget {
-  const PlayerMatchesTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        MatchTile(
-            team: 'Vitória FC',
-            opponent: 'Petro Luanda',
-            result: '2-1',
-            goals: 1),
-        MatchTile(
-            team: 'Vitória FC',
-            opponent: '1º de Agosto',
-            result: '1-1',
-            goals: 0),
-        MatchTile(
-            team: 'Vitória FC',
-            opponent: 'Bravos Maquis',
-            result: '3-0',
-            goals: 2),
-      ],
-    );
-  }
-}
-
-class MatchTile extends StatelessWidget {
-  final String team;
-  final String opponent;
-  final String result;
-  final int goals;
-
-  const MatchTile({
-    super.key,
-    required this.team,
-    required this.opponent,
-    required this.result,
-    required this.goals,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.sports_soccer),
-      title: Text('$team vs $opponent'),
-      subtitle: Text('Resultado: $result'),
-      trailing: Text('Gols: $goals'),
-    );
-  }
-}
-
-class PlayerAchievementsTab extends StatelessWidget {
-  const PlayerAchievementsTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        Text('🏆 Artilheiro do Girabola 2023'),
-        SizedBox(height: 8),
-        Text('🥇 Melhor Jogador Sub-21 de Angola'),
-        SizedBox(height: 8),
-        Text('⚽ Golo Mais Bonito da Temporada 2022'),
-      ],
+  Widget _buildPlayerProfile() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            width: 250,
+            height: 350,
+            // decoration: BoxDecoration(
+            //   color: Colors.white,
+            //   borderRadius: BorderRadius.circular(10),
+            //   boxShadow: [
+            //     BoxShadow(
+            //       blurRadius: 2,
+            //       color: Colors.black26,
+            //       offset: Offset(0, 2),
+            //     ),
+            //   ],
+            // ),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  top: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Image.asset(
+                      AppImages.avatar,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Image.asset(
+                  AppImages.playerCard,
+                ),
+                const Positioned(
+                  top: 45,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      "MAURO CONDA",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // opcional, depende da imagem
+                      ),
+                    ),
+                  ),
+                ),
+                const Positioned(
+                  bottom: 5,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      "DOURADA FC",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // opcional, depende da imagem
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: SvgPicture.asset(
+                    AppIcons.footballShoesShoe,
+                    width: 26,
+                  ),
+                  title: Text(
+                    'Pé',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  subtitle: Text(
+                    "Direito",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                ListTile(
+                  leading: SvgPicture.asset(
+                    AppIcons.footballShoesShoe,
+                    width: 26,
+                  ),
+                  title: Text(
+                    'Posição',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  subtitle: Text(
+                    "Atacante",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                ListTile(
+                  leading: SvgPicture.asset(
+                    AppIcons.footballShoesShoe,
+                    width: 26,
+                  ),
+                  title: Text(
+                    'Camisa',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  subtitle: Text(
+                    "7",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                ListTile(
+                  leading: SvgPicture.asset(
+                    AppIcons.footballShoesShoe,
+                    width: 26,
+                  ),
+                  title: Text(
+                    'Equipe',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  subtitle: Text(
+                    "Dourada FC",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

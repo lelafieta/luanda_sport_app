@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:luanda_sport_app/src/features/feeds/presentation/views/feed_view.dart';
 import '../../../coaches/presentation/screens/coach_screen.dart';
 import '../../../fans/presentation/screens/fan_screen.dart';
+import '../../../feeds/presentation/views/feed_view.dart';
 import '../../../organizers/presentation/screens/organizer_screen.dart';
-
 import '../../../players/presentation/pages/player_page.dart';
 import '../../../referees/presentation/screens/referee_screen.dart';
 

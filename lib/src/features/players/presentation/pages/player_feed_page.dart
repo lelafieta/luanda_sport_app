@@ -31,16 +31,15 @@ import '../../../matches/domain/entities/match_entity.dart';
 import '../../../matches/presentation/views/match_cartaz_view.dart';
 import '../cubit/call_up_response/call_up_response_cubit.dart';
 import '../cubit/player_upcoming_match/player_upcoming_match_cubit.dart';
-import 'print_image.dart';
 
-class PlayerFeedView extends StatefulWidget {
-  const PlayerFeedView({super.key});
+class PlayerFeedPage extends StatefulWidget {
+  const PlayerFeedPage({super.key});
 
   @override
-  State<PlayerFeedView> createState() => _PlayerFeedViewState();
+  State<PlayerFeedPage> createState() => _PlayerFeedPageState();
 }
 
-class _PlayerFeedViewState extends State<PlayerFeedView> {
+class _PlayerFeedPageState extends State<PlayerFeedPage> {
   // Simulações para exemplo
   final bool convocado = false;
   final bool noOnzeInicial = false;
