@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/entities/player_entity.dart';
 import '../../../domain/usecases/get_players_by_team_usecase.dart';
 part 'fetch_players_team_state.dart';
 
