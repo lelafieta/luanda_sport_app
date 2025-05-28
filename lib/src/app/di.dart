@@ -3,6 +3,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_coach_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/call_up_response/call_up_response_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_call_up/player_call_up_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_match/player_match_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_training_session/player_training_session_cubit.dart';
+import 'package:luanda_sport_app/src/features/training_sessions/domain/usecases/create_training_session_usecase.dart';
+import 'package:luanda_sport_app/src/features/training_sessions/domain/usecases/delete_training_session_usecase.dart';
+import 'package:luanda_sport_app/src/features/training_sessions/domain/usecases/get_training_sessions_for_team_usecase.dart';
+import 'package:luanda_sport_app/src/features/training_sessions/presentation/cubits/training_session/training_session_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/cache/i_secure_storage_helper.dart';
 import '../core/cache/secure_storage_helper.dart';
@@ -109,6 +116,10 @@ import '../features/teams/presentation/cubit/get_team_equipament_cubit/get_team_
 import '../features/teams/presentation/cubit/starting_lineup_player_cubit/starting_lineup_player_cubit.dart';
 import '../features/teams/presentation/cubit/team_action_cubit/team_action_cubit.dart';
 import '../features/teams/presentation/cubit/team_fetch_cubit/team_fetch_cubit.dart';
+import '../features/training_sessions/data/datasources/i_training_session_datasource.dart';
+import '../features/training_sessions/data/datasources/training_session_datasource.dart';
+import '../features/training_sessions/data/repositories/training_session_repository.dart';
+import '../features/training_sessions/domain/repositories/i_training_session_repository.dart';
 import '../features/trophies/data/datasources/i_trophy_datasource.dart';
 import '../features/trophies/data/datasources/trophy_datasource.dart';
 import '../features/trophies/data/repositories/trophy_repository.dart';
@@ -166,6 +177,9 @@ void _registerCubits() {
   sl.registerFactory(() => FetchPlayerStatsCubit(
       getPlayerStatsByIdUseCase: sl(), getPlayerStatsByTeamUseCase: sl()));
 
+  sl.registerFactory(() => PlayerCallUpCubit(getCallUpsByPlayerUseCase: sl()));
+  sl.registerFactory(() => PlayerMatchCubit(getMatchesByPlayerUseCase: sl()));
+
   // TROPHY
   sl.registerFactory(
       () => FetchTrophiesTeamCubit(getTrophiesByTeamUseCase: sl()));
@@ -206,6 +220,13 @@ void _registerCubits() {
 
   sl.registerFactory(
       () => PlayerUpcomingMatchCubit(getUpComingMatchesByPlayerUseCase: sl()));
+
+  // TRAINNING SESSION
+
+  sl.registerFactory(() => TrainingSessionCubit(
+      getTrainingSessionsForTeamUseCase: sl(),
+      createTrainingSessionUseCase: sl(),
+      deleteTrainingSessionUseCase: sl()));
 }
 
 void _registerRepositories() {
@@ -245,6 +266,10 @@ void _registerRepositories() {
   // MATCH
   sl.registerLazySingleton<IMatchRepository>(
       () => MatchRepository(matchDataSource: sl()));
+
+  // TRAINNING SESSION
+  sl.registerLazySingleton<ITrainingSessionRepository>(
+      () => TrainingSessionRepository(dataSource: sl()));
 }
 
 void _registerDatasources() {
@@ -286,6 +311,10 @@ void _registerDatasources() {
   // MATCH
   sl.registerLazySingleton<IMatchRemoteDataSource>(
       () => MatchRemoteDataSource(client: sl()));
+
+  // TRAINNING SESSION
+  sl.registerLazySingleton<ITrainingSessionDataSource>(
+      () => TrainingSessionDataSource(client: sl()));
 }
 
 void _registerUseCases() {
@@ -387,6 +416,14 @@ void _registerUseCases() {
   sl.registerLazySingleton(() => SearchMatchesUseCase(repository: sl()));
   sl.registerLazySingleton(() => SetMatchScoreUseCase(repository: sl()));
   sl.registerLazySingleton(() => UpdateMatchUseCase(repository: sl()));
+
+  // TRAINMIMG SESSION
+  sl.registerLazySingleton(
+      () => GetTrainingSessionsForTeamUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => CreateTrainingSessionUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => DeleteTrainingSessionUseCase(repository: sl()));
 }
 
 void _registerExternal() {
