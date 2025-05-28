@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../../players/domain/enums/activity_enum.dart';
 import '../../domain/entities/activity_entity.dart';
 
 class ActivityModel extends ActivityEntity {

@@ -36,8 +36,12 @@ class TrainingSessionRepository extends ITrainingSessionRepository {
 
   @override
   Future<Either<Failure, List<TrainingSessionEntity>>>
-      getTrainingSessionsForTeam(String teamId) {
-    // TODO: implement getTrainingSessionsForTeam
-    throw UnimplementedError();
+      getTrainingSessionsForTeam(String teamId) async {
+    try {
+      final result = await dataSource.getTrainingSessionsForTeam(teamId);
+      return right(result);
+    } catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
   }
 }

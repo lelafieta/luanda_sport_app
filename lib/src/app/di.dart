@@ -46,6 +46,7 @@ import '../features/matches/domain/usecases/get_latest_matches_usecase.dart';
 import '../features/matches/domain/usecases/get_match_by_id_usecase.dart';
 import '../features/matches/domain/usecases/get_match_events_usecase.dart';
 import '../features/matches/domain/usecases/get_match_stats_usecase.dart';
+import '../features/matches/domain/usecases/get_matches_by_player_team_usecase.dart';
 import '../features/matches/domain/usecases/get_matches_by_player_usecase.dart';
 import '../features/matches/domain/usecases/get_matches_by_team_usecase.dart';
 import '../features/matches/domain/usecases/get_top_scorers_in_match_usecase.dart';
@@ -234,7 +235,7 @@ void _registerCubits() {
   sl.registerFactory(() => ActivityCubit(
       getTrainingSessionsForTeamUseCase: sl(),
       getCallUpsByPlayerUseCase: sl(),
-      getMatchesByPlayerUseCase: sl()));
+      getMatchesByPlayerTeamUseCase: sl()));
 }
 
 void _registerRepositories() {
@@ -424,6 +425,9 @@ void _registerUseCases() {
   sl.registerLazySingleton(() => SearchMatchesUseCase(repository: sl()));
   sl.registerLazySingleton(() => SetMatchScoreUseCase(repository: sl()));
   sl.registerLazySingleton(() => UpdateMatchUseCase(repository: sl()));
+
+  sl.registerLazySingleton(
+      () => GetMatchesByPlayerTeamUseCase(repository: sl()));
 
   // TRAINMIMG SESSION
   sl.registerLazySingleton(

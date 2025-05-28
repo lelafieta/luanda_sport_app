@@ -213,10 +213,12 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
   @override
   Future<List<MatchModel>> getMatchesByPlayerTeam(
       String playerId, String teamId) async {
+    print(playerId);
+    print(teamId);
     final res = await client.from('match_players').select('''
           match:matches(*,
-            home_team:teams(*),
-            away_team:teams(*)
+            home_team:home_team_id(*),
+            away_team:away_team_id(*)
           )
         ''').eq('player_id', playerId).eq("team_id", teamId);
 
