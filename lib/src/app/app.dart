@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:luanda_sport_app/src/features/call_ups/presentation/cubit/call_up_action/call_up_action_cubit.dart';
 import 'package:luanda_sport_app/src/features/call_ups/presentation/cubit/call_up_cubit.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_match/player_match_cubit.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_upcoming_match/player_upcoming_match_cubit.dart';
+import 'package:luanda_sport_app/src/features/training_sessions/presentation/cubits/training_session/training_session_cubit.dart';
 
 import '../config/routes/app_pages.dart';
 import '../config/themes/app_theme.dart';
@@ -15,6 +17,7 @@ import '../features/players/presentation/cubit/call_up_response/call_up_response
 import '../features/players/presentation/cubit/fetch_player_stats/fetch_player_stats_cubit.dart';
 import '../features/players/presentation/cubit/fetch_players_team/fetch_players_team_cubit.dart';
 import '../features/players/presentation/cubit/get_my_player_data/get_my_player_data_cubit.dart';
+import '../features/players/presentation/cubit/player_call_up/player_call_up_cubit.dart';
 import '../features/squads/presentation/cubit/squad_cubit.dart';
 import '../features/teams/presentation/cubit/action_team_squad_cubit/action_team_squad_cubit.dart';
 import '../features/teams/presentation/cubit/get_one_team_cubit/get_one_team_cubit.dart';
@@ -55,6 +58,9 @@ class GameOnApp extends StatelessWidget {
           BlocProvider(create: (context) => di.sl<CallUpCubit>()),
           BlocProvider(create: (context) => di.sl<CallUpResponseCubit>()),
           BlocProvider(create: (context) => di.sl<PlayerUpcomingMatchCubit>()),
+          BlocProvider(create: (context) => di.sl<PlayerMatchCubit>()),
+          BlocProvider(create: (context) => di.sl<PlayerCallUpCubit>()),
+          BlocProvider(create: (context) => di.sl<TrainingSessionCubit>()),
         ],
         child: GetMaterialApp(
           title: 'Luanda Sport',
