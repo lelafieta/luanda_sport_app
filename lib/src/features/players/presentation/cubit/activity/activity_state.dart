@@ -1,10 +1,30 @@
 part of 'activity_cubit.dart';
 
-sealed class ActivityState extends Equatable {
+abstract class ActivityState extends Equatable {
   const ActivityState();
 
   @override
   List<Object> get props => [];
 }
 
-final class ActivityInitial extends ActivityState {}
+class ActivityInitial extends ActivityState {}
+
+class ActivityLoading extends ActivityState {}
+
+class ActivityLoaded extends ActivityState {
+  final List<ActivityEntity> activities;
+
+  const ActivityLoaded(this.activities);
+
+  @override
+  List<Object> get props => [activities];
+}
+
+class ActivityFailure extends ActivityState {
+  final String error;
+
+  const ActivityFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
