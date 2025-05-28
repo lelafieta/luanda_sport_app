@@ -13,6 +13,7 @@ import '../config/routes/app_pages.dart';
 import '../config/themes/app_theme.dart';
 import '../features/auth/presentation/cubit/auth_cubit.dart';
 import '../features/player_teams/presentation/cubit/player_team_cubit.dart';
+import '../features/players/presentation/cubit/activity/activity_cubit.dart';
 import '../features/players/presentation/cubit/call_up_response/call_up_response_cubit.dart';
 import '../features/players/presentation/cubit/fetch_player_stats/fetch_player_stats_cubit.dart';
 import '../features/players/presentation/cubit/fetch_players_team/fetch_players_team_cubit.dart';
@@ -61,6 +62,7 @@ class GameOnApp extends StatelessWidget {
           BlocProvider(create: (context) => di.sl<PlayerMatchCubit>()),
           BlocProvider(create: (context) => di.sl<PlayerCallUpCubit>()),
           BlocProvider(create: (context) => di.sl<TrainingSessionCubit>()),
+          BlocProvider(create: (context) => di.sl<ActivityCubit>()),
         ],
         child: GetMaterialApp(
           title: 'Luanda Sport',

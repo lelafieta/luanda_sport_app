@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:luanda_sport_app/src/features/call_ups/domain/usecases/get_call_ups_by_coach_usecase.dart';
 import 'package:get_it/get_it.dart';
+import 'package:luanda_sport_app/src/features/players/presentation/cubit/activity/activity_cubit.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/call_up_response/call_up_response_cubit.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_call_up/player_call_up_cubit.dart';
 import 'package:luanda_sport_app/src/features/players/presentation/cubit/player_match/player_match_cubit.dart';
@@ -227,6 +228,13 @@ void _registerCubits() {
       getTrainingSessionsForTeamUseCase: sl(),
       createTrainingSessionUseCase: sl(),
       deleteTrainingSessionUseCase: sl()));
+
+  // ACTIVITY
+
+  sl.registerFactory(() => ActivityCubit(
+      getTrainingSessionsForTeamUseCase: sl(),
+      getCallUpsByPlayerUseCase: sl(),
+      getMatchesByPlayerUseCase: sl()));
 }
 
 void _registerRepositories() {
