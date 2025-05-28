@@ -4,7 +4,7 @@ import 'package:luanda_sport_app/src/features/training_sessions/data/models/trai
 import '../../../../core/error/failure.dart';
 import '../../../../core/error/server_failure.dart';
 import '../../domain/entities/training_session_entity.dart';
-import '../../domain/repositories/training_session_repository.dart';
+import '../../domain/repositories/i_training_session_repository.dart';
 import '../datasources/i_training_session_datasource.dart';
 
 class TrainingSessionRepository extends ITrainingSessionRepository {
@@ -27,7 +27,7 @@ class TrainingSessionRepository extends ITrainingSessionRepository {
   @override
   Future<Either<Failure, Unit>> deleteTrainingSession(String id) async {
     try {
-      await dataSource.createTrainingSession();
+      await dataSource.deleteTrainingSession(id);
       return right(unit);
     } catch (e) {
       return left(ServerFailure(message: e.toString()));

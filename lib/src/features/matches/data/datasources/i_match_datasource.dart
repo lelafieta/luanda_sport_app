@@ -19,6 +19,8 @@ abstract class IMatchRemoteDataSource {
   Future<MatchModel?> getMatchById(String matchId);
   Future<List<MatchModel>> getMatchesByTeam(String teamId);
   Future<List<MatchModel>> getMatchesByPlayer(String playerId);
+  Future<List<MatchModel>> getMatchesByPlayerTeam(
+      String playerId, String teamId);
   Future<List<MatchModel>> searchMatches(Map<String, dynamic> filters);
   Future<List<MatchModel>> getUpcomingMatchesByPlayer(String playerId);
 

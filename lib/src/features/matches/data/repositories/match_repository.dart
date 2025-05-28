@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:luanda_sport_app/src/features/matches/domain/params/get_matches_by_player_team_params.dart';
 import '../../../../core/error/failure.dart';
 import '../../../players/domain/entities/player_entity.dart';
 import '../../domain/entities/match_entity.dart';
@@ -191,6 +192,20 @@ class MatchRepository implements IMatchRepository {
       String playerId) async {
     try {
       final result = await matchDataSource.getUpcomingMatchesByPlayer(playerId);
+      return right(result);
+    } catch (e) {
+      return left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MatchEntity>>> getMatchesByPlayerTeam(
+      GetMatchesByPlayerTeamParams params) async {
+    try {
+      final result = await matchDataSource.getMatchesByPlayerTeam(
+        params.playerId,
+        params.teamId,
+      );
       return right(result);
     } catch (e) {
       return left(Failure(message: e.toString()));

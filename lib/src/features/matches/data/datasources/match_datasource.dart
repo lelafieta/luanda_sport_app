@@ -195,7 +195,7 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
   Future<List<MatchModel>> getUpcomingMatchesByPlayer(String playerId) async {
     final response = await client
         .from('match_players')
-        .select('''match:match_id(*, home_team:home_team_id(*), away_team:away_team_id(*), competition:competitions(*))''').eq(
+        .select(''' match:match_id(*, home_team:home_team_id(*), away_team:away_team_id(*), competition:competitions(*))''').eq(
             'player_id', playerId);
 
     if (response.isEmpty) {
@@ -208,5 +208,21 @@ class MatchRemoteDataSource implements IMatchRemoteDataSource {
         .toList();
 
     return matches;
+  }
+
+  @override
+  Future<List<MatchModel>> getMatchesByPlayerTeam(
+      String playerId, String teamId) async {
+    final res = await client.from('match_players').select('''
+          match:matches(*,
+            home_team:teams(*),
+            away_team:teams(*)
+          )
+        ''').eq('player_id', playerId).eq("team_id", teamId);
+
+    // A resposta traz a lista de 'match' aninhados
+    return (res as List)
+        .map((e) => MatchModel.fromMap(e['match'] as Map<String, dynamic>))
+        .toList();
   }
 }

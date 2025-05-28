@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/base_usecases.dart';
 import '../entities/training_session_entity.dart';
-import '../repositories/training_session_repository.dart';
+import '../repositories/i_training_session_repository.dart';
 
 class GetTrainingSessionsForTeamUseCase
     extends BaseUseCases<List<TrainingSessionEntity>, String> {

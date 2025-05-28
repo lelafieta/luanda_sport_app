@@ -5,6 +5,7 @@ import '../entities/match_entity.dart';
 import '../entities/match_event_entity.dart';
 import '../entities/match_stats_entity.dart';
 import '../params/assign_players_to_match_params.dart';
+import '../params/get_matches_by_player_team_params.dart';
 import '../params/set_match_score_params.dart';
 
 abstract class IMatchRepository {
@@ -24,6 +25,8 @@ abstract class IMatchRepository {
   Future<Either<Failure, List<MatchEntity>>> getMatchesByTeam(String teamId);
   Future<Either<Failure, List<MatchEntity>>> getMatchesByPlayer(
       String playerId);
+  Future<Either<Failure, List<MatchEntity>>> getMatchesByPlayerTeam(
+      GetMatchesByPlayerTeamParams params);
   Future<Either<Failure, List<MatchEntity>>> searchMatches(
       Map<String, dynamic> filters);
 
