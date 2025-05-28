@@ -1,8 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:luanda_sport_app/src/features/players/domain/entities/player_entity.dart';
-import 'package:luanda_sport_app/src/features/players/domain/usecases/get_players_by_team_usecase.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/usecases/get_players_by_team_usecase.dart';
 part 'fetch_players_team_state.dart';
 
 class FetchPlayersTeamCubit extends Cubit<FetchPlayersTeamState> {
