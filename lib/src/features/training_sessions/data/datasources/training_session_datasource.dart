@@ -20,8 +20,10 @@ class TrainingSessionDataSource extends ITrainingSessionDataSource {
   @override
   Future<List<TrainingSessionModel>> getTrainingSessionsForTeam(
       String teamId) async {
-    final response =
-        await client.from('training_sessions').select().eq('team_id', teamId);
+    final response = await client
+        .from('training_sessions')
+        .select('*')
+        .eq('team_id', teamId);
     if (response.isNotEmpty) {
       return (response as List)
           .map((e) => TrainingSessionModel.fromJson(e))

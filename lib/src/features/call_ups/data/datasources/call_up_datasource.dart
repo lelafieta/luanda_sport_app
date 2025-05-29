@@ -41,7 +41,7 @@ class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
   Future<List<CallUpModel>> getCallUpsByPlayer(String playerId) async {
     final response = await client
         .from('call_ups')
-        .select('*,  coaches(*), players(*), competitions(*)')
+        .select('*,  coaches(*), players(*), competitions(*), match:matches(*)')
         .eq('player_id', playerId);
 
     return (response as List).map((json) => CallUpModel.fromMap(json)).toList();
