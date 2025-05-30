@@ -584,7 +584,7 @@ class _PlayerFeedPageState extends State<PlayerFeedPage> {
               } else if (state is CallUpLoaded) {
                 final callUps = state.callUps;
                 if (callUps.isEmpty) {
-                  return const Center(child: Text("Sem convocatória"));
+                  return const Center(child: Text("Sem  convocatória"));
                 }
 
                 return FadeIn(
