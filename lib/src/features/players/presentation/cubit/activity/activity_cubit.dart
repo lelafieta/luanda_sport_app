@@ -59,18 +59,18 @@ class ActivityCubit extends Cubit<ActivityState> {
         (failure) => null,
         (matches) {
           activities.addAll(matches.map((m) => ActivityEntity(
-                date: m.matchDate,
-                title: (m.competitionId == null)
-                    ? "Exibição"
-                    : m.competition!.name,
-                type: ActivityType.match,
-                description: m.stadium,
-              )));
+              date: m.matchDate,
+              title:
+                  (m.competitionId == null) ? "Exibição" : m.competition!.name,
+              type: ActivityType.match,
+              description: m.stadium,
+              match: m)));
         },
       );
 
       activities.sort((a, b) => a.date!.compareTo(b.date!));
-
+      print("Tamanho");
+      print(activities.length);
       emit(ActivityLoaded(activities));
     } catch (e, strack) {
       print(strack);

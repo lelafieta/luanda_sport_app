@@ -131,22 +131,23 @@ class _CalendarPageState extends State<CalendarPage> {
                     itemCount: selectedActivities.length,
                     itemBuilder: (context, index) {
                       final activity = selectedActivities[index];
-
-                      // if (activity.match != null) {
-                      //   return _buildMatchWidget(activity.match!);
-                      // }
-                      // if (activity.callUp != null) {
-                      //   return _buildCallUpWidget(activity.callUp!);
-                      // }
-
-                      return ListTile(
-                        leading: Icon(
-                          activity.icon,
-                          color: _getColorForType(activity.type!),
-                        ),
-                        title: Text(activity.title ?? "Sem titulo"),
-                        subtitle: Text(_formatDate(activity.date!)),
-                      );
+                      print(activity.callUp);
+                      print(activity.match);
+                      print(activity.trainingSession);
+                      if (activity.callUp != null) {
+                        return _buildCallUpWidget(activity.callUp!);
+                      } else if (activity.match != null) {
+                        return _buildMatchWidget(activity.match!);
+                      } else {
+                        return ListTile(
+                          leading: Icon(
+                            activity.icon,
+                            color: _getColorForType(activity.type!),
+                          ),
+                          title: Text(activity.title ?? "Sem título"),
+                          subtitle: Text(_formatDate(activity.date!)),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -417,7 +418,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                   },
                                   text: 'Cancelar',
                                   iconData: Icons.cancel_outlined,
-                                  textStyle: TextStyle(color: Colors.grey),
+                                  textStyle:
+                                      const TextStyle(color: Colors.grey),
                                   iconColor: Colors.grey,
                                 ),
                                 IconsButton(
