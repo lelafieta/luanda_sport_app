@@ -94,6 +94,7 @@ dependencies:
   flutter_dropdown_alert: ^1.0.7
   material_dialogs: ^1.1.5
   table_calendar: ^3.0.9
+  date_picker_timeline: ^1.2.5
 
 dev_dependencies:
   flutter_test:

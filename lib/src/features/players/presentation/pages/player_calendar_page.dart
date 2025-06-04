@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +56,7 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  bool isCollapse = false;
 
   @override
   void initState() {
@@ -79,11 +81,39 @@ class _CalendarPageState extends State<CalendarPage> {
               _selectedDay ?? _focusedDay, state.activities);
 
           return SliverSnap(
-            onCollapseStateChanged:
-                (isCollapsed, scrollingOffset, maxExtent) {},
-            collapsedBackgroundColor: Colors.black,
-            expandedBackgroundColor: Colors.transparent,
+            onCollapseStateChanged: (isCollapsed, scrollingOffset, maxExtent) {
+              if (isCollapsed) {
+                setState(() {
+                  isCollapse = true;
+                });
+              } else {
+                setState(() {
+                  isCollapse = false;
+                });
+              }
+            },
+            collapsedBackgroundColor: Colors.white,
+            expandedBackgroundColor: Colors.white,
             expandedContentHeight: 350,
+            collapsedBarHeight: 1,
+            bottom: (isCollapse)
+                ? AppBar(
+                    backgroundColor: Colors.white,
+                    title: DatePicker(
+                      DateTime.now(),
+                      initialSelectedDate: DateTime.now(),
+                      selectionColor: Colors.black,
+                      selectedTextColor: Colors.white,
+                      onDateChange: (date) {
+                        // New date selected
+                        // setState(() {
+                        //   _selectedValue = date;
+                        // });
+                      },
+                    ),
+                    toolbarHeight: 100,
+                  )
+                : null,
             expandedContent: TableCalendar<ActivityEntity>(
               focusedDay: _focusedDay,
               firstDay: DateTime.utc(2024, 1, 1),
@@ -123,8 +153,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 },
               ),
             ),
-            collapsedContent:
-                const Icon(Icons.car_crash, color: Colors.green, size: 45),
+            collapsedContent: Container(),
             body: Material(
               elevation: 7,
               child: ListView.builder(
