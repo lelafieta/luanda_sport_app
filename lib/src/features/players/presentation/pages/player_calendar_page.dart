@@ -17,6 +17,7 @@ import '../../../../core/utils/app_date_utils.dart';
 import '../../../../core/utils/position_utils.dart';
 import '../../../activities/domain/entities/activity_entity.dart';
 import '../../../call_ups/domain/entities/call_up_entity.dart';
+import '../../../call_ups/domain/enums/call_up_status.dart';
 import '../../../call_ups/domain/params/update_call_up_status_params.dart';
 import '../../../matches/domain/entities/cartaz_entity.dart';
 import '../../../matches/domain/entities/match_entity.dart';
@@ -78,7 +79,9 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ActivityCubit, ActivityState>(
       builder: (context, state) {
-        if (state is ActivityLoaded) {
+        if (state is ActivityLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is ActivityLoaded) {
           final selectedActivities = _getActivitiesForDay(
               _selectedDay ?? _focusedDay, state.activities);
 
@@ -410,113 +413,170 @@ class _CalendarPageState extends State<CalendarPage> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.lightWightColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Colors.red.shade500),
-                          ),
-                        ),
-                        onPressed: () {
-                          Dialogs.materialDialog(
-                              msg:
-                                  'Tens a certeza que deseja recusar a convocatória?',
-                              title: "Recusar",
-                              color: Colors.white,
-                              context: context,
-                              titleAlign: TextAlign.center,
-                              msgAlign: TextAlign.center,
-                              actions: [
-                                IconsOutlineButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  text: 'Cancelar',
-                                  iconData: Icons.cancel_outlined,
-                                  textStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  iconColor: Colors.grey,
+              (callUp.status == "pending")
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.lightWightColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  side: BorderSide(color: Colors.red.shade500),
                                 ),
-                                IconsButton(
-                                  padding: const EdgeInsets.all(10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  onPressed: () {
-                                    context
-                                        .read<CallUpResponseCubit>()
-                                        .callUpUpdateStatus(
-                                            UpdateCallUpStatusParams(
-                                                id: callUp.id!,
-                                                status: "declined"));
+                              ),
+                              onPressed: () {
+                                Dialogs.materialDialog(
+                                    msg:
+                                        'Tens a certeza que deseja recusar a convocatória?',
+                                    title: "Recusar",
+                                    color: Colors.white,
+                                    context: context,
+                                    titleAlign: TextAlign.center,
+                                    msgAlign: TextAlign.center,
+                                    actions: [
+                                      IconsOutlineButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        text: 'Cancelar',
+                                        iconData: Icons.cancel_outlined,
+                                        textStyle:
+                                            const TextStyle(color: Colors.grey),
+                                        iconColor: Colors.grey,
+                                      ),
+                                      IconsButton(
+                                        padding: const EdgeInsets.all(10),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        onPressed: () {
+                                          context
+                                              .read<CallUpResponseCubit>()
+                                              .callUpUpdateStatus(
+                                                  UpdateCallUpStatusParams(
+                                                      id: callUp.id!,
+                                                      status: "declined"));
 
-                                    Navigator.of(context).pop();
-                                  },
-                                  text: 'Recusar',
-                                  iconData: Icons.close,
-                                  color: Colors.red.shade700,
-                                  textStyle:
-                                      const TextStyle(color: Colors.white),
-                                  iconColor: Colors.white,
-                                ),
-                              ]);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.close,
-                              width: 22,
-                              color: Colors.red.shade500,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              "Recusar",
-                              style: TextStyle(color: Colors.red.shade500),
-                            ),
-                          ],
-                        )),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: const BorderSide(color: AppColors.primary),
+                                          Navigator.of(context).pop();
+                                        },
+                                        text: 'Recusar',
+                                        iconData: Icons.close,
+                                        color: Colors.red.shade700,
+                                        textStyle: const TextStyle(
+                                            color: Colors.white),
+                                        iconColor: Colors.white,
+                                      ),
+                                    ]);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    AppIcons.close,
+                                    width: 22,
+                                    color: Colors.red.shade500,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    "Recusar",
+                                    style:
+                                        TextStyle(color: Colors.red.shade500),
+                                  ),
+                                ],
+                              )),
                         ),
-                      ),
-                      onPressed: () {
-                        // context.read<CallUpResponseCubit>().callUpUpdateStatus(
-                        //     UpdateCallUpStatusParams(
-                        //         id: callUp.id!, status: "accepted"));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.check,
-                            width: 22,
-                            color: AppColors.white,
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Aceitar",
-                            style: TextStyle(
-                              color: AppColors.white,
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side:
+                                    const BorderSide(color: AppColors.primary),
+                              ),
+                            ),
+                            onPressed: () {
+                              // context.read<CallUpResponseCubit>().callUpUpdateStatus(
+                              //     UpdateCallUpStatusParams(
+                              //         id: callUp.id!, status: "accepted"));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.check,
+                                  width: 22,
+                                  color: AppColors.white,
+                                ),
+                                const SizedBox(width: 10),
+                                const Text(
+                                  "Aceitar",
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                        ),
+                      ],
+                    )
+                  : (callUp.status == "accepted")
+                      ? Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade100,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  "ACEITE",
+                                  style: TextStyle(
+                                    color: Colors.green.shade800,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                Icons.check_box,
+                                color: Colors.green.shade800,
+                              )
+                            ],
+                          ),
+                        )
+                      : Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade100,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  "RECUSADA",
+                                  style: TextStyle(
+                                    color: Colors.red.shade800,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                Icons.close,
+                                color: Colors.red.shade800,
+                              )
+                            ],
+                          ),
+                        ),
             ],
           ),
         ),
