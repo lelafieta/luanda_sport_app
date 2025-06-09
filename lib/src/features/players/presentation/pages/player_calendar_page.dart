@@ -56,7 +56,6 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  bool isCollapse = false;
 
   @override
   void initState() {
@@ -81,39 +80,11 @@ class _CalendarPageState extends State<CalendarPage> {
               _selectedDay ?? _focusedDay, state.activities);
 
           return SliverSnap(
-            onCollapseStateChanged: (isCollapsed, scrollingOffset, maxExtent) {
-              if (isCollapsed) {
-                setState(() {
-                  isCollapse = true;
-                });
-              } else {
-                setState(() {
-                  isCollapse = false;
-                });
-              }
-            },
+            onCollapseStateChanged:
+                (isCollapsed, scrollingOffset, maxExtent) {},
             collapsedBackgroundColor: Colors.white,
-            expandedBackgroundColor: Colors.white,
+            expandedBackgroundColor: Colors.transparent,
             expandedContentHeight: 350,
-            collapsedBarHeight: 1,
-            bottom: (isCollapse)
-                ? AppBar(
-                    backgroundColor: Colors.white,
-                    title: DatePicker(
-                      DateTime.now(),
-                      initialSelectedDate: DateTime.now(),
-                      selectionColor: Colors.black,
-                      selectedTextColor: Colors.white,
-                      onDateChange: (date) {
-                        // New date selected
-                        // setState(() {
-                        //   _selectedValue = date;
-                        // });
-                      },
-                    ),
-                    toolbarHeight: 100,
-                  )
-                : null,
             expandedContent: TableCalendar<ActivityEntity>(
               focusedDay: _focusedDay,
               firstDay: DateTime.utc(2024, 1, 1),
@@ -153,7 +124,23 @@ class _CalendarPageState extends State<CalendarPage> {
                 },
               ),
             ),
-            collapsedContent: Container(),
+            collapsedContent: Container(
+              width: double.infinity,
+              // color: Colors.red,
+              child: DatePicker(
+                DateTime.now(),
+                initialSelectedDate: DateTime.now(),
+                selectionColor: Colors.black,
+                selectedTextColor: Colors.white,
+                locale: "pt_PT",
+                onDateChange: (date) {
+                  // New date selected
+                  // setState(() {
+                  //   _selectedValue = date;
+                  // });
+                },
+              ),
+            ),
             body: Material(
               elevation: 7,
               child: ListView.builder(
@@ -184,91 +171,6 @@ class _CalendarPageState extends State<CalendarPage> {
         }
         return const SizedBox.shrink();
       },
-    );
-    return Scaffold(
-      body: BlocBuilder<ActivityCubit, ActivityState>(
-        builder: (context, state) {
-          if (state is ActivityLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is ActivityFailure) {
-            return Center(child: Text(state.error));
-          } else if (state is ActivityLoaded) {
-            final selectedActivities = _getActivitiesForDay(
-                _selectedDay ?? _focusedDay, state.activities);
-
-            return Column(
-              children: [
-                TableCalendar<ActivityEntity>(
-                  focusedDay: _focusedDay,
-                  firstDay: DateTime.utc(2024, 1, 1),
-                  lastDay: DateTime.utc(2026, 12, 31),
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                  onDaySelected: (selected, focused) {
-                    setState(() {
-                      _selectedDay = selected;
-                      _focusedDay = focused;
-                    });
-                  },
-                  eventLoader: (day) =>
-                      _getActivitiesForDay(day, state.activities),
-                  calendarStyle: const CalendarStyle(
-                    markerDecoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  calendarBuilders: CalendarBuilders(
-                    markerBuilder: (context, date, events) {
-                      if (events.isNotEmpty) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: events.take(3).map((activity) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 1),
-                              child: Icon(
-                                activity.icon,
-                                size: 14,
-                                color: _getColorForType(activity.type!),
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: selectedActivities.length,
-                    itemBuilder: (context, index) {
-                      final activity = selectedActivities[index];
-
-                      if (activity.callUp != null) {
-                        return _buildCallUpWidget(activity.callUp!);
-                      } else if (activity.match != null) {
-                        return _buildMatchWidget(activity.match!);
-                      } else {
-                        return ListTile(
-                          leading: Icon(
-                            activity.icon,
-                            color: _getColorForType(activity.type!),
-                          ),
-                          title: Text(activity.title ?? "Sem título"),
-                          subtitle: Text(_formatDate(activity.date!)),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
     );
   }
 
