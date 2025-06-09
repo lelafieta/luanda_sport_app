@@ -20,6 +20,7 @@ import '../../../call_ups/domain/entities/call_up_entity.dart';
 import '../../../call_ups/domain/params/update_call_up_status_params.dart';
 import '../../../matches/domain/entities/cartaz_entity.dart';
 import '../../../matches/domain/entities/match_entity.dart';
+import '../../../training_sessions/domain/entities/training_session_entity.dart';
 import '../../domain/enums/activity_enum.dart';
 import '../cubit/activity/activity_cubit.dart';
 import '../cubit/call_up_response/call_up_response_cubit.dart';
@@ -151,7 +152,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
             body: Material(
               elevation: 7,
-              child: ListView.builder(
+              child: ListView.separated(
                 itemCount: selectedActivities.length,
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
@@ -163,15 +164,11 @@ class _CalendarPageState extends State<CalendarPage> {
                   } else if (activity.match != null) {
                     return _buildMatchWidget(activity.match!);
                   } else {
-                    return ListTile(
-                      leading: Icon(
-                        activity.icon,
-                        color: _getColorForType(activity.type!),
-                      ),
-                      title: Text(activity.title ?? "Sem título"),
-                      subtitle: Text(_formatDate(activity.date!)),
-                    );
+                    return _buildTrainingWidget(activity.trainingSession!);
                   }
+                },
+                separatorBuilder: (context, index) {
+                  return Divider(height: 45, color: Colors.grey.shade200);
                 },
               ),
             ),
@@ -187,7 +184,7 @@ class _CalendarPageState extends State<CalendarPage> {
       width: double.infinity,
       child: Container(
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           border: Border.all(
@@ -782,6 +779,91 @@ class _CalendarPageState extends State<CalendarPage> {
               child: Text(AppDateUtils.formatDate(
                 showWeekday: true,
                 data: match.matchDate!,
+              )),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrainingWidget(TrainingSessionEntity training) {
+    // return Text("data");
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GestureDetector(
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      "Sessão de Treino",
+                      style: const TextStyle(
+                        // color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                        )),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                    width: 2, color: Colors.grey.shade200),
+                              ),
+                            ),
+                            child: Column(
+                              children: [Text(training.notes!)],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
+              ),
+              child: Text(AppDateUtils.formatDate(
+                showWeekday: true,
+                data: training.sessionDate!,
               )),
             )
           ],
