@@ -83,9 +83,9 @@ class _PlayerFeedPageState extends State<PlayerFeedPage> {
               ),
               const SizedBox(height: 10),
               _buildUpComingMatchesWidget(),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
                   "Convocatórias",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

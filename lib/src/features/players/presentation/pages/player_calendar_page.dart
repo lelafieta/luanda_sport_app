@@ -57,6 +57,8 @@ class _CalendarPageState extends State<CalendarPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
+  final DatePickerController _datePickerController = DatePickerController();
+
   @override
   void initState() {
     super.initState();
@@ -94,6 +96,9 @@ class _CalendarPageState extends State<CalendarPage> {
                 setState(() {
                   _selectedDay = selected;
                   _focusedDay = focused;
+
+                  _datePickerController.animateToDate(_selectedDay!);
+                  _datePickerController.setDateAndAnimate(_selectedDay!);
                 });
               },
               eventLoader: (day) => _getActivitiesForDay(day, state.activities),
@@ -124,20 +129,23 @@ class _CalendarPageState extends State<CalendarPage> {
                 },
               ),
             ),
-            collapsedContent: Container(
+            collapsedContent: SizedBox(
               width: double.infinity,
               // color: Colors.red,
               child: DatePicker(
                 DateTime.now(),
-                initialSelectedDate: DateTime.now(),
-                selectionColor: Colors.black,
+                controller: _datePickerController,
+                initialSelectedDate: _selectedDay,
+                selectionColor: AppColors.primary,
                 selectedTextColor: Colors.white,
                 locale: "pt_PT",
                 onDateChange: (date) {
-                  // New date selected
-                  // setState(() {
-                  //   _selectedValue = date;
-                  // });
+                  setState(() {
+                    _selectedDay = date;
+                    _focusedDay = date;
+                    _datePickerController.animateToDate(_selectedDay!);
+                    _datePickerController.setDateAndAnimate(_selectedDay!);
+                  });
                 },
               ),
             ),
