@@ -53,7 +53,7 @@ class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
         .from('call_ups')
         .update({'status': status})
         .eq('id', id)
-        .select()
+        .select('*, coaches(*), players(*), competitions(*), match:matches(*)')
         .single();
 
     return CallUpModel.fromMap(response);

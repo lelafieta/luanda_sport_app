@@ -18,6 +18,14 @@ final class CallUpResponseSuccess extends CallUpResponseState {
   List<Object> get props => [];
 }
 
+final class CallUpResponseUpdated extends CallUpResponseState {
+  final CallUpEntity callUp;
+  const CallUpResponseUpdated({required this.callUp});
+
+  @override
+  List<Object> get props => [callUp];
+}
+
 final class CallUpResponseFailure extends CallUpResponseState {
   final String error;
 

@@ -60,6 +60,7 @@ class _CalendarPageState extends State<CalendarPage> {
   DateTime? _selectedDay;
 
   final DatePickerController _datePickerController = DatePickerController();
+  ValueNotifier<CallUpEntity?> theCallUp = ValueNotifier<CallUpEntity?>(null);
 
   @override
   void initState() {
@@ -182,405 +183,442 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  SizedBox _buildCallUpWidget(CallUpEntity callUp) {
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          border: Border.all(
-            width: 1,
-            color: Colors.grey.shade400,
-          ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: GestureDetector(
-          onTap: () {},
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
+  Widget _buildCallUpWidget(CallUpEntity callUp) {
+    theCallUp.value = callUp;
+    return BlocListener<CallUpResponseCubit, CallUpResponseState>(
+      listener: (context, state) {
+        if (state is CallUpResponseUpdated) {
+          print("UPDATED ${state.callUp.status}");
+          theCallUp.value = state.callUp;
+        }
+      },
+      child: ValueListenableBuilder(
+          valueListenable: theCallUp,
+          builder: (context, value, _) {
+            return SizedBox(
+              width: double.infinity,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                  border: Border.all(
+                    width: 1,
+                    color: Colors.grey.shade400,
                   ),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      child: Text(
-                        (callUp.competitionId == null)
-                            ? "Exibição"
-                            : "Campeonato",
-                        style: const TextStyle(
-                          // color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          border: Border.all(color: Colors.grey.shade300),
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          )),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Column(
+                            bottomLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              child: Text(
+                                (value!.competitionId == null)
+                                    ? "Exibição"
+                                    : "Campeonato",
+                                style: const TextStyle(
+                                  // color: AppColors.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20),
+                                  )),
+                              child: Row(
                                 children: [
-                                  (callUp.match!.homeTeam == null)
-                                      ? Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                ClipOval(
-                                                  child: Container(
-                                                      width: 30,
-                                                      height: 30,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                      )),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Column(
+                                        children: [
+                                          (value.match!.homeTeam == null)
+                                              ? Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(children: [
+                                                        ClipOval(
+                                                          child: Container(
+                                                              width: 30,
+                                                              height: 30,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50),
+                                                              )),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 8),
+                                                        const Text(
+                                                          "Equipe de Casa",
+                                                          style: TextStyle(),
+                                                        ),
+                                                      ]),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(children: [
+                                                        ClipOval(
+                                                          child: (value
+                                                                      .match!
+                                                                      .homeTeam!
+                                                                      .logoUrl ==
+                                                                  null)
+                                                              ? Container(
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade300,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50),
+                                                                  ),
+                                                                )
+                                                              : CachedNetworkImage(
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  imageUrl: value
+                                                                      .match!
+                                                                      .homeTeam!
+                                                                      .logoUrl
+                                                                      .toString()),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 8),
+                                                        Text(
+                                                          callUp.match!
+                                                              .homeTeam!.name
+                                                              .toString(),
+                                                          style: TextStyle(),
+                                                        ),
+                                                      ]),
+                                                    ),
+                                                  ],
                                                 ),
-                                                const SizedBox(width: 8),
-                                                const Text(
-                                                  "Equipe de Casa",
-                                                  style: TextStyle(),
+                                          const SizedBox(height: 10),
+                                          (value.match!.awayTeam == null)
+                                              ? Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(children: [
+                                                        ClipOval(
+                                                          child: Container(
+                                                              width: 30,
+                                                              height: 30,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50),
+                                                              )),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 8),
+                                                        const Text(
+                                                          "Equipe de Fora",
+                                                          style: TextStyle(),
+                                                        ),
+                                                      ]),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(children: [
+                                                        ClipOval(
+                                                          child: (value
+                                                                      .match!
+                                                                      .awayTeam!
+                                                                      .logoUrl ==
+                                                                  null)
+                                                              ? Container(
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade300,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50),
+                                                                  ),
+                                                                )
+                                                              : CachedNetworkImage(
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  imageUrl: value
+                                                                      .match!
+                                                                      .awayTeam!
+                                                                      .logoUrl
+                                                                      .toString()),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 8),
+                                                        Text(
+                                                          value.match!.awayTeam!
+                                                              .name
+                                                              .toString(),
+                                                          style: TextStyle(),
+                                                        ),
+                                                      ]),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ]),
-                                            ),
-                                          ],
-                                        )
-                                      : Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                ClipOval(
-                                                  child: (callUp
-                                                              .match!
-                                                              .homeTeam!
-                                                              .logoUrl ==
-                                                          null)
-                                                      ? Container(
-                                                          width: 30,
-                                                          height: 30,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors
-                                                                .grey.shade300,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50),
-                                                          ),
-                                                        )
-                                                      : CachedNetworkImage(
-                                                          width: 30,
-                                                          height: 30,
-                                                          fit: BoxFit.cover,
-                                                          imageUrl: callUp
-                                                              .match!
-                                                              .homeTeam!
-                                                              .logoUrl
-                                                              .toString()),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  callUp.match!.homeTeam!.name
-                                                      .toString(),
-                                                  style: TextStyle(),
-                                                ),
-                                              ]),
-                                            ),
-                                          ],
-                                        ),
-                                  const SizedBox(height: 10),
-                                  (callUp.match!.awayTeam == null)
-                                      ? Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                ClipOval(
-                                                  child: Container(
-                                                      width: 30,
-                                                      height: 30,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                      )),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                const Text(
-                                                  "Equipe de Fora",
-                                                  style: TextStyle(),
-                                                ),
-                                              ]),
-                                            ),
-                                          ],
-                                        )
-                                      : Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                ClipOval(
-                                                  child: (callUp
-                                                              .match!
-                                                              .awayTeam!
-                                                              .logoUrl ==
-                                                          null)
-                                                      ? Container(
-                                                          width: 30,
-                                                          height: 30,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors
-                                                                .grey.shade300,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50),
-                                                          ),
-                                                        )
-                                                      : CachedNetworkImage(
-                                                          width: 30,
-                                                          height: 30,
-                                                          fit: BoxFit.cover,
-                                                          imageUrl: callUp
-                                                              .match!
-                                                              .awayTeam!
-                                                              .logoUrl
-                                                              .toString()),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  callUp.match!.awayTeam!.name
-                                                      .toString(),
-                                                  style: TextStyle(),
-                                                ),
-                                              ]),
-                                            ),
-                                          ],
-                                        ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(20),
+                            topLeft: Radius.circular(20),
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      PositionUtils.covertPosition(callUp.position.toString()),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(AppDateUtils.formatDate(data: callUp.visibleUntil!)),
-                  ],
-                ),
-              ),
-              (callUp.status == "pending")
-                  ? Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.lightWightColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side: BorderSide(color: Colors.red.shade500),
-                                ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              PositionUtils.covertPosition(
+                                  callUp.position.toString()),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
-                              onPressed: () {
-                                Dialogs.materialDialog(
-                                    msg:
-                                        'Tens a certeza que deseja recusar a convocatória?',
-                                    title: "Recusar",
-                                    color: Colors.white,
-                                    context: context,
-                                    titleAlign: TextAlign.center,
-                                    msgAlign: TextAlign.center,
-                                    actions: [
-                                      IconsOutlineButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        text: 'Cancelar',
-                                        iconData: Icons.cancel_outlined,
-                                        textStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        iconColor: Colors.grey,
-                                      ),
-                                      IconsButton(
-                                        padding: const EdgeInsets.all(10),
+                            ),
+                            Text(AppDateUtils.formatDate(
+                                data: callUp.visibleUntil!)),
+                          ],
+                        ),
+                      ),
+                      (value.status == "pending")
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            AppColors.lightWightColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(50),
+                                              BorderRadius.circular(20),
+                                          side: BorderSide(
+                                              color: Colors.red.shade500),
                                         ),
-                                        onPressed: () {
-                                          context
-                                              .read<CallUpResponseCubit>()
-                                              .callUpUpdateStatus(
-                                                  UpdateCallUpStatusParams(
-                                                      id: callUp.id!,
-                                                      status: "declined"));
-
-                                          Navigator.of(context).pop();
-                                        },
-                                        text: 'Recusar',
-                                        iconData: Icons.close,
-                                        color: Colors.red.shade700,
-                                        textStyle: const TextStyle(
-                                            color: Colors.white),
-                                        iconColor: Colors.white,
                                       ),
-                                    ]);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    AppIcons.close,
-                                    width: 22,
-                                    color: Colors.red.shade500,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    "Recusar",
-                                    style:
-                                        TextStyle(color: Colors.red.shade500),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side:
-                                    const BorderSide(color: AppColors.primary),
-                              ),
-                            ),
-                            onPressed: () {
-                              // context.read<CallUpResponseCubit>().callUpUpdateStatus(
-                              //     UpdateCallUpStatusParams(
-                              //         id: callUp.id!, status: "accepted"));
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  AppIcons.check,
-                                  width: 22,
-                                  color: AppColors.white,
+                                      onPressed: () {
+                                        Dialogs.materialDialog(
+                                            msg:
+                                                'Tens a certeza que deseja recusar a convocatória?',
+                                            title: "Recusar",
+                                            color: Colors.white,
+                                            context: context,
+                                            titleAlign: TextAlign.center,
+                                            msgAlign: TextAlign.center,
+                                            actions: [
+                                              IconsOutlineButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                text: 'Cancelar',
+                                                iconData: Icons.cancel_outlined,
+                                                textStyle: const TextStyle(
+                                                    color: Colors.grey),
+                                                iconColor: Colors.grey,
+                                              ),
+                                              IconsButton(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                ),
+                                                onPressed: () {
+                                                  context
+                                                      .read<
+                                                          CallUpResponseCubit>()
+                                                      .callUpUpdateStatus(
+                                                          UpdateCallUpStatusParams(
+                                                              id: callUp.id!,
+                                                              status:
+                                                                  "declined"));
+
+                                                  Navigator.of(context).pop();
+                                                },
+                                                text: 'Recusar',
+                                                iconData: Icons.close,
+                                                color: Colors.red.shade700,
+                                                textStyle: const TextStyle(
+                                                    color: Colors.white),
+                                                iconColor: Colors.white,
+                                              ),
+                                            ]);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                            AppIcons.close,
+                                            width: 22,
+                                            color: Colors.red.shade500,
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            "Recusar",
+                                            style: TextStyle(
+                                                color: Colors.red.shade500),
+                                          ),
+                                        ],
+                                      )),
                                 ),
                                 const SizedBox(width: 10),
-                                const Text(
-                                  "Aceitar",
-                                  style: TextStyle(
-                                    color: AppColors.white,
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primary,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        side: const BorderSide(
+                                            color: AppColors.primary),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      // context.read<CallUpResponseCubit>().callUpUpdateStatus(
+                                      //     UpdateCallUpStatusParams(
+                                      //         id: callUp.id!, status: "accepted"));
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          AppIcons.check,
+                                          width: 22,
+                                          color: AppColors.white,
+                                        ),
+                                        const SizedBox(width: 10),
+                                        const Text(
+                                          "Aceitar",
+                                          style: TextStyle(
+                                            color: AppColors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : (callUp.status == "accepted")
-                      ? Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade100,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: Text(
-                                  "ACEITE",
-                                  style: TextStyle(
-                                    color: Colors.green.shade800,
-                                    fontWeight: FontWeight.bold,
+                            )
+                          : (callUp.status == "accepted")
+                              ? Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.green.shade100,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "ACEITE",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.check_box,
+                                        color: Colors.green.shade800,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "RECUSADA",
+                                          style: TextStyle(
+                                            color: Colors.red.shade800,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.close,
+                                        color: Colors.red.shade800,
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ),
-                              Icon(
-                                Icons.check_box,
-                                color: Colors.green.shade800,
-                              )
-                            ],
-                          ),
-                        )
-                      : Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.red.shade100,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: Text(
-                                  "RECUSADA",
-                                  style: TextStyle(
-                                    color: Colors.red.shade800,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.close,
-                                color: Colors.red.shade800,
-                              )
-                            ],
-                          ),
-                        ),
-            ],
-          ),
-        ),
-      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
     );
   }
 
