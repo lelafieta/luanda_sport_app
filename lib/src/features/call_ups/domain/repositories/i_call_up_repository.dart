@@ -10,7 +10,8 @@ abstract class ICallUpRepository {
   Future<Either<Failure, List<CallUpEntity>>> getCallUpsByPlayerPending(
       String playerId);
   Future<Either<Failure, List<CallUpEntity>>> getCallUpsByCoach(String coachId);
-  Future<Either<Failure, Unit>> updateCallUpStatus(String id, String status);
+  Future<Either<Failure, CallUpEntity>> updateCallUpStatus(
+      String id, String status);
   Future<Either<Failure, Unit>> cancelCallUp(String id);
   Future<Either<Failure, Unit>> deleteCallUp(String id);
 }

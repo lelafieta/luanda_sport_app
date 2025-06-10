@@ -66,11 +66,11 @@ class CallUpRepository extends ICallUpRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> updateCallUpStatus(
+  Future<Either<Failure, CallUpEntity>> updateCallUpStatus(
       String id, String status) async {
     try {
-      await callUpDataSource.updateCallUpStatus(id, status);
-      return right(unit);
+      final response = await callUpDataSource.updateCallUpStatus(id, status);
+      return right(response);
     } catch (e) {
       return left(Failure(message: e.toString()));
     }

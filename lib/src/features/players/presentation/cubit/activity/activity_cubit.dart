@@ -4,7 +4,6 @@ import '../../../../activities/domain/entities/activity_entity.dart';
 import '../../../../call_ups/domain/usecases/get_call_ups_by_player_usecase.dart';
 import '../../../../matches/domain/params/get_matches_by_player_team_params.dart';
 import '../../../../matches/domain/usecases/get_matches_by_player_team_usecase.dart';
-import '../../../../matches/domain/usecases/get_matches_by_player_usecase.dart';
 import '../../../../training_sessions/domain/usecases/get_training_sessions_for_team_usecase.dart';
 import '../../../domain/enums/activity_enum.dart';
 part 'activity_state.dart';
@@ -69,11 +68,9 @@ class ActivityCubit extends Cubit<ActivityState> {
       );
 
       activities.sort((a, b) => a.date!.compareTo(b.date!));
-      print("Tamanho");
-      print(activities.length);
+
       emit(ActivityLoaded(activities));
     } catch (e, strack) {
-      print(strack);
       emit(
           ActivityFailure(error: "Erro ao carregar atividades ${e} ${strack}"));
     }

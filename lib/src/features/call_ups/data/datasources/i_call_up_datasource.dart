@@ -7,7 +7,7 @@ abstract class ICallUpRemoteDataSource {
   Future<List<CallUpModel>> getCallUpsByPlayer(String playerId);
   Future<List<CallUpModel>> getCallUpsByPlayerPending(String playerId);
   Future<List<CallUpModel>> getCallUpsByCoach(String coachId);
-  Future<Unit> updateCallUpStatus(String id, String status);
+  Future<CallUpModel> updateCallUpStatus(String id, String status);
   Future<Unit> cancelCallUp(String id);
   Future<Unit> deleteCallUp(String id);
 }

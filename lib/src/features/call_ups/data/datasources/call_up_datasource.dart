@@ -48,9 +48,15 @@ class CallUpRemoteDataSource extends ICallUpRemoteDataSource {
   }
 
   @override
-  Future<Unit> updateCallUpStatus(String id, String status) async {
-    await client.from('call_ups').update({'status': status}).eq('id', id);
-    return unit;
+  Future<CallUpModel> updateCallUpStatus(String id, String status) async {
+    final response = await client
+        .from('call_ups')
+        .update({'status': status})
+        .eq('id', id)
+        .select()
+        .single();
+
+    return CallUpModel.fromMap(response);
   }
 
   @override
