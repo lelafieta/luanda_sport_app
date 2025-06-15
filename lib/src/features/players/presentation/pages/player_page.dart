@@ -71,7 +71,7 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
@@ -96,11 +96,7 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
                     return const SizedBox.shrink();
                   },
                 ),
-                CalendarPage(),
-                Text("data"),
-                Text("data"),
-                Text("data"),
-                const PlayerFeedPage(),
+                const CalendarPage(),
                 BlocBuilder<GetMyPlayerDataCubit, GetMyPlayerDataState>(
                   builder: (context, state) {
                     if (state is GetMyPlayerDataLoading) {
@@ -124,6 +120,11 @@ class _PlayerPageState extends State<PlayerPage> with TickerProviderStateMixin {
                     return const SizedBox.shrink();
                   },
                 ),
+               
+                Text("data"),
+                Text("data"),
+                Text("data"),
+                const PlayerFeedPage(),
                 AchievementsView(),
               ],
             ),
